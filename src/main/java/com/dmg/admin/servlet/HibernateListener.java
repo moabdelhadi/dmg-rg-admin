@@ -39,16 +39,16 @@ public class HibernateListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		// http://www.network-science.de/ascii/ :: rectangles
 		logger.warn("Starting DMG-RG-ADMIN application DB session creation");
-		logger.warn("   	db         88888888ba,    88b           d88  88  888b      88");
-		logger.warn("      d88b        88      `'8b   888b         d888  88  8888b     88");
-		logger.warn("     d8'`8b       88        `8b  88`8b       d8'88  88  88 `8b    88");
-		logger.warn("    d8'  `8b      88         88  88 `8b     d8' 88  88  88  `8b   88");
-		logger.warn("   d8YaaaaY8b     88         88  88  `8b   d8'  88  88  88   `8b  88");
-		logger.warn("  d8''''''''8b    88         8P  88   `8b d8'   88  88  88    `8b 88");
-		logger.warn(" d8'        `8b   88      .a8P   88    `888'    88  88  88     `8888");
-		logger.warn("d8'          `8b  88888888Y''    88     `8'     88  88  88      `888");
+		logger.warn("        db         88888888ba,    88b           d88  88  888b      88");
+		logger.warn("       d88b        88      `'8b   888b         d888  88  8888b     88");
+		logger.warn("      d8'`8b       88        `8b  88`8b       d8'88  88  88 `8b    88");
+		logger.warn("	  d8'  `8b      88         88  88 `8b     d8' 88  88  88  `8b   88");
+		logger.warn("	 d8YaaaaY8b     88         88  88  `8b   d8'  88  88  88   `8b  88");
+		logger.warn("   d8''''''''8b    88         8P  88   `8b d8'   88  88  88    `8b 88");
+		logger.warn("  d8'        `8b   88      .a8P   88    `888'    88  88  88     `8888");
+		logger.warn(" d8'          `8b  88888888Y''    88     `8'     88  88  88      `888");
 		try {
-			FacadeFactory.registerFacade("aa-twitifier", true);
+			FacadeFactory.registerFacade("dmg-rg-admin", true);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
