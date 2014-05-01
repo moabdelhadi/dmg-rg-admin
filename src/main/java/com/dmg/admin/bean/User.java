@@ -9,7 +9,7 @@ import javax.persistence.UniqueConstraint;
 import com.dmg.core.bean.AbstractPojo;
 
 @Entity
-@Table(name = "appuser", uniqueConstraints = { @UniqueConstraint(columnNames = { "USERNAME" }) })
+@Table(name = "ADMINUSERS", uniqueConstraints = { @UniqueConstraint(columnNames = { "USERNAME" }) })
 public class User extends AbstractPojo {
 
 	/**
