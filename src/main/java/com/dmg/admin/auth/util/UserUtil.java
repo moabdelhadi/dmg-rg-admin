@@ -277,7 +277,8 @@ public class UserUtil implements Serializable {
 		String minLenghtStr = PropertiesManager.getInstance().getProperty("authentication.username.validation.length");
 		int minLenght = 4;
 		if (minLenghtStr == null) {
-			//			System.setProperty("authentication.username.validation.length", "4");
+			// System.setProperty("authentication.username.validation.length",
+			// "4");
 			return minLenght;
 		}
 
@@ -308,7 +309,8 @@ public class UserUtil implements Serializable {
 		String maxAttemptsStr = PropertiesManager.getInstance().getProperty("authentication.maxFailedPasswordChangeAttempts");
 		int maxAttempts = 5;
 		if (maxAttemptsStr == null) {
-			//System.setProperty("authentication.maxFailedPasswordChangeAttempts", "5");
+			// System.setProperty("authentication.maxFailedPasswordChangeAttempts",
+			// "5");
 			return maxAttempts;
 		}
 
@@ -319,6 +321,14 @@ public class UserUtil implements Serializable {
 		}
 
 		return maxAttempts;
+	}
+
+	public static boolean validateToken(String token) {
+		if (token.equals(PropertiesManager.getInstance().getProperty("authentication.admin.token"))) {
+			return true;
+		}
+		return false;
+
 	}
 
 }

@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dmg.admin.auth.SessionHandler;
 import com.vaadin.server.ServiceException;
 import com.vaadin.server.SessionDestroyEvent;
 import com.vaadin.server.SessionDestroyListener;
@@ -35,6 +36,7 @@ public class VaadinCustomServlet extends VaadinServlet implements SessionInitLis
 
 	@Override
 	public void sessionInit(SessionInitEvent event) throws ServiceException {
+		SessionHandler.initialize();
 		logger.warn("Session is initialized");
 	}
 

@@ -39,20 +39,20 @@ public class ChangePasswordView extends VerticalLayout implements View {
 
 	private void initView() {
 		CustomLayout customLayout = new CustomLayout("changePassword");
-		customLayout.setWidth("20%");
+		customLayout.setWidth("30%");
 		final PasswordField oldPassword = new PasswordField();
 		oldPassword.setInputPrompt("password");
-		oldPassword.setWidth("80%");
+		oldPassword.setWidth("100%");
 		customLayout.addComponent(oldPassword, "oldPassword");
 
 		final PasswordField newPassword = new PasswordField();
 		newPassword.setInputPrompt("password");
-		newPassword.setWidth("80%");
+		newPassword.setWidth("100%");
 		customLayout.addComponent(newPassword, "newPassword");
 
 		final PasswordField newPasswordVeri = new PasswordField();
 		newPasswordVeri.setInputPrompt("password");
-		newPasswordVeri.setWidth("80%");
+		newPasswordVeri.setWidth("100%");
 		customLayout.addComponent(newPasswordVeri, "newPasswordVeri");
 
 		final Button loginButton = new Button("Modify");

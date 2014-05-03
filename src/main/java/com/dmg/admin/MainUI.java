@@ -1,6 +1,7 @@
 package com.dmg.admin;
 
 import com.dmg.admin.auth.SessionHandler;
+import com.dmg.admin.auth.util.UserUtil;
 import com.dmg.admin.view.ChangePasswordView;
 import com.dmg.admin.view.LoginView;
 import com.dmg.admin.view.LogoutView;
@@ -19,7 +20,7 @@ public class MainUI extends UI {
 	private Navigator navigator;
 
 	@Override
-	protected void init(VaadinRequest request) {
+	protected void init(final VaadinRequest request) {
 		navigator = new Navigator(this, this);
 		navigator.addView("", new StartView(navigator));
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
@@ -31,6 +32,13 @@ public class MainUI extends UI {
 
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
+				String token = request.getParameter("token");
+				if (token != null && !token.equals("")) {
+					if (UserUtil.validateToken(token)) {
+						navigator.getDisplay().showView(new RegistrationView(navigator));
+						return false;
+					}
+				}
 				if (SessionHandler.get() == null) {
 					String fragmentAndParameters = event.getViewName();
 					if (event.getParameters() != null) {
