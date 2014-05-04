@@ -93,6 +93,14 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- START OF ADDONS -->
+		<dependency>
+		   <groupId>org.vaadin.addons</groupId>
+		   <artifactId>filteringtable</artifactId>
+		   <version>0.9.6.v7</version>
+		</dependency>		
+		<!-- END OF ADDONS -->
 
 		<dependency>
 			<groupId>com.dmg</groupId>
