@@ -31,8 +31,8 @@ a {
 }
 
 #mainform {
-	width:437px;
-	margin:auto;
+	
+	margin:auto;	
 }
 @media screen and (max-width:960px) {
 	#mainform {
@@ -60,8 +60,7 @@ h2 a {
 	font-family: 'Archivo Narrow', sans-serif;
 }
 .button-holder {
-	padding:5px;
-	margin-bottom:50px;
+	padding-top:5px;	
 	position:relative;
 }
 /* END GLOBAL */
@@ -230,22 +229,45 @@ h2 a {
 	-ms-box-shadow:0px 0px 6px 3px #444;
 }
 
+.button-holder {
+	padding-top:5px;	
+	position:relative;
+	width: 50%;
+    margin: 0 auto;
+	
+}
+
 .vertical-bt{
 position: relative;
-clear: both;
-width: 26%;
-float: right;
-
+width: 50%;
+margin: 0 auto;
+height: 333px;
 }
 
 .kareem{
 background-image: url("VAADIN/themes/dmg-theme/layouts/img/ios-linen.jpg");
 }
+
+#pos-ver-1{
+position:absolute;
+top:0px;
+left:629px;
+}
+#pos-ver-2{
+position:absolute;
+top:106px;
+left:629px;
+}
+#pos-ver-3{
+position:absolute;
+top:212px;
+left:629px;
+}
 </style>
 <div id="mainform"> 
     <div class="button-holder">    
     	<!-- Small Button 1 -->
-        <div class="tile-bt solid-darkblue shadow-blue floatleft margin-5">
+        <div class="tile-bt-2 solid-darkblue shadow-blue floatleft margin-5">
         	<a href="#!transactions" class="gradient">
         	<img src="img/transactions.png" alt="" />
             <span class="light-text">Transactions</span>
@@ -253,7 +275,7 @@ background-image: url("VAADIN/themes/dmg-theme/layouts/img/ios-linen.jpg");
         </div>
         
         <!-- Small Button 2 -->
-        <div class="tile-bt solid-blue shadow-blue floatleft margin-5">
+        <div class="tile-bt-2 solid-blue shadow-blue floatleft margin-5">
         	<a href="#!bills" class="gradient">
         	<img src="img/bills.png" alt="" />
             <span class="light-text">Bills</span>
@@ -261,44 +283,21 @@ background-image: url("VAADIN/themes/dmg-theme/layouts/img/ios-linen.jpg");
         </div>
         
          <!-- Small Button 3 -->
-        <div class="tile-bt solid-blue-2 shadow-blue floatleft margin-5">
-        	<a href="#!bills" class="gradient">
+        <div class="tile-bt-2 solid-blue-2 shadow-blue floatleft margin-5">
+        	<a href="#!users" class="gradient">
         	<img src="img/users.png" alt="" />
             <span class="light-text">Display Users</span>
             </a>
         </div>
         
         <!-- Settings Button-->
-        <div class="tile-bt solid-violetred shadow-black floatleft margin-5">
+        <div class="tile-bt-2 solid-violetred shadow-black floatleft margin-5">
         	<a href="#" class="gradient">
         	<img src="img/settings.png" alt="" />
             <span class="light-text">Settings</span>
             </a>
         </div>
-        <div class="vertical-bt">
-	        <!-- Small Button 4 -->
-	        <div class="tile-bt solid-orange shadow-green floatleft margin-5">
-	        	<a href="#!register" class="gradient">
-	        	<img src="img/register.png" alt="" />
-	            <span class="light-text">Register</span>
-	            </a>
-	        </div>
-	        
-	        <!-- Small Button 5 -->
-	        <div class="tile-bt solid-green-2 shadow-green floatleft margin-5">
-	        	<a href="#!register" class="gradient">
-	        	<img src="img/change.png" alt="" />
-	            <span class="light-text">Change Password</span>
-	            </a>
-        	</div>
-        	<!-- Small Button 5 -->
-	        <div class="tile-bt solid-yellow shadow-green floatleft margin-5">
-		        	<a href="#!logout" class="gradient">
-		        	<img src="img/logout.png" alt="" />
-		            <span class="light-text">Logout</span>
-		            </a>
-	        </div>
-        </div>
+       
         <!-- End Small Button 1 -->
         <!-- 
         Small Button 2
@@ -456,9 +455,32 @@ background-image: url("VAADIN/themes/dmg-theme/layouts/img/ios-linen.jpg");
         
           -->
         
-        <div class="clearspace"></div>
-    
+    <div class="clearspace"></div>    
     </div>
+    <div class="vertical-bt">
+        <!-- Small Button 4 -->
+        <div id="pos-ver-1" class="tile-bt-2 solid-orange shadow-green floatleft margin-5">
+        	<a href="#!register" class="gradient">
+        	<img src="img/register.png" alt="" />
+            <span class="light-text">Register</span>
+            </a>
+        </div>
+        
+        <!-- Small Button 5 -->
+        <div id="pos-ver-2" class="tile-bt-2 solid-green-2 shadow-green floatleft margin-5">
+        	<a href="#!changePassword" class="gradient">
+        	<img src="img/change.png" alt="" />
+            <span class="light-text">Change Password</span>
+            </a>
+       	</div>
+       	<!-- Small Button 5 -->
+        <div id="pos-ver-3" class="tile-bt-2 solid-yellow shadow-green floatleft margin-5">
+	        	<a href="#!logout" class="gradient">
+	        	<img src="img/logout.png" alt="" />
+	            <span class="light-text">Logout</span>
+	            </a>
+        </div>
+      </div>
     </div>
 
 

@@ -2,6 +2,7 @@ package com.dmg.admin;
 
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.auth.util.UserUtil;
+import com.dmg.admin.view.BillsView;
 import com.dmg.admin.view.ChangePasswordView;
 import com.dmg.admin.view.LoginView;
 import com.dmg.admin.view.LogoutView;
@@ -23,6 +24,7 @@ public class MainUI extends UI {
 	protected void init(final VaadinRequest request) {
 		navigator = new Navigator(this, this);
 		navigator.addView("", new StartView(navigator));
+		navigator.addView(BillsView.NAME, new BillsView());
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));
 		navigator.addView(ChangePasswordView.NAME, new ChangePasswordView(navigator));

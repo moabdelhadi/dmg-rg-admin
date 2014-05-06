@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import com.dmg.core.bean.AbstractPojo;
 
 @Entity
@@ -29,7 +30,7 @@ public class Bill extends AbstractPojo {
 	private Date toDate;
 
 	@Column(name = "AMOUNT")
-	private int ammount;
+	private int amount;
 
 	@Column(name = "BILL_NUMBER")
 	private int billNumber;
@@ -70,12 +71,12 @@ public class Bill extends AbstractPojo {
 		this.toDate = toDate;
 	}
 
-	public int getAmmount() {
-		return ammount;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setAmmount(int ammount) {
-		this.ammount = ammount;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	public int getBillNumber() {

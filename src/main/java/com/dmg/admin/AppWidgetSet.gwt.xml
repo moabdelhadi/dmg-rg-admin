@@ -28,5 +28,9 @@
      information and instructions.
     -->
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
+    
+    <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
 
+
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 </module>
