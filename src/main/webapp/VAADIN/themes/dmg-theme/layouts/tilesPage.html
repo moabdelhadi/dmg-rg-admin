@@ -1,0 +1,466 @@
+
+<!-- 
+	This customlayout uses inline styles and images as well. Notice that the
+	URLs are relatice to the layout, which means you can open the layout offline
+	in a WYSIWYG editor (or browser), and the images will work.
+ -->
+<style>
+/*============================================
+
+Tile Button CSS Plugin by SONHLAB.com - version 1.0
+Website: http://sonhlab.com
+Documentation: http://docs.sonhlab.com/tile-button-metro-ui/
+License: Personal & Commercial Uses.
+
+============================================*/
+
+/* START GLOBAL */
+html,body,div,span,applet,object,iframe,input,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{
+	margin:0;
+	padding:0;
+	border: 0px;
+}
+
+body {
+	font-family:sans-serif;
+	background:#fff;
+}
+
+a {
+	text-decoration:none;
+}
+
+#mainform {
+	width:437px;
+	margin:auto;
+}
+@media screen and (max-width:960px) {
+	#mainform {
+		width:100%;
+		margin:auto;
+	}
+}
+.title {
+	margin:50px 5px;
+	font-size:3em;
+	font-weight:normal;
+}
+.title a {
+	color:#1e1e1e;
+	font-family: 'Archivo Narrow', sans-serif;
+}
+
+h2, h3 {
+	margin:10px 5px;
+	color:#1e1e1e;
+	font-family: sans-serif;
+}
+h2 a {
+	color:#1e1e1e;
+	font-family: 'Archivo Narrow', sans-serif;
+}
+.button-holder {
+	padding:5px;
+	margin-bottom:50px;
+	position:relative;
+}
+/* END GLOBAL */
+
+
+
+
+/* TILE BUTTONS */
+
+/* Button 100 x 100 */
+.tile-bt {
+	text-align:center;
+	cursor:pointer;
+	width:100px;
+	height:108px;
+}
+.tile-bt a {
+	display:block;
+	padding-top:16px;
+	text-decoration: !important;
+}
+.tile-bt img {
+	margin:0 auto 0 auto;
+	padding-bottom:10px;
+	height:48px;
+	width:48px;
+	position:relative;
+	display:block;
+}
+.tile-bt span {
+	font-size:14px;
+	padding-bottom:10px;
+	display:block;
+}
+.tile-bt:active {
+	opacity:0.5;
+}
+/* Button 100 x 100 */
+
+
+
+/* Button 205 x 100 */
+.tile-bt-2 {
+	width:205px;
+	height:100px;
+	line-height:100px;
+	text-align:center;
+	cursor:pointer;
+}
+.tile-bt-2 a {
+	display:block;
+	text-decoration: !important;
+}
+.tile-bt-2 img {
+	vertical-align: middle;
+	margin:auto;
+	padding:0px;
+	position:relative;
+	width:48px;
+	height:48px;
+}
+.tile-bt-2 span {
+	vertical-align: middle;
+	display:inline;
+}
+.tile-bt-2:active {
+	opacity:0.5;
+}
+
+/* End Button 205 x 100 */
+
+
+/* END TILE BUTTONS */
+
+
+
+
+
+/* BACKGROUND LIST */
+
+/* Solid Colors */
+.solid-blue { background:#00BBE2; }
+.solid-blue-2 { background:#2C84EE; }
+.solid-darkblue { background:#044E94; }
+.solid-violetred { background:#781766; }
+.solid-red { background:#E51400;}
+.solid-red-2 { background:#E81750; }
+.solid-pink { background:#FF539B; }
+.solid-purple { background:#D02090; }
+.solid-orange { background:#FB8F02; }
+.solid-orange-2 { background:#FF6600; }
+.solid-orange-3 { background:#DD5F37; }
+.solid-coral { background:#CD5B45; }
+.solid-green { background:#67B239; }
+.solid-green-2 {background:#96BF01; }
+.solid-darkgreen { background:#016C38; }
+.solid-olive { background:#999900}
+.solid-grass { background:#CDCD00; }
+.solid-darkred { background:#5F0000; }
+.solid-gold { background:#FEE9AE; }
+.solid-yellow { background:#F7D100; }
+.solid-black { background:#000; }
+.solid-smoke { background:#F5F5F5; }
+/* End Solid Colors */
+
+/* END BACKGROUND LIST */
+
+
+
+
+/* MISC */
+.clearspace { clear: both; }
+.floatleft { float:left; }
+.margin-5 { margin-right:5px; margin-bottom:5px; }
+.light-text {
+	color:#fff;
+}
+.dark-text {
+	color:#1e1e1e;
+}
+.gradient {
+	background: -moz-linear-gradient(-45deg,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0.3))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(-45deg,  rgba(255,255,255,0) 00%,rgba(255,255,255,0.3) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.3) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.3) 100%); /* IE10+ */
+	background: linear-gradient(-45deg,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.3) 100%); /* W3C */
+}
+.shadow-white, .shadow-black, .shadow-blue, .shadow-green, .shadow-red {
+	display:inline-block;
+	text-decoration:none;
+}
+.shadow-white:hover {
+	box-shadow:0px 0px 6px 3px #fff;
+	-webkit-box-shadow:0px 0px 6px 3px #fff;
+	-moz-box-shadow:0px 0px 6px 3px #fff;
+	-o-box-shadow:0px 0px 6px 3px #fff;
+	-ms-box-shadow:0px 0px 6px 3px #fff;
+}
+.shadow-blue:hover {
+	box-shadow:0px 0px 6px 3px #38D1F7;
+	-webkit-box-shadow:0px 0px 6px 3px #38D1F7;
+	-moz-box-shadow:0px 0px 6px 3px #38D1F7;
+	-o-box-shadow:0px 0px 6px 3px #38D1F7;
+	-ms-box-shadow:0px 0px 6px 3px #38D1F7;
+}
+.shadow-green:hover {
+	box-shadow:0px 0px 6px 3px #AACA37;
+	-webkit-box-shadow:0px 0px 6px 3px #AACA37;
+	-moz-box-shadow:0px 0px 6px 3px #AACA37;
+	-o-box-shadow:0px 0px 6px 3px #AACA37;
+	-ms-box-shadow:0px 0px 6px 3px #AACA37;
+}
+.shadow-red:hover {
+	box-shadow:0px 0px 6px 3px #E81750;
+	-webkit-box-shadow:0px 0px 6px 3px #E81750;
+	-moz-box-shadow:0px 0px 6px 3px #E81750;
+	-o-box-shadow:0px 0px 6px 3px #E81750;
+	-ms-box-shadow:0px 0px 6px 3px #E81750;
+}
+.shadow-black:hover {
+	box-shadow:0px 0px 6px 3px #444;
+	-webkit-box-shadow:0px 0px 6px 3px #444;
+	-moz-box-shadow:0px 0px 6px 3px #444;
+	-o-box-shadow:0px 0px 6px 3px #444;
+	-ms-box-shadow:0px 0px 6px 3px #444;
+}
+
+.vertical-bt{
+position: relative;
+clear: both;
+width: 26%;
+float: right;
+
+}
+
+.kareem{
+background-image: url("VAADIN/themes/dmg-theme/layouts/img/ios-linen.jpg");
+}
+</style>
+<div id="mainform"> 
+    <div class="button-holder">    
+    	<!-- Small Button 1 -->
+        <div class="tile-bt solid-darkblue shadow-blue floatleft margin-5">
+        	<a href="#!transactions" class="gradient">
+        	<img src="img/transactions.png" alt="" />
+            <span class="light-text">Transactions</span>
+            </a>
+        </div>
+        
+        <!-- Small Button 2 -->
+        <div class="tile-bt solid-blue shadow-blue floatleft margin-5">
+        	<a href="#!bills" class="gradient">
+        	<img src="img/bills.png" alt="" />
+            <span class="light-text">Bills</span>
+            </a>
+        </div>
+        
+         <!-- Small Button 3 -->
+        <div class="tile-bt solid-blue-2 shadow-blue floatleft margin-5">
+        	<a href="#!bills" class="gradient">
+        	<img src="img/users.png" alt="" />
+            <span class="light-text">Display Users</span>
+            </a>
+        </div>
+        
+        <!-- Settings Button-->
+        <div class="tile-bt solid-violetred shadow-black floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="img/settings.png" alt="" />
+            <span class="light-text">Settings</span>
+            </a>
+        </div>
+        <div class="vertical-bt">
+	        <!-- Small Button 4 -->
+	        <div class="tile-bt solid-orange shadow-green floatleft margin-5">
+	        	<a href="#!register" class="gradient">
+	        	<img src="img/register.png" alt="" />
+	            <span class="light-text">Register</span>
+	            </a>
+	        </div>
+	        
+	        <!-- Small Button 5 -->
+	        <div class="tile-bt solid-green-2 shadow-green floatleft margin-5">
+	        	<a href="#!register" class="gradient">
+	        	<img src="img/change.png" alt="" />
+	            <span class="light-text">Change Password</span>
+	            </a>
+        	</div>
+        	<!-- Small Button 5 -->
+	        <div class="tile-bt solid-yellow shadow-green floatleft margin-5">
+		        	<a href="#!logout" class="gradient">
+		        	<img src="img/logout.png" alt="" />
+		            <span class="light-text">Logout</span>
+		            </a>
+	        </div>
+        </div>
+        <!-- End Small Button 1 -->
+        <!-- 
+        Small Button 2
+        <div class="tile-bt solid-darkblue shadow-blue floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 2
+        
+        Small Button 3
+        <div class="tile-bt solid-violetred shadow-black floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 3
+        
+        Small Button 4
+        <div class="tile-bt solid-purple shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 4
+        
+        Small Button 5
+        <div class="tile-bt solid-orange shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 5
+        
+        Small Button 6
+        <div class="tile-bt solid-coral shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 6
+        
+        Small Button 7
+        <div class="tile-bt solid-green-2 shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 7
+        
+        Small Button 8
+        <div class="tile-bt solid-yellow shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="dark-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 8
+        
+        Small Button 9
+        <div class="tile-bt solid-darkgreen shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 9
+        
+        Small Button 10
+        <div class="tile-bt solid-red shadow-red floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 10
+        
+        Small Button 11
+        <div class="tile-bt solid-olive shadow-red floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 11
+        
+        Small Button 12
+        <div class="tile-bt solid-darkred shadow-red floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 12
+        
+        Small Button 13
+        <div class="tile-bt solid-red-2 shadow-red floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 13
+        
+        Small Button 14
+        <div class="tile-bt solid-blue shadow-red floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="dark-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 14
+        
+        Small Button 15
+        <div class="tile-bt solid-black shadow-black floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 15
+        
+        Small Button 16
+        <div class="tile-bt solid-grass shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="dark-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 16
+        
+        Small Button 17
+        <div class="tile-bt solid-pink shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 17
+        
+        Small Button 18
+        <div class="tile-bt solid-orange-2 shadow-green floatleft margin-5">
+        	<a href="#" class="gradient">
+        	<img src="images/icon.png" alt="" />
+            <span class="light-text">Button Title</span>
+            </a>
+        </div>
+        End Small Button 18
+        
+          -->
+        
+        <div class="clearspace"></div>
+    
+    </div>
+    </div>
+
+
+
+

@@ -5,15 +5,14 @@
 	in a WYSIWYG editor (or browser), and the images will work.
  -->
  <style>
- 	.btn_view a{
+ 	.btn_transactions a{
 	
-    background-image: url("VAADIN/themes/dmg-theme/img/list-all.png");
+    background-image: url("VAADIN/themes/dmg-theme/img/transactions.png");
     
-	}
+	}	
+ 	.btn_bills a{
 	
-	.btn_create a{
-	
-    background-image: url("VAADIN/themes/dmg-theme/img/create-new.png");
+    background-image: url("VAADIN/themes/dmg-theme/img/bills.png");
     
 	}
 	
@@ -54,14 +53,11 @@
 	}
 	
 
- 
- 	.btn_view a:hover{
+ 	.btn_transactions a:hover{
 	background-color:#58a5ed;
     }
-     
-    .btn_create a:hover
-    {
-    background-color:#58a5ed;
+ 	.btn_bills a:hover{
+	background-color:#58a5ed;
     }
     .btn_change a:hover
     {
@@ -78,8 +74,8 @@
  
  </style>
  
-<div class="link_div btn_view"><a href="#!list">List All</a></div>
-<div class="link_div btn_create"><a href="#!create">Create New</a></div>
+<div class="link_div btn_bills"><a href="#!bills">Bills</a></div>
+<div class="link_div btn_transactions"><a href="#!transactions">Transactions</a></div>
 <div class="link_div btn_register"><a href="#!register">Register User</a></div>
 <div class="link_div btn_change"><a href="#!changePassword">Change Password</a></div>
 <div class="link_div btn_logout"><a href="#!logout">Logout</a></div>

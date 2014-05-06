@@ -41,31 +41,31 @@ public class RegistrationView extends VerticalLayout implements View {
 		final TextField fullName = new TextField();
 
 		fullName.setInputPrompt("Full Name");
-		fullName.setWidth("100%");
+		fullName.setWidth("70%");
 		customLayout.addComponent(fullName, "fullName");
 
 		final TextField username = new TextField();
 
 		username.setInputPrompt("Username");
-		username.setWidth("100%");
+		username.setWidth("70%");
 		customLayout.addComponent(username, "username");
 
 		final PasswordField password = new PasswordField();
 
 		password.setInputPrompt("password");
-		password.setWidth("100%");
+		password.setWidth("70%");
 		customLayout.addComponent(password, "password");
 
 		final PasswordField passwordVer = new PasswordField();
 
 		passwordVer.setInputPrompt("password");
-		passwordVer.setWidth("100%");
+		passwordVer.setWidth("70%");
 		customLayout.addComponent(passwordVer, "passwordVer");
 
 		final TextField email = new TextField();
 
 		email.setInputPrompt("Email address");
-		email.setWidth("100%");
+		email.setWidth("70%");
 		customLayout.addComponent(email, "email");
 
 		final Button loginButton = new Button("Register");

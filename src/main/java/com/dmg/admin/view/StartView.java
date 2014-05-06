@@ -18,9 +18,10 @@ public class StartView extends VerticalLayout implements View {
 	public StartView(final Navigator navigator) {
 		setSizeFull();
 
-		CustomLayout customLayout = new CustomLayout("mainPage");
+		CustomLayout customLayout = new CustomLayout("tilesPage");
 
 		addComponent(customLayout);
+		addStyleName("kareem");
 
 		setComponentAlignment(customLayout, Alignment.MIDDLE_CENTER);
 	}
