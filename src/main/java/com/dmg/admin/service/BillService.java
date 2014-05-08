@@ -19,7 +19,7 @@ public class BillService implements Serializable {
 	 */
 	private static final long serialVersionUID = 333126056493315802L;
 
-	private static final String LIST_QUERY_ORDERED_BY_DATE = "SELECT b FROM bill b ORDER BY b.creationDate DESC";
+	private static final String LIST_QUERY_ORDERED_BY_DATE = "SELECT b FROM Bill b ORDER BY b.creationDate DESC";
 
 	public List<Bill> listBills() throws DataAccessLayerException {
 		return FacadeFactory.getFacade().list(LIST_QUERY_ORDERED_BY_DATE, new HashMap<String, Object>());
