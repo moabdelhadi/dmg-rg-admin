@@ -29,8 +29,8 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public String getBooleanFilterDisplayName(Object propertyId, boolean value) {
-		if ("validated".equals(propertyId)) {
-			return value ? "Validated" : "Not validated";
+		if ("payed".equals(propertyId)) {
+			return value ? "Payed" : "Not payed";
 		}
 		// returning null will output default value
 		return null;
@@ -38,7 +38,7 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public Resource getBooleanFilterIcon(Object propertyId, boolean value) {
-		if ("validated".equals(propertyId)) {
+		if ("payed".equals(propertyId)) {
 			return value ? new ThemeResource("../runo/icons/16/ok.png") : new ThemeResource("../runo/icons/16/cancel.png");
 		}
 		return null;

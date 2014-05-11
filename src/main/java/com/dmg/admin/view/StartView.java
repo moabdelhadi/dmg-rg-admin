@@ -1,10 +1,12 @@
 package com.dmg.admin.view;
 
+import com.dmg.admin.util.VersionReader;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class StartView extends VerticalLayout implements View {
@@ -17,11 +19,14 @@ public class StartView extends VerticalLayout implements View {
 
 	public StartView(final Navigator navigator) {
 		setSizeFull();
+		String version = VersionReader.getInstance().getVersion();
+		Label versionLabel = new Label("DMG-RG-ADMIN version (" + version + ")");
 
-		CustomLayout customLayout = new CustomLayout("tilesPage");
+		CustomLayout customLayout = new CustomLayout("startPage");
 
+		customLayout.addComponent(versionLabel, "version");
 		addComponent(customLayout);
-		addStyleName("kareem");
+		addStyleName("bg-image");
 
 		setComponentAlignment(customLayout, Alignment.MIDDLE_CENTER);
 	}

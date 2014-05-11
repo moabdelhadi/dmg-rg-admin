@@ -8,6 +8,7 @@ import com.dmg.admin.view.LoginView;
 import com.dmg.admin.view.LogoutView;
 import com.dmg.admin.view.RegistrationView;
 import com.dmg.admin.view.StartView;
+import com.dmg.admin.view.TransactionsView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
@@ -24,6 +25,7 @@ public class MainUI extends UI {
 	protected void init(final VaadinRequest request) {
 		navigator = new Navigator(this, this);
 		navigator.addView("", new StartView(navigator));
+		navigator.addView(TransactionsView.NAME, new TransactionsView());
 		navigator.addView(BillsView.NAME, new BillsView());
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));

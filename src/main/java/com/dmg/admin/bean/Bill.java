@@ -1,5 +1,6 @@
 package com.dmg.admin.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,10 +31,10 @@ public class Bill extends AbstractPojo {
 	private Date toDate;
 
 	@Column(name = "AMOUNT")
-	private int amount;
+	private BigDecimal amount;
 
 	@Column(name = "BILL_NUMBER")
-	private int billNumber;
+	private String billNumber;
 
 	public Bill() {
 
@@ -71,19 +72,19 @@ public class Bill extends AbstractPojo {
 		this.toDate = toDate;
 	}
 
-	public int getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
-	public int getBillNumber() {
+	public String getBillNumber() {
 		return billNumber;
 	}
 
-	public void setBillNumber(int billNumber) {
+	public void setBillNumber(String billNumber) {
 		this.billNumber = billNumber;
 	}
 
