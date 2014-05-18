@@ -17,9 +17,10 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -35,46 +36,51 @@ public class RegistrationView extends VerticalLayout implements View {
 
 	public RegistrationView(final Navigator navigator) {
 		setSizeFull();
-		CustomLayout customLayout = new CustomLayout("register");
-		customLayout.setWidth("30%");
+		Panel panel = new Panel();
+		panel.setWidth("30%");
+		FormLayout formLayout = new FormLayout();
+		panel.setContent(formLayout);
+		panel.setCaption("Resgister New Admin User");
+		formLayout.setWidth("100%");
+		formLayout.setMargin(true);
 
-		final TextField fullName = new TextField();
+		final TextField fullName = new TextField("Full Name");
 
 		fullName.setInputPrompt("Full Name");
-		fullName.setWidth("70%");
-		customLayout.addComponent(fullName, "fullName");
+		fullName.setWidth("150%");
+		formLayout.addComponent(fullName);
 
-		final TextField username = new TextField();
+		final TextField username = new TextField("Username");
 
 		username.setInputPrompt("Username");
-		username.setWidth("70%");
-		customLayout.addComponent(username, "username");
+		username.setWidth("150%");
+		formLayout.addComponent(username);
 
-		final PasswordField password = new PasswordField();
+		final PasswordField password = new PasswordField("Password");
 
 		password.setInputPrompt("password");
-		password.setWidth("70%");
-		customLayout.addComponent(password, "password");
+		password.setWidth("150%");
+		formLayout.addComponent(password);
 
-		final PasswordField passwordVer = new PasswordField();
+		final PasswordField passwordVer = new PasswordField("Password Again");
 
 		passwordVer.setInputPrompt("password");
-		passwordVer.setWidth("70%");
-		customLayout.addComponent(passwordVer, "passwordVer");
+		passwordVer.setWidth("150%");
+		formLayout.addComponent(passwordVer);
 
-		final TextField email = new TextField();
+		final TextField email = new TextField("Email");
 
 		email.setInputPrompt("Email address");
-		email.setWidth("70%");
-		customLayout.addComponent(email, "email");
+		email.setWidth("150%");
+		formLayout.addComponent(email);
 
 		final Button loginButton = new Button("Register");
 		loginButton.addStyleName(Runo.BUTTON_BIG);
-		customLayout.addComponent(loginButton, "loginButton");
+		formLayout.addComponent(loginButton);
 
-		addComponent(customLayout);
+		addComponent(panel);
 
-		setComponentAlignment(customLayout, Alignment.MIDDLE_CENTER);
+		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
 		loginButton.addClickListener(new Button.ClickListener() {
 

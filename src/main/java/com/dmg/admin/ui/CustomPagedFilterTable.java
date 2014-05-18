@@ -1,10 +1,13 @@
 package com.dmg.admin.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.tepi.filtertable.paged.PagedFilterTable;
 
 import com.dmg.core.bean.AbstractPojo;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 
 public class CustomPagedFilterTable extends PagedFilterTable<BeanItemContainer<AbstractPojo>> {
@@ -24,6 +27,17 @@ public class CustomPagedFilterTable extends PagedFilterTable<BeanItemContainer<A
 			variables.remove("pagelength");
 		}
 		super.changeVariables(source, variables);
+	}
+
+	@Override
+	protected String formatPropertyValue(Object rowId, Object colId, Property<?> property) {
+		Object v = property.getValue();
+		if (v instanceof Date) {
+			Date dateValue = (Date) v;
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			return sdf.format(dateValue);
+		}
+		return super.formatPropertyValue(rowId, colId, property);
 	}
 
 }

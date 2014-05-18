@@ -99,7 +99,12 @@
 		   <groupId>org.vaadin.addons</groupId>
 		   <artifactId>filteringtable</artifactId>
 		   <version>0.9.6.v7</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+		   <groupId>groupId</groupId>
+		   <artifactId>tableexport-for-vaadin</artifactId>
+		   <version>1.5.1.3</version>
+		</dependency>
 		<!-- END OF ADDONS -->
 
 		<dependency>
@@ -177,6 +182,11 @@
 							<!-- if you don't specify any modules, the plugin will find them -->
 							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
 								</modules> -->
+							<!-- <tasks>
+							<delete file="src/main/webapp/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+									<copy file="src/main/webapp/VAADIN/themes/dawn/filtertable.css"
+									tofile="src/main/webapp/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+			              	</tasks> -->
 						</configuration>
 						<goals>
 							<goal>clean</goal>
@@ -193,6 +203,28 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+		        <artifactId>maven-antrun-plugin</artifactId>
+		        <executions>
+		          <execution>
+		           <id>custom copy of filtertable</id>
+  					<phase>prepare-package</phase>
+		            <configuration>
+		              <tasks>
+		               <delete file="src/main/webapp/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+		               <delete file="target/dmg-rg-admin-1.0/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+						<copy file="src/main/webapp/VAADIN/themes/dawn/filtertable.css"
+						tofile="src/main/webapp/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+						<copy file="src/main/webapp/VAADIN/themes/dawn/filtertable.css"
+						tofile="target/dmg-rg-admin-1.0/VAADIN/widgetsets/com.dmg.admin.AppWidgetSet/filtertable/filtertable.css"/>
+		              </tasks>
+		            </configuration>
+		            <goals>
+		              <goal>run</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+	      	</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
