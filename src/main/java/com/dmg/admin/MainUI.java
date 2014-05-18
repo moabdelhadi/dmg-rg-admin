@@ -15,7 +15,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
-@Theme("dmg-theme")
+@Theme("dawn")
 @SuppressWarnings("serial")
 public class MainUI extends UI {
 

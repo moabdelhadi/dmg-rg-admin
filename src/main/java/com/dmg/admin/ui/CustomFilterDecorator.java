@@ -100,8 +100,7 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public String getDateFormatPattern(Object propertyId) {
-		// TODO Auto-generated method stub
-		return null;
+		return "dd/MM/yyyy";
 	}
 
 	@Override
