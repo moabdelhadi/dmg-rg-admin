@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dmg.admin.bean.Transaction;
 import com.dmg.admin.service.TransactionService;
+import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
@@ -76,9 +77,10 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setColumnExpandRatio("status", 0.10F);
 		pagedTable.setColumnExpandRatio("amount", 0.20F);
 
-		/*Grid grid = new Grid(pagedTable);
-		grid.setExportEnabled(false);
-		grid.resetFilters();*/
+		/*
+		 * Grid grid = new Grid(pagedTable); grid.setExportEnabled(false);
+		 * grid.resetFilters();
+		 */
 		setMargin(true);
 
 		CustomPagedFilterControlConfig config = new CustomPagedFilterControlConfig();
@@ -97,6 +99,7 @@ public class TransactionsView extends VerticalLayout implements View {
 				excelExport.export();
 			}
 		});
+		addComponent(ComponentUtil.initMenuButton(""));
 		addComponent(button);
 		addComponent(pagedTable);
 		addComponent(pagerControls);

@@ -33,7 +33,7 @@ public class LoginView extends VerticalLayout implements View {
 	public LoginView(final Navigator navigator, final String fragmentAndParameters) {
 		setSizeFull();
 		CustomLayout customLayout = new CustomLayout("login");
-		customLayout.setWidth("20%");
+		customLayout.setWidth("30%");
 		final TextField username = new TextField();
 		username.setInputPrompt("Username");
 		username.setWidth("80%");
