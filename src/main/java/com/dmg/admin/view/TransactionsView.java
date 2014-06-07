@@ -15,6 +15,7 @@ import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ThemeResource;
@@ -39,8 +40,10 @@ public class TransactionsView extends VerticalLayout implements View {
 	private final TransactionService transactionService;
 	BeanItemContainer<Transaction> container = new BeanItemContainer<Transaction>(Transaction.class);
 	private ExcelExport excelExport;
+	private final Navigator navigator;
 
-	public TransactionsView() {
+	public TransactionsView(Navigator navigator) {
+		this.navigator = navigator;
 		initView();
 		transactionService = new TransactionService();
 		setSizeFull();
@@ -99,7 +102,7 @@ public class TransactionsView extends VerticalLayout implements View {
 				excelExport.export();
 			}
 		});
-		addComponent(ComponentUtil.initMenuButton(""));
+		addComponent(ComponentUtil.initMenuButton(navigator, ""));
 		addComponent(button);
 		addComponent(pagedTable);
 		addComponent(pagerControls);

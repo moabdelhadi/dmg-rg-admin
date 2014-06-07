@@ -26,9 +26,9 @@ public class MainUI extends UI {
 	protected void init(final VaadinRequest request) {
 		navigator = new Navigator(this, this);
 		navigator.addView("", new StartView(navigator));
-		navigator.addView(TransactionsView.NAME, new TransactionsView());
-		navigator.addView(BillsView.NAME, new BillsView());
-		navigator.addView(UsersView.NAME, new UsersView());
+		navigator.addView(TransactionsView.NAME, new TransactionsView(navigator));
+		navigator.addView(BillsView.NAME, new BillsView(navigator));
+		navigator.addView(UsersView.NAME, new UsersView(navigator));
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));
 		navigator.addView(ChangePasswordView.NAME, new ChangePasswordView(navigator));
