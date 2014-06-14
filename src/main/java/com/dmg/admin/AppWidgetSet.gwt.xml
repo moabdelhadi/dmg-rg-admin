@@ -8,6 +8,7 @@
 
     <!-- Inherit DefaultWidgetSet -->
     <inherits name="com.vaadin.DefaultWidgetSet" /> 
+    
 
     <!--
      Uncomment the following to compile the widgetset for one browser only.
@@ -31,6 +32,12 @@
     
     <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
 
+
+    
+    <generate-with class="com.dmg.admin.OptimizedConnectorBundleLoaderFactory">
+      <when-type-assignable class="com.vaadin.client.metadata.ConnectorBundleLoader" />
+      </generate-with>
+    
 
     <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 </module>
