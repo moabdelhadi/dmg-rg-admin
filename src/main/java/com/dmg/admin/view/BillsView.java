@@ -124,7 +124,7 @@ public class BillsView extends VerticalLayout implements View {
 				excelExport.export();
 			}
 		});
-		addComponent(ComponentUtil.initMenuButton(navigator, ""));
+		addComponent(ComponentUtil.initMenuButton(navigator, StartView.NAME, "Go back to the main menu"));
 		addComponent(button);
 		addComponent(pagedTable);
 		addComponent(pagerControls);

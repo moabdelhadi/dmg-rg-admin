@@ -28,4 +28,8 @@ public class UserAccountService implements Serializable {
 		return FacadeFactory.getFacade().list(LIST_QUERY_ORDERED_BY_DATE, new HashMap<String, Object>());
 	}
 
+	public UserAccount getUserAcount(Long id) throws DataAccessLayerException {
+		return FacadeFactory.getFacade().find(UserAccount.class, id);
+	}
+
 }

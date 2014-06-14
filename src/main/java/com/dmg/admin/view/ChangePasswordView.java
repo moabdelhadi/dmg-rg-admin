@@ -6,6 +6,7 @@ import com.dmg.admin.exception.InvalidCredentialsException;
 import com.dmg.admin.exception.PasswordRequirementException;
 import com.dmg.admin.exception.PasswordsDoNotMatchException;
 import com.dmg.admin.exception.TooShortPasswordException;
+import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.google.gwt.thirdparty.guava.common.base.Strings;
 import com.vaadin.event.ShortcutAction.KeyCode;
@@ -34,7 +35,7 @@ public class ChangePasswordView extends VerticalLayout implements View {
 	public ChangePasswordView(final Navigator navigator) {
 		setSizeFull();
 		this.navigator = navigator;
-
+		setMargin(true);
 	}
 
 	private void initView() {
@@ -60,7 +61,10 @@ public class ChangePasswordView extends VerticalLayout implements View {
 		loginButton.setClickShortcut(KeyCode.ENTER);
 		customLayout.addComponent(loginButton, "modifyButton");
 
+		addComponent(ComponentUtil.initMenuButton(navigator, StartView.NAME, "Go back to the main menu"));
 		addComponent(customLayout);
+
+		setExpandRatio(customLayout, 0.95F);
 
 		setComponentAlignment(customLayout, Alignment.MIDDLE_CENTER);
 

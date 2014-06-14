@@ -9,9 +9,9 @@ import com.vaadin.ui.themes.BaseTheme;
 
 public class ComponentUtil {
 
-	public static HorizontalLayout initMenuButton(final Navigator navigator, final String destination) {
+	public static HorizontalLayout initMenuButton(final Navigator navigator, final String destination, final String label) {
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		Button mainMenuButton = new Button("Go back to the main menu");
+		Button mainMenuButton = new Button(label);
 		mainMenuButton.setWidth("12%");
 		mainMenuButton.setStyleName(BaseTheme.BUTTON_LINK);
 		mainMenuButton.addClickListener(new ClickListener() {

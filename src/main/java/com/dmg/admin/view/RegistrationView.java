@@ -9,6 +9,7 @@ import com.dmg.admin.exception.PasswordsDoNotMatchException;
 import com.dmg.admin.exception.TooShortPasswordException;
 import com.dmg.admin.exception.TooShortUsernameException;
 import com.dmg.admin.exception.UsernameExistsException;
+import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.google.gwt.thirdparty.guava.common.base.Strings;
 import com.vaadin.navigator.Navigator;
@@ -36,8 +37,9 @@ public class RegistrationView extends VerticalLayout implements View {
 
 	public RegistrationView(final Navigator navigator) {
 		setSizeFull();
+		setMargin(true);
 		Panel panel = new Panel();
-		panel.setWidth("30%");
+		panel.setWidth("35%");
 		FormLayout formLayout = new FormLayout();
 		panel.setContent(formLayout);
 		panel.setCaption("Resgister New Admin User");
@@ -77,9 +79,10 @@ public class RegistrationView extends VerticalLayout implements View {
 		final Button loginButton = new Button("Register");
 		loginButton.addStyleName(Runo.BUTTON_BIG);
 		formLayout.addComponent(loginButton);
-
+		addComponent(ComponentUtil.initMenuButton(navigator, StartView.NAME, "Go back to the main menu"));
 		addComponent(panel);
 
+		setExpandRatio(panel, 0.95F);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
 		loginButton.addClickListener(new Button.ClickListener() {
