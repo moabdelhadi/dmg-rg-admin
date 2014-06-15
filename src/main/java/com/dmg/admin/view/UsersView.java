@@ -129,7 +129,7 @@ public class UsersView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				navigator.navigateTo(UpdateUser.NAME + "/" + ((UserAccount) pagedTable.getValue()).getId());
+				navigator.navigateTo(UpdateUserView.NAME + "/" + ((UserAccount) pagedTable.getValue()).getId());
 
 			}
 		});

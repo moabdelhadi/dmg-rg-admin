@@ -9,7 +9,7 @@ import com.dmg.admin.view.LogoutView;
 import com.dmg.admin.view.RegistrationView;
 import com.dmg.admin.view.StartView;
 import com.dmg.admin.view.TransactionsView;
-import com.dmg.admin.view.UpdateUser;
+import com.dmg.admin.view.UpdateUserView;
 import com.dmg.admin.view.UsersView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
@@ -30,7 +30,7 @@ public class MainUI extends UI {
 		navigator.addView(TransactionsView.NAME, new TransactionsView(navigator));
 		navigator.addView(BillsView.NAME, new BillsView(navigator));
 		navigator.addView(UsersView.NAME, new UsersView(navigator));
-		navigator.addView(UpdateUser.NAME, new UpdateUser(navigator));
+		navigator.addView(UpdateUserView.NAME, new UpdateUserView(navigator));
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));
 		navigator.addView(ChangePasswordView.NAME, new ChangePasswordView(navigator));

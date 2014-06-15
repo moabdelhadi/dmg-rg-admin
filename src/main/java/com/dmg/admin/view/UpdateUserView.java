@@ -16,7 +16,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public class UpdateUser extends VerticalLayout implements View {
+public class UpdateUserView extends VerticalLayout implements View {
 
 	/**
 	 * 
@@ -29,7 +29,7 @@ public class UpdateUser extends VerticalLayout implements View {
 	private UserAccount userAccount;
 	private Panel panel;
 
-	public UpdateUser(Navigator navigator) {
+	public UpdateUserView(Navigator navigator) {
 		this.navigator = navigator;
 		accountService = new UserAccountService();
 		setSizeFull();
