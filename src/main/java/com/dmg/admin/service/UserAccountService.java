@@ -32,4 +32,8 @@ public class UserAccountService implements Serializable {
 		return FacadeFactory.getFacade().find(UserAccount.class, id);
 	}
 
+	public void update(UserAccount userAccount) throws DataAccessLayerException {
+		FacadeFactory.getFacade().store(userAccount);
+	}
+
 }

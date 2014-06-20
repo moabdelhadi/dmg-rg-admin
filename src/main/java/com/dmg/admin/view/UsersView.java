@@ -105,6 +105,7 @@ public class UsersView extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				editBtn.setVisible(true);
+				editBtn.setDescription("Click here to edit user info!");
 			}
 		});
 

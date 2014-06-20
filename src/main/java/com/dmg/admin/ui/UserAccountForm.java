@@ -1,8 +1,10 @@
 package com.dmg.admin.ui;
 
-import com.vaadin.data.Item;
+import com.dmg.admin.bean.UserAccount;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
@@ -29,7 +31,7 @@ public class UserAccountForm extends CustomComponent {
 	@PropertyId("appartmentNumber")
 	TextField appartmentNumberField = new TextField("Apartment Number");
 
-	@PropertyId("contractNumber")
+	@PropertyId("contractNo")
 	TextField contractNoField = new TextField("Contract Number");
 
 	@PropertyId("phone")
@@ -44,8 +46,12 @@ public class UserAccountForm extends CustomComponent {
 	@PropertyId("poboxCity")
 	TextField poboxCityField = new TextField("P.O.Box City");
 
-	public UserAccountForm(Item item) {
-		FormLayout layout = new FormLayout();
+	FormLayout layout = new FormLayout();
+
+	FieldGroup binder;
+
+	public UserAccountForm(UserAccount item) {
+
 		layout.setMargin(true);
 		layout.setWidth("100%");
 
@@ -59,6 +65,19 @@ public class UserAccountForm extends CustomComponent {
 		mobileField.setWidth("150%");
 		poboxField.setWidth("150%");
 		poboxCityField.setWidth("150%");
+		//setting default values for null
+		nameField.setNullRepresentation("");
+		emailField.setNullRepresentation("");
+		cityField.setNullRepresentation("");
+		buildingNumberField.setNullRepresentation("");
+		appartmentNumberField.setNullRepresentation("");
+		contractNoField.setNullRepresentation("");
+		phoneField.setNullRepresentation("");
+		mobileField.setNullRepresentation("");
+		poboxField.setNullRepresentation("");
+		poboxCityField.setNullRepresentation("");
+
+		emailField.addValidator(new EmailValidator("Please enter a valid email"));
 
 		layout.addComponent(nameField);
 		layout.addComponent(emailField);
@@ -72,9 +91,24 @@ public class UserAccountForm extends CustomComponent {
 		layout.addComponent(poboxCityField);
 		// TODO Auto-generated constructor stub
 
-		FieldGroup binder = new FieldGroup(item);
+		BeanItem<UserAccount> bean = new BeanItem<UserAccount>(item);
+		binder = new FieldGroup();
+		binder.setItemDataSource(bean);
 		binder.bindMemberFields(this);
 		setCompositionRoot(layout);
 
 	}
+
+	public FormLayout getLayout() {
+		return layout;
+	}
+
+	public FieldGroup getBinder() {
+		return binder;
+	}
+
+	public void setBinder(FieldGroup binder) {
+		this.binder = binder;
+	}
+
 }

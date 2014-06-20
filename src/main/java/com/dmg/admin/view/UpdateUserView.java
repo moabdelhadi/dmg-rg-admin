@@ -5,12 +5,16 @@ import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.UserAccountForm;
 import com.dmg.core.exception.DataAccessLayerException;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
@@ -28,6 +32,8 @@ public class UpdateUserView extends VerticalLayout implements View {
 	private String id;
 	private UserAccount userAccount;
 	private Panel panel;
+	private Button updateBtn;
+	private UserAccountForm userAccountForm;
 
 	public UpdateUserView(Navigator navigator) {
 		this.navigator = navigator;
@@ -40,15 +46,29 @@ public class UpdateUserView extends VerticalLayout implements View {
 
 	private void initView() {
 		panel = new Panel("Update User Account");
-
 		panel.setWidth("35%");
 		addComponent(ComponentUtil.initMenuButton(navigator, UsersView.NAME, "Go back to users view"));
 		addComponent(panel);
-
 		setExpandRatio(panel, 0.95F);
-
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
+		updateBtn = new Button("Update");
 
+		updateBtn.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				try {
+					userAccountForm.getBinder().commit();
+					accountService.update(userAccount);
+					Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
+				} catch (CommitException e) {
+					Notification.show("Error commiting changes - " + e.getCause().getMessage(), Type.ERROR_MESSAGE);
+				} catch (DataAccessLayerException e) {
+					Notification.show("DB ERROR when saving the changes!", Type.ERROR_MESSAGE);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -127,8 +147,11 @@ public class UpdateUserView extends VerticalLayout implements View {
 			 * formLayout.addComponent(binder.buildAndBind("P.O.Box City",
 			 * "poboxCity"));
 			 */
+			userAccountForm = new UserAccountForm(userAccount);
 
-			panel.setContent(new UserAccountForm(item));
+			userAccountForm.getLayout().addComponent(updateBtn);
+
+			panel.setContent(userAccountForm);
 		} catch (NumberFormatException | DataAccessLayerException e) {
 			if (e instanceof NumberFormatException) {
 				Notification.show("ID entered is not correct", Type.ERROR_MESSAGE);
