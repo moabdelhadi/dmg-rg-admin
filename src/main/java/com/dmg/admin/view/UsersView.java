@@ -42,7 +42,6 @@ public class UsersView extends VerticalLayout implements View {
 	private ExcelExport excelExport;
 	private Button editBtn;
 	private final Navigator navigator;
-	private Long selectedId;
 
 	public UsersView(Navigator navigator) {
 		this.navigator = navigator;

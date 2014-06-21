@@ -1,3 +1,7 @@
+.v-formlayout > table{
+	width: 100%;
+}
+
 .v-debug-console {
   background: #fff;
   opacity: .9;

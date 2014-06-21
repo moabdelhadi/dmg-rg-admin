@@ -55,17 +55,17 @@ public class UserAccountForm extends CustomComponent {
 		layout.setMargin(true);
 		layout.setWidth("100%");
 
-		nameField.setWidth("150%");
-		emailField.setWidth("150%");
-		cityField.setWidth("150%");
-		buildingNumberField.setWidth("150%");
-		appartmentNumberField.setWidth("150%");
-		contractNoField.setWidth("150%");
-		phoneField.setWidth("150%");
-		mobileField.setWidth("150%");
-		poboxField.setWidth("150%");
-		poboxCityField.setWidth("150%");
-		//setting default values for null
+		nameField.setWidth("100%");
+		emailField.setWidth("100%");
+		cityField.setWidth("100%");
+		buildingNumberField.setWidth("100%");
+		appartmentNumberField.setWidth("100%");
+		contractNoField.setWidth("100%");
+		phoneField.setWidth("100%");
+		mobileField.setWidth("100%");
+		poboxField.setWidth("100%");
+		poboxCityField.setWidth("100%");
+		// setting default values for null
 		nameField.setNullRepresentation("");
 		emailField.setNullRepresentation("");
 		cityField.setNullRepresentation("");
