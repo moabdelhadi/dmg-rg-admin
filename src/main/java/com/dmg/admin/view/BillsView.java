@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dmg.admin.bean.Bill;
 import com.dmg.admin.service.BillService;
+import com.dmg.admin.ui.BillDisplayLayout;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
@@ -26,8 +27,10 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 public class BillsView extends VerticalLayout implements View {
 
@@ -43,6 +46,7 @@ public class BillsView extends VerticalLayout implements View {
 	private ExcelExport excelExport;
 	private final Navigator navigator;
 	private Button detailsBtn;
+	private final Window billWindow = new Window();
 
 	public BillsView(Navigator navigator) {
 		this.navigator = navigator;
@@ -94,7 +98,7 @@ public class BillsView extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				detailsBtn.setVisible(true);
-				detailsBtn.setDescription("Click here to display bill's details!");
+
 			}
 		});
 
@@ -150,10 +154,12 @@ public class BillsView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
-				navigator.navigateTo(BillDetailsView.NAME + "/" + ((Bill) pagedTable.getValue()).getId());
+				openDetails();
+				// navigator.navigateTo(BillDetailsView.NAME + "/" + ((Bill)
+				// pagedTable.getValue()).getId());
 
 			}
+
 		});
 
 		Button exportBtn = new Button("Export");
@@ -185,6 +191,16 @@ public class BillsView extends VerticalLayout implements View {
 		setExpandRatio(buttonLayout, 0.05F);
 		setExpandRatio(pagedTable, 0.90F);
 		setExpandRatio(pagerControls, 0.05F);
+	}
+
+	private void openDetails() {
+		if (!billWindow.isAttached()) {
+			billWindow.center();
+			billWindow.setWidth("80%");
+			BillDisplayLayout billDisplayLayout = new BillDisplayLayout((Bill) pagedTable.getValue());
+			billWindow.setContent(billDisplayLayout);
+			UI.getCurrent().addWindow(billWindow);
+		}
 	}
 
 	private void reloadResult() {
