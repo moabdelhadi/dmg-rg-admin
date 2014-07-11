@@ -3,6 +3,7 @@ package com.dmg.admin.service;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dmg.admin.bean.UserAccount;
 import com.dmg.core.exception.DataAccessLayerException;
@@ -24,6 +25,9 @@ public class UserAccountService implements Serializable {
 
 	private static final String LIST_QUERY_ORDERED_BY_DATE = "SELECT u FROM UserAccount u ORDER BY u.creationDate DESC";
 
+	// private static final String LIST_QUERY_MODIFIED =
+	// "SELECT u FROM UserAccount u WHERE u.status=:status ";
+
 	public List<UserAccount> lisUsers() throws DataAccessLayerException {
 		return FacadeFactory.getFacade().list(LIST_QUERY_ORDERED_BY_DATE, new HashMap<String, Object>());
 	}
@@ -36,4 +40,9 @@ public class UserAccountService implements Serializable {
 		FacadeFactory.getFacade().store(userAccount);
 	}
 
+	public List<UserAccount> getModifiedUsers() throws DataAccessLayerException {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("status", 1);
+		return FacadeFactory.getFacade().list(UserAccount.class, parameters);
+	}
 }
