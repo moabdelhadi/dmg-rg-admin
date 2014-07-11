@@ -219,7 +219,9 @@ public class RestServiceController extends PackagesResourceConfig {
 			for (UserAccount userAccount : modifiedUsers) {
 				UserAccountJson userAccountJson = populateUserAccountJson(userAccount);
 				userAccountsJson.addUserAccountJson(userAccountJson);
-				userAccount.setStatus(2);
+				userAccount.setStatus(2);// setting status to 2 means sent to
+											// dll but waiting for update reqest
+											// to reset to 0
 				userAccountService.update(userAccount);
 			}
 		} catch (DataAccessLayerException e) {
@@ -243,7 +245,78 @@ public class RestServiceController extends PackagesResourceConfig {
 				try {
 
 					UserAccount userAccount = populateUserAccount(userAccountJson);
+					userAccount.setStatus(0);// reset the status to zero means
+												// coming from dll
 					userAccountService.update(userAccount);
+
+				} catch (DataAccessLayerException e) {
+					logger.error("DataAccessLayerException saving useraccount ==>", e.getMessage());
+					resultJson.setStatus(WARNING);
+					userAccountJson.setErrorMsg(e.getMessage() + ": " + "UserAccount is==> NAME: " + userAccountJson.getName());
+					resultJson.addUser(userAccountJson);
+				}
+			}
+			if (resultJson.getStatus() == null || !resultJson.getStatus().equals(WARNING)) {
+				resultJson.setStatus(SUCCESS);
+			}
+			if (userAccountsJson.getUserAccountJsonList().size() != resultJson.getBills().size()) {
+				resultJson.setMessages("Records have been successfully saved");
+			}
+			return Response.status(Status.OK).entity(resultJson).build();
+		} catch (JsonParseException e) {
+			logger.error("JsonParseException json value is: " + jsonString);
+			logger.error("JsonParseException ==>", e.getMessage());
+			resultJson.setStatus(FAILED);
+			resultJson.setMessages("JsonParseException json value is: " + jsonString);
+			return Response.serverError().entity(resultJson).build();
+		} catch (JsonMappingException e) {
+			logger.error("JsonMappingException json value is: " + jsonString);
+			logger.error("JsonMappingException ==>", e.getMessage());
+			resultJson.setStatus(FAILED);
+			resultJson.setMessages("JsonMappingException json value is: " + jsonString);
+			return Response.serverError().entity(resultJson).build();
+		} catch (IOException e) {
+			logger.error("IOException json value is: " + jsonString);
+			logger.error("IOException ==>", e.getMessage());
+			resultJson.setStatus(FAILED);
+			resultJson.setMessages("IOException json value is: " + jsonString);
+			return Response.serverError().entity(resultJson).build();
+		}
+
+	}
+
+	@POST
+	@Path("/users/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateUsers(String jsonString) {
+		ObjectMapper mapper = new ObjectMapper();
+		UserAccountsJson userAccountsJson;
+		ResultJson resultJson = new ResultJson();
+
+		try {
+			userAccountsJson = mapper.readValue(jsonString, UserAccountsJson.class);
+			for (UserAccountJson userAccountJson : userAccountsJson.getUserAccountJsonList()) {
+				try {
+
+					UserAccount userAccount = populateUserAccount(userAccountJson);
+					if (StringUtils.isBlank(userAccount.getContractNo()) || StringUtils.isBlank(userAccount.getCity())) {
+						logger.error("contractNo OR city not found:  " + "UserAccount is==> NAME: " + userAccountJson.getName());
+						resultJson.setStatus(WARNING);
+						userAccountJson.setErrorMsg("contractNo OR city not found:  " + "UserAccount is==> NAME: " + userAccountJson.getName());
+						resultJson.addUser(userAccountJson);
+					} else {
+						UserAccount dbUser = userAccountService.findUsersToUpdate(userAccount.getContractNo(), userAccount.getCity());
+						if (dbUser == null) {
+							logger.error("User account not found in DB:  " + "UserAccount is==> NAME: " + userAccountJson.getName());
+							resultJson.setStatus(WARNING);
+							userAccountJson.setErrorMsg("User account not found in DB:  " + "UserAccount is==> NAME: " + userAccountJson.getName());
+							resultJson.addUser(userAccountJson);
+						}
+						userAccount.setId(dbUser.getId());
+						userAccount.setStatus(0);// reset the status to zero
+													// means coming from dll
+						userAccountService.update(userAccount);
+					}
 
 				} catch (DataAccessLayerException e) {
 					logger.error("DataAccessLayerException saving useraccount ==>", e.getMessage());
