@@ -22,7 +22,10 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.ColumnGenerator;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -70,6 +73,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("pobox", String.class, null);
 		pagedTable.addContainerProperty("poboxCity", String.class, null);
 		pagedTable.addContainerProperty("activationString", String.class, null);
+		pagedTable.addContainerProperty("enabled", Boolean.class, null);
 
 		pagedTable.setColumnHeader("name", "Name");
 		pagedTable.setColumnHeader("email", "Email");
@@ -82,11 +86,12 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("pobox", "P.O.Box");
 		pagedTable.setColumnHeader("poboxCity", "P.O.Box City");
 		pagedTable.setColumnHeader("activationString", "Activation");
+		pagedTable.setColumnHeader("enable", "Enable");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "activationString");
+		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "activationString", "enable");
 
 		pagedTable.setColumnExpandRatio("name", 0.10F);
 		pagedTable.setColumnExpandRatio("email", 0.10F);
@@ -98,7 +103,25 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnExpandRatio("mobile", 0.10F);
 		pagedTable.setColumnExpandRatio("pobox", 0.05F);
 		pagedTable.setColumnExpandRatio("poboxCity", 0.05F);
-		pagedTable.setColumnExpandRatio("activationString", 0.15F);
+		pagedTable.setColumnExpandRatio("activationString", 0.05F);
+		pagedTable.setColumnExpandRatio("enable", 0.10F);
+
+		pagedTable.addGeneratedColumn("enable", new ColumnGenerator() {
+
+			@Override
+			public Image generateCell(final CustomTable source, final Object itemId, Object columnId) {
+
+				if (((UserAccount) itemId).getEnable()) {
+					Image enable = new Image(null, new ThemeResource("img/enable.png"));
+					return enable;
+				} else {
+					Image enable = new Image(null, new ThemeResource("img/disable.png"));
+					return enable;
+				}
+
+			}
+
+		});
 
 		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override

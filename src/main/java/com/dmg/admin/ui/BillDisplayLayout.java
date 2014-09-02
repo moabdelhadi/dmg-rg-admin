@@ -1,6 +1,9 @@
 package com.dmg.admin.ui;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.dmg.admin.bean.Bill;
 import com.vaadin.ui.HorizontalLayout;
@@ -12,9 +15,10 @@ public class BillDisplayLayout extends HorizontalLayout {
 	 * 
 	 */
 	private static final long serialVersionUID = 701948131350786451L;
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public BillDisplayLayout(Bill item) {
-
+		setSpacing(true);
 		setMargin(true);
 		setWidth("100%");
 
@@ -23,33 +27,35 @@ public class BillDisplayLayout extends HorizontalLayout {
 		VerticalLayout verticalLayout2 = new VerticalLayout();
 		VerticalLayout verticalLayout3 = new VerticalLayout();
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		verticalLayout1.addComponent(new DataRowLayout("Doc No.:", StringUtils.trimToEmpty(item.getDocNo())));
+		verticalLayout1.addComponent(new DataRowLayout("Doc Type:", StringUtils.trimToEmpty(item.getDocType())));
+		verticalLayout1.addComponent(new DataRowLayout("Year Code:", StringUtils.trimToEmpty(item.getYearCode())));
+		verticalLayout1.addComponent(new DataRowLayout("Serial No.:", trimString(String.valueOf(item.getSerialNo()))));
+		verticalLayout1.addComponent(new DataRowLayout("Party Name:", StringUtils.trimToEmpty(item.getPartyName())));
+		verticalLayout1.addComponent(new DataRowLayout("Previous Balance:", trimString(String.valueOf(item.getPrevBalance()))));
+		verticalLayout1.addComponent(new DataRowLayout("Last Received Date:", getFormattedDate(item.getLastReceivingDate())));
+		verticalLayout1.addComponent(new DataRowLayout("Last Received Amount:", trimString(String.valueOf(item.getLastReceivingAmount()))));
+		verticalLayout1.addComponent(new DataRowLayout("City:", StringUtils.trimToEmpty(item.getCity())));
 
-		verticalLayout1.addComponent(new DataRowLayout("Contract #:", item.getContractNo()));
-		verticalLayout1.addComponent(new DataRowLayout("Company:", item.getCompany()));
-		verticalLayout1.addComponent(new DataRowLayout("Doc #:", item.getDocNo()));
-		verticalLayout1.addComponent(new DataRowLayout("Doc Type:", item.getDocType()));
-		verticalLayout1.addComponent(new DataRowLayout("Year Code:", item.getYearCode()));
-		verticalLayout1.addComponent(new DataRowLayout("Sr. #:", String.valueOf(item.getSrNo())));
-		verticalLayout1.addComponent(new DataRowLayout("Building Code:", item.getBuildingCode()));
-		verticalLayout1.addComponent(new DataRowLayout("Building Name:", item.getBuildingName()));
+		verticalLayout2.addComponent(new DataRowLayout("Last Reading Date:", getFormattedDate(item.getBillDate())));
+		verticalLayout2.addComponent(new DataRowLayout("Service:", trimString(String.valueOf(item.getService()))));
+		verticalLayout2.addComponent(new DataRowLayout("Gas Difference:", trimString(String.valueOf(item.getGasDifference()))));
+		verticalLayout2.addComponent(new DataRowLayout("Last Received Pay Reference:", StringUtils.trimToEmpty(item.getLastReceivedPayReference())));
+		verticalLayout2.addComponent(new DataRowLayout("Collector Name:", StringUtils.trimToEmpty(item.getCollectorName())));
+		verticalLayout2.addComponent(new DataRowLayout("Last Reading:", StringUtils.trimToEmpty(item.getLastReading())));
+		verticalLayout2.addComponent(new DataRowLayout("Last Reading Date:", getFormattedDate(item.getLastReadingDate())));
+		verticalLayout2.addComponent(new DataRowLayout("Current Reading:", StringUtils.trimToEmpty(item.getCurrentReading())));
+		verticalLayout2.addComponent(new DataRowLayout("Current Reading Date:", getFormattedDate(item.getCurrentReadingDate())));
 
-		verticalLayout2.addComponent(new DataRowLayout("Apartment Code:", item.getApartmentCode()));
-		verticalLayout2.addComponent(new DataRowLayout("Current Reading:", String.valueOf(item.getCurrReading())));
-		verticalLayout2.addComponent(new DataRowLayout("Current Reading Date:", sdf.format(item.getCurrReadingDate())));
-		verticalLayout2.addComponent(new DataRowLayout("Last Reading:", String.valueOf(item.getLastReading())));
-		verticalLayout2.addComponent(new DataRowLayout("Last Reading Date:", sdf.format(item.getLastReadingDate())));
-		verticalLayout2.addComponent(new DataRowLayout("Total Unit:", String.valueOf(item.getTotalUnit())));
-		verticalLayout2.addComponent(new DataRowLayout("Unit Price:", String.valueOf(item.getUnitPrice())));
-
-		verticalLayout3.addComponent(new DataRowLayout("Amount:", String.valueOf(item.getAmt())));
-		verticalLayout3.addComponent(new DataRowLayout("Total Amount:", String.valueOf(item.getTotalAmt())));
-		verticalLayout3.addComponent(new DataRowLayout("Received Amount:", String.valueOf(item.getReceivedAmt())));
-		verticalLayout3.addComponent(new DataRowLayout("Monthly Fee:", String.valueOf(item.getMonthlyFee())));
-		verticalLayout3.addComponent(new DataRowLayout("Other Amount:", String.valueOf(item.getOtherAmt())));
-		verticalLayout3.addComponent(new DataRowLayout("Reading Doc #:", item.getReadingDocno()));
-		verticalLayout3.addComponent(new DataRowLayout("Reading Doc Type:", item.getReadingDoctype()));
-		verticalLayout3.addComponent(new DataRowLayout("Last Invoice Doc #:", item.getLastInvdocno()));
+		verticalLayout3.addComponent(new DataRowLayout("Building Code:", StringUtils.trimToEmpty(item.getBuildingCode())));
+		verticalLayout3.addComponent(new DataRowLayout("Building Name:", StringUtils.trimToEmpty(item.getBuildingName())));
+		verticalLayout3.addComponent(new DataRowLayout("Apartment Code:", StringUtils.trimToEmpty(item.getApartmentCode())));
+		verticalLayout3.addComponent(new DataRowLayout("Total Unit:", StringUtils.trimToEmpty(item.getTotalUnit())));
+		verticalLayout3.addComponent(new DataRowLayout("Unit Price:", StringUtils.trimToEmpty(item.getUnitPrice())));
+		verticalLayout3.addComponent(new DataRowLayout("Amount:", trimString(String.valueOf(item.getAmount()))));
+		verticalLayout3.addComponent(new DataRowLayout("Total Amount:", trimString(String.valueOf(item.getTotalAmount()))));
+		verticalLayout3.addComponent(new DataRowLayout("Contract No.:", StringUtils.trimToEmpty(item.getContractNo())));
+		verticalLayout3.addComponent(new DataRowLayout("Received Amount:", trimString(String.valueOf(item.getReceivedAmmount()))));
 
 		addComponent(verticalLayout1);
 		addComponent(verticalLayout2);
@@ -65,4 +71,20 @@ public class BillDisplayLayout extends HorizontalLayout {
 
 	}
 
+	private String getFormattedDate(Date date) {
+		if (date != null) {
+			return sdf.format(date);
+		}
+		return "";
+
+	}
+
+	private String trimString(String str) {
+		String trimmed = StringUtils.trimToEmpty(str);
+		if (trimmed.equals("null")) {
+			return "";
+		}
+		return trimmed;
+
+	}
 }

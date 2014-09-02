@@ -1,6 +1,7 @@
 package com.dmg.admin.view;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.dmg.admin.bean.Bill;
@@ -64,35 +65,23 @@ public class BillsView extends VerticalLayout implements View {
 		pagedTable.setImmediate(true);
 
 		pagedTable.addContainerProperty("contractNo", String.class, null);
-		pagedTable.addContainerProperty("partyName", String.class, null);
-		pagedTable.addContainerProperty("buildingName", String.class, null);
-		pagedTable.addContainerProperty("apartmentCode", String.class, null);
-		pagedTable.addContainerProperty("amt", BigDecimal.class, null);
-		pagedTable.addContainerProperty("totalAmt", BigDecimal.class, null);
-		pagedTable.addContainerProperty("receivedAmt", BigDecimal.class, null);
-		pagedTable.addContainerProperty("lastRecAmt", BigDecimal.class, null);
-		pagedTable.addContainerProperty("otherAmt", BigDecimal.class, null);
-		pagedTable.addContainerProperty("currReading", BigDecimal.class, null);
-		pagedTable.addContainerProperty("lastReading", BigDecimal.class, null);
+		pagedTable.addContainerProperty("docNo", String.class, null);
+		pagedTable.addContainerProperty("totalAmount", BigDecimal.class, null);
+		pagedTable.addContainerProperty("receivedAmmount", BigDecimal.class, null);
+		pagedTable.addContainerProperty("lastReceivedPayReference", String.class, null);
+		pagedTable.addContainerProperty("billDate", Date.class, null);
 
-		pagedTable.setColumnHeader("contractNo", "contract #");
-		pagedTable.setColumnHeader("partyName", "Party Name");
-		pagedTable.setColumnHeader("buildingName", "Building Name");
-		pagedTable.setColumnHeader("apartmentCode", "Apartment Code");
-		pagedTable.setColumnHeader("amt", "Amount");
-		pagedTable.setColumnHeader("totalAmt", "Total Amount");
-		pagedTable.setColumnHeader("receivedAmt", "Received Amount");
-		pagedTable.setColumnHeader("lastRecAmt", "Last Received Amount");
-		pagedTable.setColumnHeader("otherAmt", "Other Amount");
-		pagedTable.setColumnHeader("monthlyFee", "Monthly Fee");
-		pagedTable.setColumnHeader("currReading", "Current Reading");
-		pagedTable.setColumnHeader("lastReading", "Last Reading");
+		pagedTable.setColumnHeader("contractNo", "Contract No.");
+		pagedTable.setColumnHeader("docNo", "Doc No.");
+		pagedTable.setColumnHeader("totalAmount", "Total Amount");
+		pagedTable.setColumnHeader("receivedAmmount", "Received Amount");
+		pagedTable.setColumnHeader("lastReceivedPayReference", "Reference");
+		pagedTable.setColumnHeader("billDate", "Bill Date");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable
-				.setVisibleColumns("contractNo", "partyName", "buildingName", "apartmentCode", "amt", "totalAmt", "receivedAmt", "lastRecAmt", "otherAmt", "monthlyFee", "currReading", "lastReading");
+		pagedTable.setVisibleColumns("contractNo", "docNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "billDate");
 
 		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override

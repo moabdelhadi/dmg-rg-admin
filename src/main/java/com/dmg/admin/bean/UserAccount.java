@@ -60,6 +60,9 @@ public class UserAccount extends AbstractPojo {
 	@Column(name = "LASTUPDATE")
 	private Date lastUpdate;
 
+	@Column(name = "ENABLE")
+	private Boolean enable;
+
 	public UserAccount() {
 
 	}
@@ -183,6 +186,14 @@ public class UserAccount extends AbstractPojo {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
 	}
 
 	@Override
