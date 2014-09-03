@@ -73,23 +73,23 @@ public class RestServiceController extends PackagesResourceConfig {
 						Bill bill = populateBill(billJson);
 						billService.storeBill(bill);
 					} catch (ParseException e) {
-						logger.error("ParseException Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
-								+ billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						logger.error("ParseException Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
+								+ billJson.getSerialNo());
 						logger.error("ParseException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
+								+ " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 
 					} catch (DataAccessLayerException e) {
-						logger.error("DataAccessLayerException Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						logger.error("DataAccessLayerException Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
+								+ billJson.getSerialNo());
 						logger.error("DataAccessLayerException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getCause().getMessage() + ": " + "Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: "
-								+ billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						billJson.setErrorMsg(e.getCause().getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 					}
 				}
@@ -142,12 +142,12 @@ public class RestServiceController extends PackagesResourceConfig {
 						Bill bill = populateBill(billJson);
 						Bill billDB = billService.findBill(bill);
 						if (billDB == null) {
-							logger.error("Bill Not Found To Update==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
-									+ billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+							logger.error("Bill Not Found To Update==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
+									+ billJson.getSerialNo());
 
 							resultJson.setStatus(WARNING);
-							billJson.setErrorMsg("Bill not found: " + "Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-									+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+							billJson.setErrorMsg("Bill not found: " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
+									+ " SRNO: " + billJson.getSerialNo());
 							resultJson.addBill(billJson);
 						} else {
 							bill.setId(billDB.getId());
@@ -156,23 +156,23 @@ public class RestServiceController extends PackagesResourceConfig {
 						}
 
 					} catch (ParseException e) {
-						logger.error("ParseException Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
-								+ billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						logger.error("ParseException Bill is==>  YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
+								+ billJson.getSerialNo());
 						logger.error("ParseException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
+								+ " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 						// resultJson.setMessage(e.getMessage());
 					} catch (DataAccessLayerException e) {
-						logger.error("DataAccessLayerException Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						logger.error("DataAccessLayerException Bill is==>  YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
+								+ " SRNO: " + billJson.getSerialNo());
 						logger.error("DataAccessLayerException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> COMPANY: " + billJson.getCompany() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
-								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSrNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
+								+ " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 					}
 				}
@@ -356,53 +356,33 @@ public class RestServiceController extends PackagesResourceConfig {
 
 	private Bill populateBill(BillJson billJson) throws ParseException {
 		Bill bill = new Bill();
-		bill.setAmt(StringUtils.isNotBlank(billJson.getAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getAmt())) : null);
-		bill.setApartmentCode(billJson.getApartmentCode());
-		bill.setBuildingCode(billJson.getBuildingCode());
-		bill.setBuildingName(billJson.getBuildingName());
-		bill.setCompany(billJson.getCompany());
-		bill.setContractNo(billJson.getContractNo());
-		bill.setCurrReading(StringUtils.isNotBlank(billJson.getCurrReading()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getCurrReading())) : null);
-		bill.setCurrReadingDate(StringUtils.isNotBlank(billJson.getCurrReadingDate()) ? sdf.parse(billJson.getCurrReadingDate()) : null);
-		bill.setDbConnectionAcCode(billJson.getDbConnectionAcCode());
-		bill.setDbDepositAmtAcCode(billJson.getDbDepositAmtAcCode());
-		bill.setDbInsuranceAmtAcCode(billJson.getDbInsuranceAmtAcCode());
-		bill.setDbMaintenanceAcCode(billJson.getDbMaintenanceAcCode());
-		bill.setDbMonthlyAcCode(billJson.getDbMaintenanceAcCode());
-		bill.setDbOtherAmtAcCode(billJson.getDbOtherAmtAcCode());
-		bill.setDbReadingAmtAcCode(billJson.getDbReadingAmtAcCode());
-		bill.setDiscAmt(StringUtils.isNotBlank(billJson.getDiscAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getDiscAmt())) : null);
 		bill.setDocNo(billJson.getDocNo());
 		bill.setDocType(billJson.getDocType());
-		bill.setFinalInvoiceYn(billJson.getFinalInvoiceYn());
-		bill.setGasMeterNo(billJson.getGasMeterNo());
-		bill.setLastInvDate(StringUtils.isNotBlank(billJson.getLastInvDate()) ? sdf.parse(billJson.getLastInvDate()) : null);
-		bill.setLastInvdocno(billJson.getLastInvdocno());
-		bill.setLastInvdocType(billJson.getLastInvdocType());
-		bill.setLastReading(StringUtils.isNotBlank(billJson.getLastReading()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getLastReading())) : null);
-		bill.setLastReadingDate(StringUtils.isNotBlank(billJson.getLastReadingDate()) ? sdf.parse(billJson.getLastReadingDate()) : null);
-		bill.setLastRecAmt(StringUtils.isNotBlank(billJson.getLastRecAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getLastRecAmt())) : null);
-		bill.setLastRecDocDate(StringUtils.isNotBlank(billJson.getLastRecDocDate()) ? sdf.parse(billJson.getLastRecDocDate()) : null);
-		bill.setLastRecDocNo(billJson.getLastRecDocNo());
-		bill.setLastRecDocType(billJson.getLastRecDocType());
-		bill.setLastRecYearCode(billJson.getLastRecYearCode());
-		bill.setLastYearCode(billJson.getLastYearCode());
-		bill.setMaintenanceAmt(StringUtils.isNotBlank(billJson.getMaintenanceAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getMaintenanceAmt())) : null);
-		bill.setMonthlyFee(StringUtils.isNotBlank(billJson.getMonthlyFee()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getMonthlyFee())) : null);
-		bill.setOtherAmt(StringUtils.isNotBlank(billJson.getOtherAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getOtherAmt())) : null);
-		bill.setPartyCode(billJson.getPartyCode());
+		bill.setYearCode(billJson.getYearCode());
+		bill.setSerialNo(billJson.getSerialNo());
 		bill.setPartyName(billJson.getPartyName());
 		bill.setPrevBalance(StringUtils.isNotBlank(billJson.getPrevBalance()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getPrevBalance())) : null);
-		bill.setReadingDocno(billJson.getReadingDocno());
-		bill.setReadingDoctype(billJson.getReadingDoctype());
-		bill.setReadingSrNo(StringUtils.isNotBlank(billJson.getReadingSrNo()) ? Integer.parseInt(billJson.getReadingSrNo()) : 0);
-		bill.setReceivedAmt(StringUtils.isNotBlank(billJson.getReceivedAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getReceivedAmt())) : null);
-		bill.setSrNo(Integer.parseInt(billJson.getSrNo()));
-		bill.setTotalAmt(StringUtils.isNotBlank(billJson.getTotalAmt()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getTotalAmt())) : null);
-		bill.setTotalUnit(StringUtils.isNotBlank(billJson.getTotalUnit()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getTotalUnit())) : null);
-		bill.setUnitPrice(StringUtils.isNotBlank(billJson.getUnitPrice()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getUnitPrice())) : null);
-		bill.setUsedForAnotherInvoiceYn(billJson.getUsedForAnotherInvoiceYn());
-		bill.setYearCode(billJson.getYearCode());
+		bill.setLastReceivingDate(StringUtils.isNotBlank(billJson.getLastReceivingDate()) ? sdf.parse(billJson.getLastReceivingDate()) : null);
+		bill.setLastReceivingAmount(StringUtils.isNotBlank(billJson.getLastReceivingAmount()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getLastReceivingAmount())) : null);
+		bill.setCity(billJson.getCity());
+		bill.setBillDate(StringUtils.isNotBlank(billJson.getBillDate()) ? sdf.parse(billJson.getBillDate()) : null);
+		bill.setService(StringUtils.isNotBlank(billJson.getService()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getService())) : null);
+		bill.setGasDifference(StringUtils.isNotBlank(billJson.getGasDifference()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getGasDifference())) : null);
+		bill.setLastReceivedPayReference(billJson.getLastReceivedPayReference());
+		bill.setCollectorName(billJson.getCollectorName());
+		bill.setLastReading(billJson.getLastReading());
+		bill.setLastReadingDate(StringUtils.isNotBlank(billJson.getLastReadingDate()) ? sdf.parse(billJson.getLastReadingDate()) : null);
+		bill.setCurrentReading(billJson.getCurrentReading());
+		bill.setCurrentReadingDate(StringUtils.isNotBlank(billJson.getCurrentReadingDate()) ? sdf.parse(billJson.getCurrentReadingDate()) : null);
+		bill.setBuildingCode(billJson.getBuildingCode());
+		bill.setBuildingName(billJson.getBuildingName());
+		bill.setApartmentCode(billJson.getApartmentCode());
+		bill.setTotalUnit(billJson.getTotalUnit());
+		bill.setUnitPrice(billJson.getUnitPrice());
+		bill.setAmount(StringUtils.isNotBlank(billJson.getAmount()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getAmount())) : null);
+		bill.setTotalAmount(StringUtils.isNotBlank(billJson.getTotalAmount()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getTotalAmount())) : null);
+		bill.setContractNo(billJson.getContractNo());
+		bill.setReceivedAmmount(StringUtils.isNotBlank(billJson.getReceivedAmmount()) ? BigDecimal.valueOf(Double.parseDouble(billJson.getReceivedAmmount())) : null);
 
 		return bill;
 	}

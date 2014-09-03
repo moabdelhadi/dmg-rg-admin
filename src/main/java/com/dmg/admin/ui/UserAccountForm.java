@@ -5,6 +5,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
@@ -46,14 +47,18 @@ public class UserAccountForm extends CustomComponent {
 	@PropertyId("poboxCity")
 	TextField poboxCityField = new TextField("P.O.Box City");
 
+	@PropertyId("enable")
+	CheckBox enableField = new CheckBox("Enable");
+
 	FormLayout layout = new FormLayout();
 
 	FieldGroup binder;
 
 	public UserAccountForm(UserAccount item) {
+		layout.addStyleName("top-bottom-margins");
 
-		layout.setMargin(true);
 		layout.setWidth("100%");
+		layout.setMargin(true);
 
 		nameField.setWidth("100%");
 		emailField.setWidth("100%");
@@ -89,6 +94,7 @@ public class UserAccountForm extends CustomComponent {
 		layout.addComponent(mobileField);
 		layout.addComponent(poboxField);
 		layout.addComponent(poboxCityField);
+		layout.addComponent(enableField);
 		// TODO Auto-generated constructor stub
 
 		BeanItem<UserAccount> bean = new BeanItem<UserAccount>(item);

@@ -40,11 +40,11 @@ public class BillService implements Serializable {
 	public Bill findBill(Bill bill) throws DataAccessLayerException {
 		String query = LIST_QUERY + "WHERE b.company=:company AND b.yearCode=:yearCode AND b.docNo=:docNo AND b.docType=:docType AND b.srNo=:srNo";
 		Map<String, Object> parameters = new LinkedHashMap<String, Object>();
-		parameters.put("company", bill.getCompany());
+		// parameters.put("company", bill.getCompany());
 		parameters.put("yearCode", bill.getYearCode());
 		parameters.put("docNo", bill.getDocNo());
 		parameters.put("docType", bill.getDocType());
-		parameters.put("srNo", bill.getSrNo());
+		parameters.put("srNo", bill.getSerialNo());
 
 		return FacadeFactory.getFacade().find(query, parameters);
 
