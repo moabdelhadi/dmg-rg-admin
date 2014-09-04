@@ -63,6 +63,9 @@ public class UserAccount extends AbstractPojo {
 	@Column(name = "ENABLE")
 	private Boolean enable;
 
+	@Column(name = "SYNC_STATUS")
+	private int syncStatus;
+
 	public UserAccount() {
 
 	}
@@ -194,6 +197,14 @@ public class UserAccount extends AbstractPojo {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public int getSyncStatus() {
+		return syncStatus;
+	}
+
+	public void setSyncStatus(int syncStatus) {
+		this.syncStatus = syncStatus;
 	}
 
 	@Override

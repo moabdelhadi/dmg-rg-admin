@@ -60,6 +60,7 @@ public class UpdateUserView extends VerticalLayout implements View {
 
 				try {
 					userAccountForm.getBinder().commit();
+					userAccount.setSyncStatus(1);
 					accountService.update(userAccount);
 					Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 				} catch (CommitException e) {
@@ -149,6 +150,7 @@ public class UpdateUserView extends VerticalLayout implements View {
 			 * "poboxCity"));
 			 */
 			userAccountForm = new UserAccountForm(userAccount);
+			userAccountForm.getNameField().setReadOnly(true);
 			userAccountForm.getLayout().addComponent(updateBtn);
 
 			panel.setContent(userAccountForm);

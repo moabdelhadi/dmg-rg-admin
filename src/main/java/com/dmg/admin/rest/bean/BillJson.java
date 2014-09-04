@@ -28,7 +28,7 @@ public class BillJson implements Serializable {
 
 	private String lastReceivingDate;
 
-	private String LastReceivingAmount;
+	private String lastReceivingAmount;
 
 	private String city;
 
@@ -133,11 +133,11 @@ public class BillJson implements Serializable {
 	}
 
 	public String getLastReceivingAmount() {
-		return LastReceivingAmount;
+		return lastReceivingAmount;
 	}
 
 	public void setLastReceivingAmount(String lastReceivingAmount) {
-		LastReceivingAmount = lastReceivingAmount;
+		this.lastReceivingAmount = lastReceivingAmount;
 	}
 
 	public String getCity() {

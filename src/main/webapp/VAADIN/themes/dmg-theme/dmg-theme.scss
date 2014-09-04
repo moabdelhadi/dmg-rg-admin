@@ -8,14 +8,10 @@
 @mixin dmg-theme {
   /* Include all the styles from the reindeer theme */
   @include valo;
-
-
-top-bottom-margins
-  /* Insert your theme rules here */
   
 .top-bottom-margins{
 	padding-top:20px;
-	padding-bottom:20px;}
+	padding-bottom:20px;
 }
 
 }

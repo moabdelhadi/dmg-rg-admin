@@ -35,7 +35,7 @@ public class Bill extends AbstractPojo {
 	private Date lastReceivingDate;
 
 	@Column(name = "LAST_REC_AMT")
-	private BigDecimal LastReceivingAmount;
+	private BigDecimal lastReceivingAmount;
 
 	@Column(name = "CITY")
 	private String city;
@@ -155,11 +155,11 @@ public class Bill extends AbstractPojo {
 	}
 
 	public BigDecimal getLastReceivingAmount() {
-		return LastReceivingAmount;
+		return lastReceivingAmount;
 	}
 
 	public void setLastReceivingAmount(BigDecimal lastReceivingAmount) {
-		LastReceivingAmount = lastReceivingAmount;
+		this.lastReceivingAmount = lastReceivingAmount;
 	}
 
 	public String getCity() {
@@ -317,7 +317,7 @@ public class Bill extends AbstractPojo {
 	@Override
 	public String toString() {
 		return "Bill [docNo=" + docNo + ", docType=" + docType + ", yearCode=" + yearCode + ", serialNo=" + serialNo + ", partyName=" + partyName + ", prevBalance=" + prevBalance
-				+ ", lastReceivingDate=" + lastReceivingDate + ", LastReceivingAmount=" + LastReceivingAmount + ", city=" + city + ", billDate=" + billDate + ", service=" + service
+				+ ", lastReceivingDate=" + lastReceivingDate + ", LastReceivingAmount=" + lastReceivingAmount + ", city=" + city + ", billDate=" + billDate + ", service=" + service
 				+ ", gasDifference=" + gasDifference + ", lastReceivedPayReference=" + lastReceivedPayReference + ", collectorName=" + collectorName + ", lastReading=" + lastReading
 				+ ", lastReadingDate=" + lastReadingDate + ", currentReading=" + currentReading + ", currentReadingDate=" + currentReadingDate + ", buildingCode=" + buildingCode + ", buildingName="
 				+ buildingName + ", apartmentCode=" + apartmentCode + ", totalUnit=" + totalUnit + ", unitPrice=" + unitPrice + ", amount=" + amount + ", totalAmount=" + totalAmount + ", contractNo="

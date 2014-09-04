@@ -105,6 +105,10 @@ public class UserAccountForm extends CustomComponent {
 
 	}
 
+	public TextField getNameField() {
+		return nameField;
+	}
+
 	public FormLayout getLayout() {
 		return layout;
 	}
