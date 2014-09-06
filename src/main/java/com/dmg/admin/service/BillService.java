@@ -44,7 +44,7 @@ public class BillService implements Serializable {
 		parameters.put("yearCode", bill.getYearCode());
 		parameters.put("docNo", bill.getDocNo());
 		parameters.put("docType", bill.getDocType());
-		parameters.put("srNo", bill.getSerialNo());
+		parameters.put("serialNo", bill.getSerialNo());
 
 		return FacadeFactory.getFacade().find(query, parameters);
 

@@ -32,13 +32,16 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 		if ("enable".equals(propertyId)) {
 			return value ? "enabled" : "disabled";
 		}
+		if ("payed".equals(propertyId)) {
+			return value ? "payed" : "not payed";
+		}
 		// returning null will output default value
 		return null;
 	}
 
 	@Override
 	public Resource getBooleanFilterIcon(Object propertyId, boolean value) {
-		if ("enable".equals(propertyId)) {
+		if ("enable".equals(propertyId) || "payed".equals("payed")) {
 			return value ? new ThemeResource("img/enable.png") : new ThemeResource("img/disable.png");
 		}
 		return null;

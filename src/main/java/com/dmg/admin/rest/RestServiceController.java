@@ -73,23 +73,23 @@ public class RestServiceController extends PackagesResourceConfig {
 						Bill bill = populateBill(billJson);
 						billService.storeBill(bill);
 					} catch (ParseException e) {
-						logger.error("ParseException Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
-								+ billJson.getSerialNo());
+						logger.error("ParseException Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						logger.error("ParseException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
-								+ " SRNO: " + billJson.getSerialNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
+								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 
 					} catch (DataAccessLayerException e) {
-						logger.error("DataAccessLayerException Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
-								+ billJson.getSerialNo());
+						logger.error("DataAccessLayerException Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						logger.error("DataAccessLayerException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getCause().getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
-								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
+						billJson.setErrorMsg(e.getCause().getMessage() + ": " + "Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
+								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 					}
 				}
@@ -142,12 +142,12 @@ public class RestServiceController extends PackagesResourceConfig {
 						Bill bill = populateBill(billJson);
 						Bill billDB = billService.findBill(bill);
 						if (billDB == null) {
-							logger.error("Bill Not Found To Update==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
-									+ billJson.getSerialNo());
+							logger.error("Bill Not Found To Update==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+									+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 
 							resultJson.setStatus(WARNING);
-							billJson.setErrorMsg("Bill not found: " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
-									+ " SRNO: " + billJson.getSerialNo());
+							billJson.setErrorMsg("Bill not found: " + "Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
+									+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 							resultJson.addBill(billJson);
 						} else {
 							bill.setId(billDB.getId());
@@ -156,23 +156,23 @@ public class RestServiceController extends PackagesResourceConfig {
 						}
 
 					} catch (ParseException e) {
-						logger.error("ParseException Bill is==>  YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType() + " SRNO: "
-								+ billJson.getSerialNo());
+						logger.error("ParseException Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						logger.error("ParseException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
-								+ " SRNO: " + billJson.getSerialNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
+								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 						// resultJson.setMessage(e.getMessage());
 					} catch (DataAccessLayerException e) {
-						logger.error("DataAccessLayerException Bill is==>  YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
-								+ " SRNO: " + billJson.getSerialNo());
+						logger.error("DataAccessLayerException Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: "
+								+ billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						logger.error("DataAccessLayerException ==>", e.getMessage());
 
 						resultJson.setStatus(WARNING);
-						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo() + " DOC_TYPE: " + billJson.getDocType()
-								+ " SRNO: " + billJson.getSerialNo());
+						billJson.setErrorMsg(e.getMessage() + ": " + "Bill is==> CITY: " + billJson.getCity() + " YEAR_CODE: " + billJson.getYearCode() + " DOC_NO: " + billJson.getDocNo()
+								+ " DOC_TYPE: " + billJson.getDocType() + " SRNO: " + billJson.getSerialNo());
 						resultJson.addBill(billJson);
 					}
 				}

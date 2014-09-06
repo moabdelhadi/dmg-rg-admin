@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.dmg.core.bean.AbstractPojo;
 
 @Entity
@@ -312,6 +314,13 @@ public class Bill extends AbstractPojo {
 
 	public void setReceivedAmmount(BigDecimal receivedAmmount) {
 		this.receivedAmmount = receivedAmmount;
+	}
+
+	public boolean getPayed() {
+		if (StringUtils.isEmpty(lastReceivedPayReference)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

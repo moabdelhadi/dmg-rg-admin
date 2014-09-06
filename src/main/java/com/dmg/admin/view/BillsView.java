@@ -25,7 +25,10 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.ColumnGenerator;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -66,22 +69,26 @@ public class BillsView extends VerticalLayout implements View {
 
 		pagedTable.addContainerProperty("contractNo", String.class, null);
 		pagedTable.addContainerProperty("docNo", String.class, null);
+		pagedTable.addContainerProperty("serialNo", String.class, null);
 		pagedTable.addContainerProperty("totalAmount", BigDecimal.class, null);
 		pagedTable.addContainerProperty("receivedAmmount", BigDecimal.class, null);
 		pagedTable.addContainerProperty("lastReceivedPayReference", String.class, null);
+		pagedTable.addContainerProperty("payed", Boolean.class, null);
 		pagedTable.addContainerProperty("billDate", Date.class, null);
 
 		pagedTable.setColumnHeader("contractNo", "Contract No.");
 		pagedTable.setColumnHeader("docNo", "Doc No.");
+		pagedTable.setColumnHeader("serialNo", "Serial No.");
 		pagedTable.setColumnHeader("totalAmount", "Total Amount");
 		pagedTable.setColumnHeader("receivedAmmount", "Received Amount");
 		pagedTable.setColumnHeader("lastReceivedPayReference", "Reference");
+		pagedTable.setColumnHeader("payed", "Payed");
 		pagedTable.setColumnHeader("billDate", "Bill Date");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("contractNo", "docNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "billDate");
+		pagedTable.setVisibleColumns("contractNo", "docNo", "serialNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "payed", "billDate");
 
 		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
@@ -89,6 +96,23 @@ public class BillsView extends VerticalLayout implements View {
 				detailsBtn.setVisible(true);
 
 			}
+		});
+
+		pagedTable.addGeneratedColumn("payed", new ColumnGenerator() {
+
+			@Override
+			public Image generateCell(final CustomTable source, final Object itemId, Object columnId) {
+
+				if (((Bill) itemId).getPayed()) {
+					Image payed = new Image(null, new ThemeResource("img/enable.png"));
+					return payed;
+				} else {
+					Image notPayed = new Image(null, new ThemeResource("img/disable.png"));
+					return notPayed;
+				}
+
+			}
+
 		});
 
 		pagedTable.setSelectable(true);
