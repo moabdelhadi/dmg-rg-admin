@@ -15,6 +15,11 @@ import com.dmg.core.bean.AbstractPojo;
 @Table(name = "BILLS2")
 public class Bill extends AbstractPojo {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1538715097115070833L;
+
 	@Column(name = "DOCNO")
 	private String docNo;
 
