@@ -8,7 +8,7 @@
 @mixin dmg-theme {
   /* Include all the styles from the reindeer theme */
   @include valo;
-  /*@include fonticons;*/
+  @include fonticons;
   
 .top-bottom-margins{
 	padding-top:20px;
