@@ -8,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class HeadersFilter implements Filter {
@@ -16,8 +15,8 @@ public class HeadersFilter implements Filter {
 	@Override
 	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
 
-		final HttpServletRequest httpRequest = (HttpServletRequest) request;
-		final String requestUri = httpRequest.getRequestURI();
+//		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+//		final String requestUri = httpRequest.getRequestURI();
 		final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		httpResponse.addHeader("access-control-allow-origin", "*");

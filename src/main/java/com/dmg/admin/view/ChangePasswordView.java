@@ -70,6 +70,11 @@ public class ChangePasswordView extends VerticalLayout implements View {
 
 		loginButton.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 

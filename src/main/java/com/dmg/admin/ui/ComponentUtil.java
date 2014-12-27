@@ -16,6 +16,11 @@ public class ComponentUtil {
 		mainMenuButton.setStyleName(BaseTheme.BUTTON_LINK);
 		mainMenuButton.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				navigator.navigateTo(destination);

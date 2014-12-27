@@ -93,6 +93,11 @@ public class TransactionsView extends VerticalLayout implements View {
 		button.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
 		button.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				CustomTableHolder pagedTableHolder = new CustomTableHolder(pagedTable);

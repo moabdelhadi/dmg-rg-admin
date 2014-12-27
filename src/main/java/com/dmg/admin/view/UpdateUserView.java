@@ -55,6 +55,11 @@ public class UpdateUserView extends VerticalLayout implements View {
 
 		updateBtn.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 

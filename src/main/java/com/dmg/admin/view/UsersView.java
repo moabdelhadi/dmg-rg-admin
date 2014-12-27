@@ -108,6 +108,11 @@ public class UsersView extends VerticalLayout implements View {
 
 		pagedTable.addGeneratedColumn("enable", new ColumnGenerator() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Image generateCell(final CustomTable source, final Object itemId, Object columnId) {
 
@@ -124,6 +129,11 @@ public class UsersView extends VerticalLayout implements View {
 		});
 
 		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				editBtn.setVisible(true);
@@ -149,6 +159,11 @@ public class UsersView extends VerticalLayout implements View {
 
 		editBtn.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 
@@ -159,6 +174,11 @@ public class UsersView extends VerticalLayout implements View {
 		Button exportBtn = new Button("Export");
 		exportBtn.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
 		exportBtn.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {

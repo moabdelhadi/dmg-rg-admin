@@ -91,6 +91,11 @@ public class BillsView extends VerticalLayout implements View {
 		pagedTable.setVisibleColumns("contractNo", "docNo", "serialNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "payed", "billDate");
 
 		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				detailsBtn.setVisible(true);
@@ -99,6 +104,11 @@ public class BillsView extends VerticalLayout implements View {
 		});
 
 		pagedTable.addGeneratedColumn("payed", new ColumnGenerator() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Image generateCell(final CustomTable source, final Object itemId, Object columnId) {
@@ -165,6 +175,11 @@ public class BillsView extends VerticalLayout implements View {
 
 		detailsBtn.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				openDetails();
@@ -178,6 +193,11 @@ public class BillsView extends VerticalLayout implements View {
 		Button exportBtn = new Button("Export");
 		exportBtn.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
 		exportBtn.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
