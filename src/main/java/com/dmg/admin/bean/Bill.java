@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import com.dmg.core.bean.AbstractPojo;
 
 @Entity
-@Table(name = "BILLS2")
+@Table(name = "BILLS")
 public class Bill extends AbstractPojo {
 
 	/**

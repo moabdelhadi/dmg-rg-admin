@@ -45,6 +45,7 @@ public class RegistrationView extends VerticalLayout implements View {
 		panel.setCaption("Resgister New Admin User");
 		formLayout.setWidth("100%");
 		formLayout.setMargin(true);
+		formLayout.addStyleName("top-bottom-margins");
 
 		final TextField fullName = new TextField("Full Name");
 

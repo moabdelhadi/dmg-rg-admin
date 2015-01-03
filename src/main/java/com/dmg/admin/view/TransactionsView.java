@@ -57,28 +57,44 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setFilterBarVisible(true);
 		pagedTable.setImmediate(true);
 
-		pagedTable.addContainerProperty("billNumber", String.class, null);
+		pagedTable.addContainerProperty("contractNo", String.class, null);
+		pagedTable.addContainerProperty("totalAmount", String.class, null);
+		pagedTable.addContainerProperty("docNo", String.class, null);
+		pagedTable.addContainerProperty("invDate", Date.class, null);
+		pagedTable.addContainerProperty("serialNo", String.class, null);
+		pagedTable.addContainerProperty("buildingCode", String.class, null);
+		pagedTable.addContainerProperty("apartmentCode", String.class, null);
+		pagedTable.addContainerProperty("amount", String.class, null);
 		pagedTable.addContainerProperty("accountNumber", String.class, null);
+		pagedTable.addContainerProperty("billNumber", String.class, null);
 		pagedTable.addContainerProperty("paymentDate", Date.class, null);
 		pagedTable.addContainerProperty("status", String.class, null);
-		pagedTable.addContainerProperty("amount", Double.class, null);
 
-		pagedTable.setColumnHeader("billNumber", "Bill Number");
-		pagedTable.setColumnHeader("accountNumber", "Account Number");
-		pagedTable.setColumnHeader("paymentDate", "Date");
-		pagedTable.setColumnHeader("status", "Status");
+		pagedTable.setColumnHeader("contractNo", "Contract #.");
+		pagedTable.setColumnHeader("totalAmount", "Total Amount");
+		pagedTable.setColumnHeader("docNo", "Doc No");
+		pagedTable.setColumnHeader("invDate", "Invoice Date");
+		pagedTable.setColumnHeader("serialNo", "Serial #");
+		pagedTable.setColumnHeader("buildingCode", "Building code");
+		pagedTable.setColumnHeader("apartmentCode", "Apartment Code");
 		pagedTable.setColumnHeader("amount", "Amount");
+		pagedTable.setColumnHeader("accountNumber", "Account #");
+		pagedTable.setColumnHeader("billNumber", "Bill Number");
+		pagedTable.setColumnHeader("paymentDate", "Payment Number");
+		pagedTable.setColumnHeader("status", "Status");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("billNumber", "accountNumber", "paymentDate", "status", "amount");
+		pagedTable.setVisibleColumns("contractNo", "totalAmount", "docNo", "invDate", "serialNo", "buildingCode", "apartmentCode", "amount", "accountNumber", "billNumber", "paymentDate", "status");
 
-		pagedTable.setColumnExpandRatio("billNumber", 0.30F);
-		pagedTable.setColumnExpandRatio("accountNumber", 0.30F);
-		pagedTable.setColumnExpandRatio("paymentDate", 0.10F);
-		pagedTable.setColumnExpandRatio("status", 0.10F);
-		pagedTable.setColumnExpandRatio("amount", 0.20F);
+		/*
+		 * pagedTable.setColumnExpandRatio("billNumber", 0.30F);
+		 * pagedTable.setColumnExpandRatio("accountNumber", 0.30F);
+		 * pagedTable.setColumnExpandRatio("paymentDate", 0.10F);
+		 * pagedTable.setColumnExpandRatio("status", 0.10F);
+		 * pagedTable.setColumnExpandRatio("amount", 0.20F);
+		 */
 
 		/*
 		 * Grid grid = new Grid(pagedTable); grid.setExportEnabled(false);
