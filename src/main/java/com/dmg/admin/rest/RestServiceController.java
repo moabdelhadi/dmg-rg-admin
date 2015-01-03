@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -53,6 +54,14 @@ public class RestServiceController extends PackagesResourceConfig {
 		setPropertiesAndFeatures(settings);
 		billService = new BillService();
 		userAccountService = new UserAccountService();
+	}
+
+	@POST
+	@Path("/bills/test")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response testPost(@FormParam("test") String test) {
+
+		return Response.status(Status.OK).entity(test).build();
 	}
 
 	@POST
