@@ -10,6 +10,7 @@ import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
+import com.dmg.admin.util.StatusEnum;
 import com.dmg.admin.util.ViewUtil;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
@@ -22,7 +23,11 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomTable.ColumnGenerator;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -58,35 +63,67 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setImmediate(true);
 
 		pagedTable.addContainerProperty("contractNo", String.class, null);
-		pagedTable.addContainerProperty("totalAmount", String.class, null);
-		pagedTable.addContainerProperty("docNo", String.class, null);
-		pagedTable.addContainerProperty("invDate", Date.class, null);
-		pagedTable.addContainerProperty("serialNo", String.class, null);
-		pagedTable.addContainerProperty("buildingCode", String.class, null);
-		pagedTable.addContainerProperty("apartmentCode", String.class, null);
-		pagedTable.addContainerProperty("amount", String.class, null);
-		pagedTable.addContainerProperty("accountNumber", String.class, null);
-		pagedTable.addContainerProperty("billNumber", String.class, null);
-		pagedTable.addContainerProperty("paymentDate", Date.class, null);
+		pagedTable.addContainerProperty("city", String.class, null);
 		pagedTable.addContainerProperty("status", String.class, null);
+		pagedTable.addContainerProperty("creationDate", Date.class, null);
+		pagedTable.addContainerProperty("updateDate", Date.class, null);
+		pagedTable.addContainerProperty("merchTxnRef", String.class, null);
+		pagedTable.addContainerProperty("amount", String.class, null);
+		pagedTable.addContainerProperty("approved", StatusEnum.class, null);
 
 		pagedTable.setColumnHeader("contractNo", "Contract #.");
-		pagedTable.setColumnHeader("totalAmount", "Total Amount");
-		pagedTable.setColumnHeader("docNo", "Doc No");
-		pagedTable.setColumnHeader("invDate", "Invoice Date");
-		pagedTable.setColumnHeader("serialNo", "Serial #");
-		pagedTable.setColumnHeader("buildingCode", "Building code");
-		pagedTable.setColumnHeader("apartmentCode", "Apartment Code");
-		pagedTable.setColumnHeader("amount", "Amount");
-		pagedTable.setColumnHeader("accountNumber", "Account #");
-		pagedTable.setColumnHeader("billNumber", "Bill Number");
-		pagedTable.setColumnHeader("paymentDate", "Payment Number");
+		pagedTable.setColumnHeader("city", "City");
 		pagedTable.setColumnHeader("status", "Status");
+		pagedTable.setColumnHeader("creationDate", "Creation Date");
+		pagedTable.setColumnHeader("updateDate", "Update Date");
+		pagedTable.setColumnHeader("merchTxnRef", "Txn Ref.");
+		pagedTable.setColumnHeader("amount", "Amount");
+		pagedTable.setColumnHeader("approved", "Approved Status");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("contractNo", "totalAmount", "docNo", "invDate", "serialNo", "buildingCode", "apartmentCode", "amount", "accountNumber", "billNumber", "paymentDate", "status");
+		pagedTable.setVisibleColumns("contractNo", "city", "status", "creationDate", "updateDate", "merchTxnRef", "amount", "approved");
+
+		pagedTable.addGeneratedColumn("approved", new ColumnGenerator() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2467347978301925174L;
+
+			@Override
+			public HorizontalLayout generateCell(final CustomTable source, final Object itemId, Object columnId) {
+				HorizontalLayout horizontalLayout = new HorizontalLayout();
+				horizontalLayout.setSpacing(true);
+
+				Label label = new Label();
+				switch (((Transaction) itemId).getApproved()) {
+				case APPROVED:
+					label.setCaption(StatusEnum.APPROVED.getName());
+					label.setIcon(new ThemeResource("img/approved.png"));
+					horizontalLayout.addComponent(label);
+					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+					return horizontalLayout;
+				case REJECTED:
+					label.setCaption(StatusEnum.REJECTED.getName());
+					label.setIcon(new ThemeResource("img/rejected.png"));
+					horizontalLayout.addComponent(label);
+					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+					return horizontalLayout;
+
+				default:
+					label.setCaption(StatusEnum.PENDING.getName());
+					label.setIcon(new ThemeResource("img/pending.png"));
+					horizontalLayout.addComponent(label);
+					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+					return horizontalLayout;
+
+				}
+
+			}
+
+		});
 
 		/*
 		 * pagedTable.setColumnExpandRatio("billNumber", 0.30F);

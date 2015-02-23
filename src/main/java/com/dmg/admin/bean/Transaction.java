@@ -3,7 +3,9 @@ package com.dmg.admin.bean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.dmg.admin.util.StatusEnum;
 import com.dmg.core.bean.AbstractPojo;
 
 @Entity
@@ -62,6 +64,9 @@ public class Transaction extends AbstractPojo {
 
 	@Column(name = "FEES")
 	private String fees;
+
+	@Transient
+	private String Approved;
 
 	public Transaction() {
 
@@ -193,6 +198,19 @@ public class Transaction extends AbstractPojo {
 
 	public void setFees(String fees) {
 		this.fees = fees;
+	}
+
+	public StatusEnum getApproved() {
+		switch (syncStatus) {
+		case 1:
+			return StatusEnum.PENDING;
+		case 2:
+			return StatusEnum.APPROVED;
+		case 3:
+			return StatusEnum.REJECTED;
+		default:
+			return StatusEnum.PENDING;
+		}
 	}
 
 	@Override
