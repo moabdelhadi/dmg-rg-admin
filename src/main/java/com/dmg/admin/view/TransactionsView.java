@@ -10,7 +10,7 @@ import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
-import com.dmg.admin.util.StatusEnum;
+import com.dmg.admin.util.ApproveStatusEnum;
 import com.dmg.admin.util.ViewUtil;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
@@ -20,12 +20,12 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomTable.ColumnGenerator;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -69,7 +69,7 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("updateDate", Date.class, null);
 		pagedTable.addContainerProperty("merchTxnRef", String.class, null);
 		pagedTable.addContainerProperty("amount", String.class, null);
-		pagedTable.addContainerProperty("approved", StatusEnum.class, null);
+		pagedTable.addContainerProperty("approveStatusEnum", ApproveStatusEnum.class, null);
 
 		pagedTable.setColumnHeader("contractNo", "Contract #.");
 		pagedTable.setColumnHeader("city", "City");
@@ -78,14 +78,14 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("updateDate", "Update Date");
 		pagedTable.setColumnHeader("merchTxnRef", "Txn Ref.");
 		pagedTable.setColumnHeader("amount", "Amount");
-		pagedTable.setColumnHeader("approved", "Approved Status");
+		pagedTable.setColumnHeader("approveStatusEnum", "Approve Status");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("contractNo", "city", "status", "creationDate", "updateDate", "merchTxnRef", "amount", "approved");
+		pagedTable.setVisibleColumns("contractNo", "city", "status", "creationDate", "updateDate", "merchTxnRef", "amount", "approveStatusEnum");
 
-		pagedTable.addGeneratedColumn("approved", new ColumnGenerator() {
+		pagedTable.addGeneratedColumn("approveStatusEnum", new ColumnGenerator() {
 
 			/**
 			 * 
@@ -98,22 +98,22 @@ public class TransactionsView extends VerticalLayout implements View {
 				horizontalLayout.setSpacing(true);
 
 				Label label = new Label();
-				switch (((Transaction) itemId).getApproved()) {
+				switch (((Transaction) itemId).getApproveStatusEnum()) {
 				case APPROVED:
-					label.setCaption(StatusEnum.APPROVED.getName());
+					label.setCaption(ApproveStatusEnum.APPROVED.getName());
 					label.setIcon(new ThemeResource("img/approved.png"));
 					horizontalLayout.addComponent(label);
 					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 					return horizontalLayout;
 				case REJECTED:
-					label.setCaption(StatusEnum.REJECTED.getName());
+					label.setCaption(ApproveStatusEnum.REJECTED.getName());
 					label.setIcon(new ThemeResource("img/rejected.png"));
 					horizontalLayout.addComponent(label);
 					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 					return horizontalLayout;
 
 				default:
-					label.setCaption(StatusEnum.PENDING.getName());
+					label.setCaption(ApproveStatusEnum.PENDING.getName());
 					label.setIcon(new ThemeResource("img/pending.png"));
 					horizontalLayout.addComponent(label);
 					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);

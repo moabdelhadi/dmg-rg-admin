@@ -7,7 +7,7 @@ import java.util.Locale;
 import org.tepi.filtertable.FilterDecorator;
 import org.tepi.filtertable.numberfilter.NumberFilterPopupConfig;
 
-import com.dmg.admin.util.StatusEnum;
+import com.dmg.admin.util.ApproveStatusEnum;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -17,15 +17,15 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public String getEnumFilterDisplayName(Object propertyId, Object value) {
-		if ("approved".equals(propertyId)) {
-			StatusEnum statusEnum = (StatusEnum) value;
+		if ("approveStatusEnum".equals(propertyId)) {
+			ApproveStatusEnum statusEnum = (ApproveStatusEnum) value;
 			switch (statusEnum) {
 			case APPROVED:
-				return StatusEnum.APPROVED.getName();
+				return ApproveStatusEnum.APPROVED.getName();
 			case REJECTED:
-				return StatusEnum.REJECTED.getName();
+				return ApproveStatusEnum.REJECTED.getName();
 			default:
-				return StatusEnum.PENDING.getName();
+				return ApproveStatusEnum.PENDING.getName();
 			}
 		}
 		return null;
@@ -34,8 +34,8 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public Resource getEnumFilterIcon(Object propertyId, Object value) {
-		if ("approved".equals(propertyId)) {
-			StatusEnum statusEnum = (StatusEnum) value;
+		if ("approveStatusEnum".equals(propertyId)) {
+			ApproveStatusEnum statusEnum = (ApproveStatusEnum) value;
 			switch (statusEnum) {
 			case APPROVED:
 				return new ThemeResource("img/approved.png");
