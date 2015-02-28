@@ -2,7 +2,6 @@ package com.dmg.admin;
 
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.auth.util.UserUtil;
-import com.dmg.admin.view.BillDetailsView;
 import com.dmg.admin.view.BillsView;
 import com.dmg.admin.view.ChangePasswordView;
 import com.dmg.admin.view.LoginView;
@@ -10,6 +9,7 @@ import com.dmg.admin.view.LogoutView;
 import com.dmg.admin.view.RegistrationView;
 import com.dmg.admin.view.StartView;
 import com.dmg.admin.view.TransactionsView;
+import com.dmg.admin.view.UpdateTransactionView;
 import com.dmg.admin.view.UpdateUserView;
 import com.dmg.admin.view.UsersView;
 import com.vaadin.annotations.Theme;
@@ -32,7 +32,8 @@ public class MainUI extends UI {
 		navigator.addView(BillsView.NAME, new BillsView(navigator));
 		navigator.addView(UsersView.NAME, new UsersView(navigator));
 		navigator.addView(UpdateUserView.NAME, new UpdateUserView(navigator));
-		navigator.addView(BillDetailsView.NAME, new BillDetailsView(navigator));
+		navigator.addView(UpdateUserView.NAME, new UpdateUserView(navigator));
+		navigator.addView(UpdateTransactionView.NAME, new UpdateTransactionView(navigator));
 		navigator.addView(LoginView.NAME, new LoginView(navigator, StartView.NAME));
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));
 		navigator.addView(ChangePasswordView.NAME, new ChangePasswordView(navigator));

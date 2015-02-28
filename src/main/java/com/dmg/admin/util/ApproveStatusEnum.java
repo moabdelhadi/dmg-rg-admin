@@ -19,4 +19,13 @@ public enum ApproveStatusEnum {
 		return status;
 	}
 
+	public static int findStatus(String name) {
+		for (ApproveStatusEnum approveStatus : ApproveStatusEnum.values()) {
+			if (name.equals(approveStatus.getName())) {
+				return approveStatus.getStatus();
+			}
+		}
+		return 0;
+	}
+
 }

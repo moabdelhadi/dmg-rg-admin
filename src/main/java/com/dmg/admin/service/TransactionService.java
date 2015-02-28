@@ -28,4 +28,12 @@ public class TransactionService implements Serializable {
 		return FacadeFactory.getFacade().list(LIST_QUERY_ORDERED_BY_DATE, new HashMap<String, Object>());
 	}
 
+	public void update(Transaction transaction) throws DataAccessLayerException {
+		FacadeFactory.getFacade().store(transaction);
+	}
+
+	public Transaction getTransaction(Long id) throws DataAccessLayerException {
+		return FacadeFactory.getFacade().find(Transaction.class, id);
+	}
+
 }

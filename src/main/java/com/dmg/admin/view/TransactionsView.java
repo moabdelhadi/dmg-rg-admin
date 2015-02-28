@@ -16,6 +16,7 @@ import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -46,6 +47,7 @@ public class TransactionsView extends VerticalLayout implements View {
 	BeanItemContainer<Transaction> container = new BeanItemContainer<Transaction>(Transaction.class);
 	private ExcelExport excelExport;
 	private final Navigator navigator;
+	private Button editBtn;
 
 	public TransactionsView(Navigator navigator) {
 		this.navigator = navigator;
@@ -125,26 +127,49 @@ public class TransactionsView extends VerticalLayout implements View {
 
 		});
 
-		/*
-		 * pagedTable.setColumnExpandRatio("billNumber", 0.30F);
-		 * pagedTable.setColumnExpandRatio("accountNumber", 0.30F);
-		 * pagedTable.setColumnExpandRatio("paymentDate", 0.10F);
-		 * pagedTable.setColumnExpandRatio("status", 0.10F);
-		 * pagedTable.setColumnExpandRatio("amount", 0.20F);
-		 */
+		pagedTable.setSelectable(true);
 
-		/*
-		 * Grid grid = new Grid(pagedTable); grid.setExportEnabled(false);
-		 * grid.resetFilters();
-		 */
 		setMargin(true);
 
 		CustomPagedFilterControlConfig config = new CustomPagedFilterControlConfig();
-
 		HorizontalLayout pagerControls = pagedTable.createControls(config);
-		Button button = new Button("Export");
-		button.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
-		button.addClickListener(new ClickListener() {
+
+		HorizontalLayout buttonLayout = new HorizontalLayout();
+		buttonLayout.setWidth("100%");
+
+		editBtn = new Button("Edit");
+		editBtn.setIcon(new ThemeResource(ViewUtil.EDIT_ICON));
+
+		editBtn.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				navigator.navigateTo(UpdateTransactionView.NAME + "/" + ((Transaction) pagedTable.getValue()).getId());
+			}
+
+		});
+
+		pagedTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void itemClick(ItemClickEvent itemClickEvent) {
+				editBtn.setVisible(true);
+				editBtn.setDescription("Click here to edit a transaction!");
+			}
+		});
+
+		Button exportButton = new Button("Export");
+		exportButton.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
+		exportButton.addClickListener(new ClickListener() {
 
 			/**
 			 * 
@@ -160,12 +185,22 @@ public class TransactionsView extends VerticalLayout implements View {
 				excelExport.export();
 			}
 		});
+
+		Label label = new Label();
+		buttonLayout.addComponent(exportButton);
+		buttonLayout.addComponent(label);
+		buttonLayout.addComponent(editBtn);
+		buttonLayout.setExpandRatio(exportButton, 0.10F);
+		buttonLayout.setExpandRatio(label, 0.82F);
+		buttonLayout.setExpandRatio(editBtn, 0.08F);
+
 		addComponent(ComponentUtil.initMenuButton(navigator, StartView.NAME, "Go back to the main menu"));
-		addComponent(button);
+
+		addComponent(buttonLayout);
 		addComponent(pagedTable);
 		addComponent(pagerControls);
 
-		setExpandRatio(button, 0.05F);
+		setExpandRatio(buttonLayout, 0.05F);
 		setExpandRatio(pagedTable, 0.90F);
 		setExpandRatio(pagerControls, 0.05F);
 	}
@@ -188,7 +223,7 @@ public class TransactionsView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		editBtn.setVisible(false);
 		reloadResult();
 
 	}
