@@ -1,5 +1,6 @@
 package com.dmg.admin.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -54,25 +55,33 @@ public class UserAccount extends AbstractPojo {
 	@Column(name = "STATUS")
 	private int status;
 
-	@Column(name = "ACTIVATIONSTRING")
-	private String activationString;
-
 	@Column(name = "LASTUPDATE")
 	private Date lastUpdate;
 
+	@Column(name = "PASS_RESET_KEY")
+	private String passResetKey;
+
+	@Column(name = "ACTIVATION_KEY")
+	private String activationKey;
+	
 	@Column(name = "ENABLE")
 	private Boolean enable;
 
+	@Column(name="BALANCE")
+	private BigDecimal balance;
+	
 	@Column(name = "SYNC_STATUS")
 	private int syncStatus;
-
+	
+	
 	public UserAccount() {
 
 	}
 
-	public UserAccount(String email, String password) {
-		this.email = email;
+	public UserAccount(String accountNo, String password, String city) {
+		contractNo = accountNo;
 		this.password = password;
+		this.city = city;
 	}
 
 	public String getEmail() {
@@ -171,14 +180,6 @@ public class UserAccount extends AbstractPojo {
 		this.status = status;
 	}
 
-	public String getActivationString() {
-		return activationString;
-	}
-
-	public void setActivationString(String activationString) {
-		this.activationString = activationString;
-	}
-
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}
@@ -191,14 +192,43 @@ public class UserAccount extends AbstractPojo {
 		return serialVersionUID;
 	}
 
-	public Boolean getEnable() {
+	public String getPassResetKey() {
+		return passResetKey;
+	}
+
+	public void setPassResetKey(String passResetKey) {
+		this.passResetKey = passResetKey;
+	}
+
+	public String getActivationKey() {
+		return activationKey;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
+	}
+	
+	
+	public Boolean isEnable() {
 		return enable;
 	}
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
+	
+	public BigDecimal getBalance() {
+		return balance;
+	}
 
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
+
+	public Boolean getEnable() {
+		return enable;
+	}
+	
 	public int getSyncStatus() {
 		return syncStatus;
 	}
@@ -210,8 +240,8 @@ public class UserAccount extends AbstractPojo {
 	@Override
 	public String toString() {
 		return "UserAccount [email=" + email + ", password=" + password + ", name=" + name + ", city=" + city + ", buildingNumber=" + buildingNumber + ", appartmentNumber=" + appartmentNumber
-				+ ", accountId=" + contractNo + ", phone=" + phone + ", mobile=" + mobile + ", pobox=" + pobox + ", poboxCity=" + poboxCity + ", status=" + status + ", activationString="
-				+ activationString + ", lastUpdate=" + lastUpdate + "]";
+				+ ", accountId=" + contractNo + ", phone=" + phone + ", mobile=" + mobile + ", pobox=" + pobox + ", poboxCity=" + poboxCity + ", status=" + status 
+				 + ", lastUpdate=" + lastUpdate + "]";
 	}
 
 }

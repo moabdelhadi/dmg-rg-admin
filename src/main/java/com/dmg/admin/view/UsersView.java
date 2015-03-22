@@ -72,7 +72,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("mobile", String.class, null);
 		pagedTable.addContainerProperty("pobox", String.class, null);
 		pagedTable.addContainerProperty("poboxCity", String.class, null);
-		pagedTable.addContainerProperty("activationString", String.class, null);
+//		pagedTable.addContainerProperty("activationString", String.class, null);
 		pagedTable.addContainerProperty("enabled", Boolean.class, null);
 
 		pagedTable.setColumnHeader("name", "Name");
@@ -85,13 +85,13 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("mobile", "Mobile");
 		pagedTable.setColumnHeader("pobox", "P.O.Box");
 		pagedTable.setColumnHeader("poboxCity", "P.O.Box City");
-		pagedTable.setColumnHeader("activationString", "Activation");
+//		pagedTable.setColumnHeader("activationString", "Activation");
 		pagedTable.setColumnHeader("enable", "Enable");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "activationString", "enable");
+		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "enable");
 
 		pagedTable.setColumnExpandRatio("name", 0.10F);
 		pagedTable.setColumnExpandRatio("email", 0.10F);
@@ -103,7 +103,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnExpandRatio("mobile", 0.10F);
 		pagedTable.setColumnExpandRatio("pobox", 0.05F);
 		pagedTable.setColumnExpandRatio("poboxCity", 0.05F);
-		pagedTable.setColumnExpandRatio("activationString", 0.05F);
+//		pagedTable.setColumnExpandRatio("activationString", 0.05F);
 		pagedTable.setColumnExpandRatio("enable", 0.10F);
 
 		pagedTable.addGeneratedColumn("enable", new ColumnGenerator() {
