@@ -1,9 +1,9 @@
 package com.dmg.admin.view;
 
-import com.dmg.admin.bean.Bill;
 import com.dmg.admin.service.BillService;
 import com.dmg.admin.ui.BillDisplayLayout;
 import com.dmg.admin.ui.ComponentUtil;
+import com.dmg.core.bean.Bill;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;

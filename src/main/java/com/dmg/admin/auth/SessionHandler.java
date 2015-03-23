@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dmg.admin.bean.User;
+import com.dmg.core.bean.User;
 import com.vaadin.server.VaadinService;
 
 /**

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.dmg.admin.bean.Bill;
+import com.dmg.core.bean.Bill;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 

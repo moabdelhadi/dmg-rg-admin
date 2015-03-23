@@ -3,15 +3,15 @@ package com.dmg.admin.view;
 import java.util.Date;
 import java.util.List;
 
-import com.dmg.admin.bean.Transaction;
 import com.dmg.admin.service.TransactionService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
-import com.dmg.admin.util.ApproveStatusEnum;
 import com.dmg.admin.util.ViewUtil;
+import com.dmg.core.bean.ApproveStatusEnum;
+import com.dmg.core.bean.Transaction;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;

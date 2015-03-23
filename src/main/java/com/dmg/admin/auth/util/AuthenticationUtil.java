@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.security.auth.login.AccountLockedException;
 
 import com.dmg.admin.auth.SessionHandler;
-import com.dmg.admin.bean.User;
 import com.dmg.admin.exception.InvalidCredentialsException;
 import com.dmg.admin.util.PropertiesManager;
+import com.dmg.core.bean.User;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.dmg.core.persistence.FacadeFactory;
 

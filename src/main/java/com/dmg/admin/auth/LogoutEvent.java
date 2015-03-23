@@ -2,7 +2,7 @@ package com.dmg.admin.auth;
 
 import java.io.Serializable;
 
-import com.dmg.admin.bean.User;
+import com.dmg.core.bean.User;
 
 /**
  * Interface for listening to logout events.

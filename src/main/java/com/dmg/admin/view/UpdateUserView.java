@@ -1,9 +1,9 @@
 package com.dmg.admin.view;
 
-import com.dmg.admin.bean.UserAccount;
 import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.UserAccountForm;
+import com.dmg.core.bean.UserAccount;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;

@@ -2,7 +2,6 @@ package com.dmg.admin.view;
 
 import java.util.List;
 
-import com.dmg.admin.bean.UserAccount;
 import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
@@ -10,6 +9,7 @@ import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
 import com.dmg.admin.util.ViewUtil;
+import com.dmg.core.bean.UserAccount;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
@@ -22,8 +22,8 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;

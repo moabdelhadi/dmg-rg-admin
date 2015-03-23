@@ -6,9 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dmg.admin.bean.User;
 import com.dmg.admin.exception.PasswordRequirementException;
 import com.dmg.admin.util.PropertiesManager;
+import com.dmg.core.bean.User;
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.RegexpValidator;

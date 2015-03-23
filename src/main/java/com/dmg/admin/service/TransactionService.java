@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-import com.dmg.admin.bean.Transaction;
+import com.dmg.core.bean.Transaction;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.dmg.core.persistence.FacadeFactory;
 

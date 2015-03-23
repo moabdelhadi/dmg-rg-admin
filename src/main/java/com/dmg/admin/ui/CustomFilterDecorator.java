@@ -7,7 +7,9 @@ import java.util.Locale;
 import org.tepi.filtertable.FilterDecorator;
 import org.tepi.filtertable.numberfilter.NumberFilterPopupConfig;
 
-import com.dmg.admin.util.ApproveStatusEnum;
+
+
+import com.dmg.core.bean.ApproveStatusEnum;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;

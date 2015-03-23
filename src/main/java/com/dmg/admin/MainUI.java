@@ -50,7 +50,7 @@ public class MainUI extends UI {
 						return false;
 					}
 				}
-				if (SessionHandler.get() == null) {
+				if (SessionHandler.get() == null || SessionHandler.get().getCity()==null) {
 					String fragmentAndParameters = event.getViewName();
 					if (event.getParameters() != null) {
 						fragmentAndParameters += "/";

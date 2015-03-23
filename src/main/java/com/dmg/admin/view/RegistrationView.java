@@ -2,7 +2,6 @@ package com.dmg.admin.view;
 
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.auth.util.UserUtil;
-import com.dmg.admin.bean.User;
 import com.dmg.admin.exception.EmailInvalidException;
 import com.dmg.admin.exception.PasswordRequirementException;
 import com.dmg.admin.exception.PasswordsDoNotMatchException;
@@ -10,6 +9,7 @@ import com.dmg.admin.exception.TooShortPasswordException;
 import com.dmg.admin.exception.TooShortUsernameException;
 import com.dmg.admin.exception.UsernameExistsException;
 import com.dmg.admin.ui.ComponentUtil;
+import com.dmg.core.bean.User;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.google.gwt.thirdparty.guava.common.base.Strings;
 import com.vaadin.navigator.Navigator;

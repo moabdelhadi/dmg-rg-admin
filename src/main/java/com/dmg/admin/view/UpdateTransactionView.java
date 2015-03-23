@@ -1,9 +1,9 @@
 package com.dmg.admin.view;
 
-import com.dmg.admin.bean.Transaction;
 import com.dmg.admin.service.TransactionService;
 import com.dmg.admin.ui.ComponentUtil;
-import com.dmg.admin.util.ApproveStatusEnum;
+import com.dmg.core.bean.ApproveStatusEnum;
+import com.dmg.core.bean.Transaction;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -11,14 +11,14 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class UpdateTransactionView extends VerticalLayout implements View {
@@ -133,7 +133,7 @@ public class UpdateTransactionView extends VerticalLayout implements View {
 			cityField.setValue(transation.getCity());
 			statusField.setValue(transation.getStatus());
 			amountField.setValue(transation.getAmount());
-			feesField.setValue(transation.getFees());
+			feesField.setValue(transation.getFees().toString());
 			approveStatus.setValue(transation.getApproveStatusEnum().getName());
 
 			layout.addComponent(updateBtn);

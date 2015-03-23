@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dmg.admin.auth.SessionHandler;
-import com.dmg.admin.bean.User;
 import com.dmg.admin.exception.EmailInvalidException;
 import com.dmg.admin.exception.InvalidCredentialsException;
 import com.dmg.admin.exception.PasswordRequirementException;
@@ -15,6 +14,7 @@ import com.dmg.admin.exception.TooShortPasswordException;
 import com.dmg.admin.exception.TooShortUsernameException;
 import com.dmg.admin.exception.UsernameExistsException;
 import com.dmg.admin.util.PropertiesManager;
+import com.dmg.core.bean.User;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.dmg.core.persistence.FacadeFactory;
 

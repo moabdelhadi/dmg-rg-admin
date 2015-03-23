@@ -1,6 +1,6 @@
 package com.dmg.admin.ui;
 
-import com.dmg.admin.bean.UserAccount;
+import com.dmg.core.bean.UserAccount;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
