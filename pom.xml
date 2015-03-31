@@ -105,24 +105,7 @@
 		   <artifactId>tableexport-for-vaadin</artifactId>
 		   <version>1.5.1.3</version>
 		</dependency>
-		<!-- END OF ADDONS -->
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.18</version>
-		</dependency>
-				
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-servlet</artifactId>
-			<version>1.18</version>
-		</dependency>	
-
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.18</version>
-		</dependency>
+		<!-- END OF ADDONS -->	
 		
 		<dependency>
 			<groupId>commons-lang</groupId>
