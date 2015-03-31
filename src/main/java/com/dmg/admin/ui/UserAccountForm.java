@@ -8,6 +8,7 @@ import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 public class UserAccountForm extends CustomComponent {
@@ -50,6 +51,10 @@ public class UserAccountForm extends CustomComponent {
 	@PropertyId("enable")
 	CheckBox enableField = new CheckBox("Enable");
 
+	PasswordField passwordField = new PasswordField("New Password");
+
+	PasswordField confirmPasswordField = new PasswordField("Confirm Password");
+
 	FormLayout layout = new FormLayout();
 
 	FieldGroup binder;
@@ -70,31 +75,28 @@ public class UserAccountForm extends CustomComponent {
 		mobileField.setWidth("100%");
 		poboxField.setWidth("100%");
 		poboxCityField.setWidth("100%");
-		// setting default values for null
-		nameField.setNullRepresentation("");
-		emailField.setNullRepresentation("");
-		cityField.setNullRepresentation("");
-		buildingNumberField.setNullRepresentation("");
-		appartmentNumberField.setNullRepresentation("");
-		contractNoField.setNullRepresentation("");
-		phoneField.setNullRepresentation("");
-		mobileField.setNullRepresentation("");
-		poboxField.setNullRepresentation("");
-		poboxCityField.setNullRepresentation("");
+		passwordField.setWidth("100%");
+		confirmPasswordField.setWidth("100%");
+
+		passwordField.setInputPrompt("password");
+		confirmPasswordField.setInputPrompt("password");
 
 		emailField.addValidator(new EmailValidator("Please enter a valid email"));
 
-		layout.addComponent(nameField);
-		layout.addComponent(emailField);
 		layout.addComponent(cityField);
+		layout.addComponent(contractNoField);
 		layout.addComponent(buildingNumberField);
 		layout.addComponent(appartmentNumberField);
-		layout.addComponent(contractNoField);
-		layout.addComponent(phoneField);
+		layout.addComponent(nameField);
+		layout.addComponent(emailField);
 		layout.addComponent(mobileField);
+		layout.addComponent(phoneField);
 		layout.addComponent(poboxField);
 		layout.addComponent(poboxCityField);
+		layout.addComponent(passwordField);
+		layout.addComponent(confirmPasswordField);
 		layout.addComponent(enableField);
+
 		// TODO Auto-generated constructor stub
 
 		BeanItem<UserAccount> bean = new BeanItem<UserAccount>(item);
@@ -105,8 +107,32 @@ public class UserAccountForm extends CustomComponent {
 
 	}
 
+	public PasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public PasswordField getConfirmPasswordField() {
+		return confirmPasswordField;
+	}
+
 	public TextField getNameField() {
 		return nameField;
+	}
+
+	public TextField getCityField() {
+		return cityField;
+	}
+
+	public TextField getBuildingNumberField() {
+		return buildingNumberField;
+	}
+
+	public TextField getAppartmentNumberField() {
+		return appartmentNumberField;
+	}
+
+	public TextField getContractNoField() {
+		return contractNoField;
 	}
 
 	public FormLayout getLayout() {

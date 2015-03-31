@@ -1,5 +1,7 @@
 package com.dmg.admin.view;
 
+import com.dmg.admin.auth.util.PasswordUtil;
+import com.dmg.admin.exception.PasswordRequirementException;
 import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.UserAccountForm;
@@ -64,10 +66,12 @@ public class UpdateUserView extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 
 				try {
-					userAccountForm.getBinder().commit();
-					userAccount.setSyncStatus(1);
-					accountService.update(userAccount);
-					Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
+					if (validatePassword()) {
+						userAccountForm.getBinder().commit();
+						userAccount.setSyncStatus(2);
+						accountService.update(userAccount);
+						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
+					}
 				} catch (CommitException e) {
 					Notification.show("Error commiting changes - " + e.getCause().getMessage(), Type.ERROR_MESSAGE);
 				} catch (DataAccessLayerException e) {
@@ -77,39 +81,33 @@ public class UpdateUserView extends VerticalLayout implements View {
 		});
 	}
 
+	private boolean validatePassword() {
+		String password = userAccountForm.getPasswordField().getValue();
+		if (password != null && !"".equals(password)) {
+			String confirmPassword = userAccountForm.getConfirmPasswordField().getValue();
+			if (confirmPassword != null && confirmPassword.equals(password)) {
+				try {
+					PasswordUtil.isValid(password);
+				} catch (PasswordRequirementException e) {
+					Notification.show("ERROR", e.getMessage(), Type.ERROR_MESSAGE);
+					return false;
+				}
+				String hashedPassword = PasswordUtil.generateHashedPassword(password);
+				userAccount.setPassword(hashedPassword);
+				return true;
+			} else {
+				Notification.show("ERROR", "Password and confirmation do not match!", Type.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 		id = event.getParameters();
 		try {
 			userAccount = accountService.getUserAcount(Long.parseLong(id));
-
-			/*
-			 * FormLayout formLayout = new FormLayout(); TextField nameField =
-			 * new TextField("Name"); nameField.setWidth("150%");
-			 * formLayout.addComponent(nameField); TextField emailField = new
-			 * TextField("Email"); emailField.setWidth("150%");
-			 * formLayout.addComponent(emailField); TextField cityField = new
-			 * TextField("City"); cityField.setWidth("150%");
-			 * formLayout.addComponent(cityField); TextField buildingNumberField
-			 * = new TextField("Building Number");
-			 * buildingNumberField.setWidth("150%");
-			 * formLayout.addComponent(buildingNumberField); TextField
-			 * appartmentNumberField = new TextField("Apartment Number");
-			 * appartmentNumberField.setWidth("150%");
-			 * formLayout.addComponent(appartmentNumberField); TextField
-			 * contractNoField = new TextField("Contract Number");
-			 * contractNoField.setWidth("150%");
-			 * formLayout.addComponent(contractNoField); TextField phoneField =
-			 * new TextField("Phone"); phoneField.setWidth("150%");
-			 * formLayout.addComponent(phoneField); TextField mobileField = new
-			 * TextField("Mobile"); mobileField.setWidth("150%");
-			 * formLayout.addComponent(mobileField); TextField poboxField = new
-			 * TextField("P.O.Box"); poboxField.setWidth("150%");
-			 * formLayout.addComponent(poboxField); TextField poboxCityField =
-			 * new TextField("P.O.Box City"); poboxCityField.setWidth("150%");
-			 * formLayout.addComponent(poboxCityField);
-			 * formLayout.setWidth("100%"); formLayout.setMargin(true);
-			 */
 
 			PropertysetItem item = new PropertysetItem();
 			item.addItemProperty("name", new ObjectProperty<String>(userAccount.getName() == null ? "" : userAccount.getName()));
@@ -124,40 +122,14 @@ public class UpdateUserView extends VerticalLayout implements View {
 			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
 			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
 
-			// formLayout.setMargin(true);
-
-			// Now create a binder that can also create the fields
-			// using the default field factory
-			/*
-			 * FieldGroup binder = new FieldGroup(item); binder.bind(nameField,
-			 * "name"); binder.bind(emailField, "email"); binder.bind(cityField,
-			 * "city"); binder.bind(buildingNumberField, "buildingNumber");
-			 * binder.bind(appartmentNumberField, "apartmentNumber");
-			 * binder.bind(contractNoField, "contractNumber");
-			 * binder.bind(phoneField, "phone"); binder.bind(mobileField,
-			 * "mobile"); binder.bind(poboxField, "pobox");
-			 * binder.bind(poboxCityField, "poboxCity");
-			 */
-			/*
-			 * formLayout.addComponent(binder.buildAndBind("Name", "name"));
-			 * formLayout.addComponent(binder.buildAndBind("Email", "email"));
-			 * formLayout.addComponent(binder.buildAndBind("City", "city"));
-			 * formLayout.addComponent(binder.buildAndBind("Building #",
-			 * "buildingNumber"));
-			 * formLayout.addComponent(binder.buildAndBind("Apartment #",
-			 * "apartmentNumber"));
-			 * formLayout.addComponent(binder.buildAndBind("Contract #",
-			 * "contractNumber"));
-			 * formLayout.addComponent(binder.buildAndBind("Phone", "phone"));
-			 * formLayout.addComponent(binder.buildAndBind("Mobile", "mobile"));
-			 * formLayout.addComponent(binder.buildAndBind("P.O.Box", "pobox"));
-			 * formLayout.addComponent(binder.buildAndBind("P.O.Box City",
-			 * "poboxCity"));
-			 */
 			userAccountForm = new UserAccountForm(userAccount);
+			//here setting the read only fields
 			userAccountForm.getNameField().setReadOnly(true);
+			userAccountForm.getCityField().setReadOnly(true);
+			userAccountForm.getContractNoField().setReadOnly(true);
+			userAccountForm.getBuildingNumberField().setReadOnly(true);
+			userAccountForm.getAppartmentNumberField().setReadOnly(true);
 			userAccountForm.getLayout().addComponent(updateBtn);
-
 			panel.setContent(userAccountForm);
 		} catch (NumberFormatException | DataAccessLayerException e) {
 			if (e instanceof NumberFormatException) {

@@ -138,7 +138,7 @@ public class UpdateTransactionView extends VerticalLayout implements View {
 			contractNoField.setValue(transation.getContractNo());
 			cityField.setValue(transation.getCity());
 			statusField.setValue(transation.getStatus());
-			amountField.setValue(transation.getAmount());
+			amountField.setValue(String.valueOf(transation.getDoubleAmount()));
 			feesField.setValue(transation.getFees().toString());
 			approveStatus.setValue(transation.getApproveStatusEnum().getName());
 
