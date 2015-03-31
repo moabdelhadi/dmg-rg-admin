@@ -107,6 +107,12 @@ public class UpdateTransactionView extends VerticalLayout implements View {
 		amountField.setNullRepresentation("");
 		feesField.setNullRepresentation("");
 
+		contractNoField.setEnabled(false);
+		cityField.setEnabled(false);
+		statusField.setEnabled(false);
+		amountField.setEnabled(false);
+		feesField.setEnabled(false);
+
 		approveStatus.addItem(ApproveStatusEnum.APPROVED.getName());
 		approveStatus.setItemIcon(ApproveStatusEnum.APPROVED.getName(), new ThemeResource("img/approved.png"));
 
