@@ -30,28 +30,27 @@ public class BillService implements Serializable {
 	private static final String LIST_QUERY_ORDERED_BY_DATE_AUH = "SELECT b FROM BillAUH b ORDER BY b.creationDate DESC";
 	private static final String LIST_QUERY_DU = "SELECT b FROM BillDu b ";
 	private static final String LIST_QUERY_AUH = "SELECT b FROM BillAUH b ";
-	
+
 	private static final Logger log = LoggerFactory.getLogger(BillService.class);
-	
 
 	public List<Bill> listBills() throws DataAccessLayerException {
-		
+
 		String city = SessionHandler.get().getCity();
 		String query = "";
-		if(city=="DUBAI"){
+		if ("DUBAI".equals(city)) {
 			query = LIST_QUERY_ORDERED_BY_DATE_DU;
-		}else if(city=="ABUDHABI"){
+		} else if ("ABUDHABI".equals(city)) {
 			query = LIST_QUERY_ORDERED_BY_DATE_AUH;
-		}else {
+		} else {
 			log.error("Error in Get the City Value= : " + city);
 			return null;
 		}
-		
+
 		return FacadeFactory.getFacade().list(query, new HashMap<String, Object>());
 	}
 
 	public Bill getBill(long id) throws DataAccessLayerException {
-		
+
 		String city = SessionHandler.get().getCity();
 		Bill bill = BeansFactory.getInstance().getBill(city);
 		return FacadeFactory.getFacade().find(bill.getClass(), id);
@@ -62,18 +61,18 @@ public class BillService implements Serializable {
 	}
 
 	public Bill findBill(Bill bill) throws DataAccessLayerException {
-		
+
 		String city = SessionHandler.get().getCity();
 		String query = "";
-		if(city=="DUBAI"){
+		if (city == "DUBAI") {
 			query = LIST_QUERY_DU;
-		}else if(city=="ABUDHABI"){
+		} else if (city == "ABUDHABI") {
 			query = LIST_QUERY_AUH;
-		}else {
+		} else {
 			log.error("Error , findBill,  in Get the City Value= : " + city);
 			return null;
 		}
-		
+
 		query += "WHERE b.company=:company AND b.yearCode=:yearCode AND b.docNo=:docNo AND b.docType=:docType AND b.srNo=:srNo";
 		Map<String, Object> parameters = new LinkedHashMap<String, Object>();
 		parameters.put("city", bill.getCity());
