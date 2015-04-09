@@ -7,9 +7,8 @@ import java.util.Locale;
 import org.tepi.filtertable.FilterDecorator;
 import org.tepi.filtertable.numberfilter.NumberFilterPopupConfig;
 
-
-
 import com.dmg.core.bean.ApproveStatusEnum;
+import com.dmg.core.bean.PayEnum;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -30,6 +29,18 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 				return ApproveStatusEnum.PENDING.getName();
 			}
 		}
+
+		if ("payEnum".equals(propertyId)) {
+			PayEnum statusEnum = (PayEnum) value;
+			switch (statusEnum) {
+			case PAYED:
+				return PayEnum.PAYED.getType();
+			case NOTPAYED:
+				return PayEnum.NOTPAYED.getType();
+			default:
+				return PayEnum.NOTPAYED.getType();
+			}
+		}
 		return null;
 
 	}
@@ -45,6 +56,18 @@ public class CustomFilterDecorator implements FilterDecorator, Serializable {
 				return new ThemeResource("img/rejected.png");
 			default:
 				return new ThemeResource("img/pending.png");
+			}
+		}
+
+		if ("payEnum".equals(propertyId)) {
+			PayEnum statusEnum = (PayEnum) value;
+			switch (statusEnum) {
+			case PAYED:
+				return new ThemeResource("img/enable.png");
+			case NOTPAYED:
+				return new ThemeResource("img/disable.png");
+			default:
+				return new ThemeResource("img/disable.png");
 			}
 		}
 		return null;

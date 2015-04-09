@@ -6,9 +6,11 @@ import java.sql.Timestamp;
 import org.tepi.filtertable.FilterGenerator;
 import org.tepi.filtertable.datefilter.DateInterval;
 
+import com.dmg.core.bean.PayEnum;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Between;
 import com.vaadin.data.util.filter.Compare;
+import com.vaadin.data.util.filter.Not;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Field;
 
@@ -33,6 +35,19 @@ public class CustomFilterGenerator implements FilterGenerator, Serializable {
 				return new Compare.GreaterOrEqual(propertyId, actualFrom);
 			} else {
 				return new Compare.LessOrEqual(propertyId, actualTo);
+			}
+		}
+
+		if ("payEnum".equals(propertyId)) {
+			PayEnum v = (PayEnum) value;
+			if (v != null) {
+				if (v == PayEnum.NOTPAYED) {
+					return new Compare.Equal("lastReceivedPayReference", "");
+				} else {
+					return new Not(new Compare.Equal("lastReceivedPayReference", ""));
+
+				}
+
 			}
 		}
 

@@ -12,14 +12,18 @@ import com.dmg.admin.view.TransactionsView;
 import com.dmg.admin.view.UpdateTransactionView;
 import com.dmg.admin.view.UpdateUserView;
 import com.dmg.admin.view.UsersView;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.communication.PushMode;
+import com.vaadin.shared.ui.ui.Transport;
 import com.vaadin.ui.UI;
 
 @Theme("dmg-theme")
 @SuppressWarnings("serial")
+@Push(value = PushMode.MANUAL, transport = Transport.LONG_POLLING)
 public class MainUI extends UI {
 
 	private Navigator navigator;
@@ -50,7 +54,7 @@ public class MainUI extends UI {
 						return false;
 					}
 				}
-				if (SessionHandler.get() == null || SessionHandler.get().getCity()==null) {
+				if (SessionHandler.get() == null || SessionHandler.get().getCity() == null) {
 					String fragmentAndParameters = event.getViewName();
 					if (event.getParameters() != null) {
 						fragmentAndParameters += "/";
