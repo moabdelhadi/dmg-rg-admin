@@ -31,8 +31,8 @@ public class TransactionService implements Serializable {
 	 */
 	private static final Logger log = LoggerFactory.getLogger(TransactionService.class);
 
-	private static final String LIST_QUERY_ORDERED_BY_DATE_DU = "SELECT t FROM Transaction t ORDER BY t.creationDate DESC";
-	private static final String LIST_QUERY_ORDERED_BY_DATE_AUH = "SELECT t FROM Transaction t ORDER BY t.creationDate DESC";
+	private static final String LIST_QUERY_ORDERED_BY_DATE_DU = "SELECT t FROM TransactionDu t ORDER BY t.creationDate DESC";
+	private static final String LIST_QUERY_ORDERED_BY_DATE_AUH = "SELECT t FROM TransactionAUH t ORDER BY t.creationDate DESC";
 
 	public List<Transaction> listTransactions() throws DataAccessLayerException {
 		
