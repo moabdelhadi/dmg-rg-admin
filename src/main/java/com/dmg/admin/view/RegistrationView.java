@@ -18,6 +18,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -77,6 +78,13 @@ public class RegistrationView extends VerticalLayout implements View {
 		email.setWidth("100%");
 		formLayout.addComponent(email);
 
+		final ComboBox city = new ComboBox("City");
+		email.setWidth("100%");
+		city.addItem("DUBAI");
+		city.addItem("ABUDHABI");
+		city.setNullSelectionAllowed(false);
+		formLayout.addComponent(city);
+
 		final Button loginButton = new Button("Register");
 		loginButton.addStyleName(Runo.BUTTON_BIG);
 		formLayout.addComponent(loginButton);
@@ -98,12 +106,12 @@ public class RegistrationView extends VerticalLayout implements View {
 				User user = null;
 
 				if (Strings.isNullOrEmpty(fullName.getValue()) || Strings.isNullOrEmpty(username.getValue()) || Strings.isNullOrEmpty(password.getValue())
-						|| Strings.isNullOrEmpty(passwordVer.getValue()) || Strings.isNullOrEmpty(email.getValue())) {
+						|| Strings.isNullOrEmpty(passwordVer.getValue()) || Strings.isNullOrEmpty(email.getValue()) || Strings.isNullOrEmpty((String) city.getValue())) {
 					Notification.show("Error", "Please fill all the fields", Type.ERROR_MESSAGE);
 					return;
 				}
 				try {
-					user = UserUtil.registerUser(username.getValue(), password.getValue(), passwordVer.getValue(), email.getValue(), fullName.getValue());
+					user = UserUtil.registerUser(username.getValue(), password.getValue(), passwordVer.getValue(), email.getValue(), fullName.getValue(), (String) city.getValue());
 				} catch (TooShortPasswordException e) {
 					Notification.show("Error", "Password is too short", Type.ERROR_MESSAGE);
 					return;

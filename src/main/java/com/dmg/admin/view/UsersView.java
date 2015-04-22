@@ -1,8 +1,6 @@
 package com.dmg.admin.view;
 
-import java.util.List;
-
-import com.dmg.admin.service.UserAccountService;
+import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
@@ -10,7 +8,10 @@ import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
 import com.dmg.admin.util.ViewUtil;
 import com.dmg.core.bean.UserAccount;
-import com.dmg.core.exception.DataAccessLayerException;
+import com.dmg.core.bean.UserAccountsAUH;
+import com.dmg.core.bean.UserAccountsDU;
+import com.vaadin.addon.jpacontainer.JPAContainer;
+import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.util.BeanItemContainer;
@@ -27,8 +28,6 @@ import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 public class UsersView extends VerticalLayout implements View {
@@ -39,19 +38,30 @@ public class UsersView extends VerticalLayout implements View {
 	private static final long serialVersionUID = -4787817640065298241L;
 	public static final String NAME = "users";
 	private CustomPagedFilterTable pagedTable;
-	private List<UserAccount> userAccounts;
-	private final UserAccountService accountService;
 	BeanItemContainer<UserAccount> container = new BeanItemContainer<UserAccount>(UserAccount.class);
+	JPAContainer jpaContainer;
 	private ExcelExport excelExport;
 	private Button editBtn;
 	private final Navigator navigator;
+	private String city = "";
 
 	public UsersView(Navigator navigator) {
 		this.navigator = navigator;
 		initView();
-		accountService = new UserAccountService();
 		setSizeFull();
 		setSpacing(true);
+	}
+
+	private void initPagedTable() {
+		city = SessionHandler.get().getCity();
+		if ("DUBAI".equals(city)) {
+			jpaContainer = JPAContainerFactory.makeBatchable(UserAccountsDU.class, "dmg-rg-admin");
+		} else {
+			jpaContainer = JPAContainerFactory.makeBatchable(UserAccountsAUH.class, "dmg-rg-admin");
+		}
+		pagedTable.setContainerDataSource(jpaContainer);
+		pagedTable.setCaption("Bills found (" + jpaContainer.size() + ")");
+		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "enable");
 	}
 
 	public void initView() {
@@ -72,7 +82,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("mobile", String.class, null);
 		pagedTable.addContainerProperty("pobox", String.class, null);
 		pagedTable.addContainerProperty("poboxCity", String.class, null);
-//		pagedTable.addContainerProperty("activationString", String.class, null);
+		//		pagedTable.addContainerProperty("activationString", String.class, null);
 		pagedTable.addContainerProperty("enabled", Boolean.class, null);
 
 		pagedTable.setColumnHeader("name", "Name");
@@ -85,13 +95,11 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("mobile", "Mobile");
 		pagedTable.setColumnHeader("pobox", "P.O.Box");
 		pagedTable.setColumnHeader("poboxCity", "P.O.Box City");
-//		pagedTable.setColumnHeader("activationString", "Activation");
+		//		pagedTable.setColumnHeader("activationString", "Activation");
 		pagedTable.setColumnHeader("enable", "Enable");
 
-		pagedTable.setContainerDataSource(container);
+		//pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
-
-		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "poboxCity", "enable");
 
 		pagedTable.setColumnExpandRatio("name", 0.10F);
 		pagedTable.setColumnExpandRatio("email", 0.10F);
@@ -103,7 +111,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnExpandRatio("mobile", 0.10F);
 		pagedTable.setColumnExpandRatio("pobox", 0.05F);
 		pagedTable.setColumnExpandRatio("poboxCity", 0.05F);
-//		pagedTable.setColumnExpandRatio("activationString", 0.05F);
+		//		pagedTable.setColumnExpandRatio("activationString", 0.05F);
 		pagedTable.setColumnExpandRatio("enable", 0.10F);
 
 		pagedTable.addGeneratedColumn("enable", new ColumnGenerator() {
@@ -115,14 +123,21 @@ public class UsersView extends VerticalLayout implements View {
 
 			@Override
 			public Image generateCell(final CustomTable source, final Object itemId, Object columnId) {
-
-				if (((UserAccount) itemId).getEnable()) {
-					Image enable = new Image(null, new ThemeResource("img/enable.png"));
-					return enable;
+				UserAccount userAccount;
+				Image icon;
+				if ("DUBAI".equals(city)) {
+					userAccount = (UserAccountsDU) jpaContainer.getItem(itemId).getEntity();
 				} else {
-					Image enable = new Image(null, new ThemeResource("img/disable.png"));
-					return enable;
+					userAccount = (UserAccountsAUH) jpaContainer.getItem(itemId).getEntity();
 				}
+				if (userAccount.getEnable()) {
+					icon = new Image(null, new ThemeResource("img/enable.png"));
+
+				} else {
+					icon = new Image(null, new ThemeResource("img/disable.png"));
+
+				}
+				return icon;
 
 			}
 
@@ -167,7 +182,7 @@ public class UsersView extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				navigator.navigateTo(UpdateUserView.NAME + "/" + ((UserAccount) pagedTable.getValue()).getId());
+				navigator.navigateTo(UpdateUserView.NAME + "/" + pagedTable.getValue());
 
 			}
 		});
@@ -208,26 +223,10 @@ public class UsersView extends VerticalLayout implements View {
 
 	}
 
-	private void reloadResult() {
-		try {
-			userAccounts = accountService.lisUsers();
-		} catch (DataAccessLayerException e) {
-			Notification.show("Error", "There was a DB error while retrieving Users please contact help disk", Type.ERROR_MESSAGE);
-		}
-		container.removeAllItems();
-		for (UserAccount userAccount : userAccounts) {
-			container.addBean(userAccount);
-		}
-		pagedTable.setCurrentPage(1);
-		pagedTable.setCaption("Events found (" + userAccounts.size() + ")");
-		pagedTable.setImmediate(true);
-
-	}
-
 	@Override
 	public void enter(ViewChangeEvent event) {
+		initPagedTable();
 		editBtn.setVisible(false);
-		reloadResult();
 
 	}
 

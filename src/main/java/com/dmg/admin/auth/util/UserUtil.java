@@ -61,7 +61,7 @@ public class UserUtil implements Serializable {
 	 *             Thrown if the email is invalid
 	 * @throws DataAccessLayerException
 	 */
-	public static User registerUser(String username, String password, String verifyPassword, String email, String fullName) throws TooShortPasswordException, TooShortUsernameException,
+	public static User registerUser(String username, String password, String verifyPassword, String email, String fullName, String city) throws TooShortPasswordException, TooShortUsernameException,
 			PasswordsDoNotMatchException, UsernameExistsException, PasswordRequirementException, EmailInvalidException, DataAccessLayerException {
 
 		verifyUsernameLength(username);
@@ -72,7 +72,7 @@ public class UserUtil implements Serializable {
 		verifyEmailValidity(email);
 
 		// Everything is ok, create the user
-		User user = createUser(username, password, email, fullName);
+		User user = createUser(username, password, email, fullName, city);
 
 		return user;
 	}
@@ -105,13 +105,14 @@ public class UserUtil implements Serializable {
 	 * @return The created {@link User} object
 	 * @throws DataAccessLayerException
 	 */
-	private static User createUser(String username, String password, String email, String fullName) throws DataAccessLayerException {
+	private static User createUser(String username, String password, String email, String fullName, String city) throws DataAccessLayerException {
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(PasswordUtil.generateHashedPassword(password));
 		user.setEmail(email);
 		user.setFullName(fullName);
 		user.setCreationDate(new Date());
+		user.setCity(city);
 
 		FacadeFactory.getFacade().store(user);
 		return user;
