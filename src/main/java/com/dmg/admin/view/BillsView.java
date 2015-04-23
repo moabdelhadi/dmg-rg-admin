@@ -20,6 +20,8 @@ import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
+import com.vaadin.data.Container.ItemSetChangeEvent;
+import com.vaadin.data.Container.ItemSetChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -39,6 +41,7 @@ import com.vaadin.ui.Window;
 
 public class BillsView extends VerticalLayout implements View {
 
+	private static final int EXPORT_LIMIT = 5000;
 	/**
 	 * 
 	 */
@@ -53,6 +56,7 @@ public class BillsView extends VerticalLayout implements View {
 	private Button detailsBtn;
 	private final Window billWindow = new Window();
 	private String city = "";
+	private final Button exportBtn = new Button("Export");
 
 	public BillsView(Navigator navigator) {
 		this.navigator = navigator;
@@ -149,6 +153,21 @@ public class BillsView extends VerticalLayout implements View {
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		buttonLayout.setWidth("100%");
 
+		pagedTable.addItemSetChangeListener(new ItemSetChangeListener() {
+
+			@Override
+			public void containerItemSetChange(ItemSetChangeEvent event) {
+				int itemSize = jpaContainer.size();
+				pagedTable.setCaption("Bills found (" + itemSize + ")");
+				if (itemSize > EXPORT_LIMIT) {
+					exportBtn.setVisible(false);
+				} else {
+					exportBtn.setVisible(true);
+				}
+
+			}
+		});
+
 		detailsBtn = new Button("Details");
 		detailsBtn.setIcon(new ThemeResource(ViewUtil.EDIT_ICON));
 
@@ -165,8 +184,7 @@ public class BillsView extends VerticalLayout implements View {
 			}
 
 		});
-
-		Button exportBtn = new Button("Export");
+		exportBtn.setVisible(false);
 		exportBtn.setIcon(new ThemeResource(ViewUtil.EXCEL_ICON));
 		exportBtn.addClickListener(new ClickListener() {
 
