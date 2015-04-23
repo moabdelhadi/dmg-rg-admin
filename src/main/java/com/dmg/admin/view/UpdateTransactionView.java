@@ -75,7 +75,7 @@ public class UpdateTransactionView extends VerticalLayout implements View {
 
 				try {
 					if (approveStatus.getValue() != transation.getApproveStatusEnum().getName()) {
-						transation.setSyncStatus(2);
+						//transation.setSyncStatus(2);
 						transation.setApproveStatus(ApproveStatusEnum.findStatus(approveStatus.getValue().toString()));
 					}
 
