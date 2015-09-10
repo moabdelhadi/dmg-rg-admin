@@ -70,7 +70,8 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("creationDate", Date.class, null);
 		pagedTable.addContainerProperty("updateDate", Date.class, null);
 		pagedTable.addContainerProperty("merchTxnRef", String.class, null);
-		pagedTable.addContainerProperty("doubleAmount", String.class, null);
+		pagedTable.addContainerProperty("receiptNo", String.class, null);
+		pagedTable.addContainerProperty("doubleAmount", Double.class, null);
 		pagedTable.addContainerProperty("approveStatusEnum", ApproveStatusEnum.class, null);
 
 		pagedTable.setColumnHeader("contractNo", "Contract #.");
@@ -79,13 +80,14 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("creationDate", "Creation Date");
 		pagedTable.setColumnHeader("updateDate", "Update Date");
 		pagedTable.setColumnHeader("merchTxnRef", "Txn Ref.");
+		pagedTable.setColumnHeader("receiptNo", "Receipt No");
 		pagedTable.setColumnHeader("doubleAmount", "Amount");
 		pagedTable.setColumnHeader("approveStatusEnum", "Approve Status");
 
 		pagedTable.setContainerDataSource(container);
 		pagedTable.setSizeFull();
 
-		pagedTable.setVisibleColumns("contractNo", "city", "status", "creationDate", "updateDate", "merchTxnRef", "doubleAmount", "approveStatusEnum");
+		pagedTable.setVisibleColumns("contractNo", "status", "creationDate", "updateDate", "merchTxnRef","receiptNo", "doubleAmount", "approveStatusEnum");
 
 		pagedTable.addGeneratedColumn("approveStatusEnum", new ColumnGenerator() {
 
@@ -182,6 +184,7 @@ public class TransactionsView extends VerticalLayout implements View {
 				excelExport = new ExcelExport(pagedTableHolder);
 				excelExport.excludeCollapsedColumns();
 				excelExport.setReportTitle("Transactions Report");
+				excelExport.setDoubleDataFormat("#0.00");
 				excelExport.export();
 			}
 		});
