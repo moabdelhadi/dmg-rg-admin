@@ -3,6 +3,8 @@ package com.dmg.admin.view;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+
 import com.dmg.admin.service.TransactionService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
@@ -26,6 +28,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
+import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -184,7 +187,9 @@ public class TransactionsView extends VerticalLayout implements View {
 				excelExport = new ExcelExport(pagedTableHolder);
 				excelExport.excludeCollapsedColumns();
 				excelExport.setReportTitle("Transactions Report");
-				excelExport.setDoubleDataFormat("#0.00");
+				excelExport.setDoubleDataFormat("0.00");
+				//CellStyle doubleDataStyle = excelExport.getDoubleDataStyle();
+				excelExport.setExcelFormatOfProperty("doubleAmount", "0.00");
 				excelExport.export();
 			}
 		});
