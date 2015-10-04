@@ -6,6 +6,7 @@ import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.UserAccountForm;
 import com.dmg.core.bean.UserAccount;
+import com.dmg.core.bean.UserStatus;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.ObjectProperty;
@@ -35,6 +36,7 @@ public class UpdateUserView extends VerticalLayout implements View {
 	private UserAccount userAccount;
 	private Panel panel;
 	private Button updateBtn;
+	private Button activateUserBtn;
 	private UserAccountForm userAccountForm;
 
 	public UpdateUserView(Navigator navigator) {
@@ -49,12 +51,13 @@ public class UpdateUserView extends VerticalLayout implements View {
 	private void initView() {
 		panel = new Panel("Update User Account");
 		panel.setWidth("35%");
+		panel.setHeight("100%");
 		addComponent(ComponentUtil.initMenuButton(navigator, UsersView.NAME, "Go back to users view"));
 		addComponent(panel);
 		setExpandRatio(panel, 0.95F);
 		setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 		updateBtn = new Button("Update");
-
+		activateUserBtn = new Button("Activate User");
 		updateBtn.addClickListener(new ClickListener() {
 
 			/**
@@ -77,6 +80,30 @@ public class UpdateUserView extends VerticalLayout implements View {
 				} catch (DataAccessLayerException e) {
 					Notification.show("DB ERROR when saving the changes!", Type.ERROR_MESSAGE);
 				}
+			}
+		});
+		
+		activateUserBtn.addClickListener(new ClickListener() {
+			
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				try {
+
+						userAccount.setStatus(UserStatus.ACTIVE.value());
+						userAccount.setActivationKey("");
+						userAccount.setSyncStatus(2);
+						accountService.update(userAccount);
+						Notification.show("User has been activated successfully!", Type.HUMANIZED_MESSAGE);
+				} catch (DataAccessLayerException e) {
+					Notification.show("DB ERROR when saving the changes!", Type.ERROR_MESSAGE);
+				}
+				
+				
+				
+				
 			}
 		});
 	}
@@ -130,6 +157,7 @@ public class UpdateUserView extends VerticalLayout implements View {
 			userAccountForm.getBuildingNumberField().setReadOnly(true);
 			userAccountForm.getAppartmentNumberField().setReadOnly(true);
 			userAccountForm.getLayout().addComponent(updateBtn);
+			userAccountForm.getLayout().addComponent(activateUserBtn);
 			panel.setContent(userAccountForm);
 		} catch (NumberFormatException | DataAccessLayerException e) {
 			if (e instanceof NumberFormatException) {
