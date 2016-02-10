@@ -60,7 +60,7 @@ public class UsersView extends VerticalLayout implements View {
 			jpaContainer = JPAContainerFactory.makeBatchable(UserAccountsAUH.class, "dmg-rg-admin");
 		}
 		pagedTable.setContainerDataSource(jpaContainer);
-		pagedTable.setCaption("Bills found (" + jpaContainer.size() + ")");
+		pagedTable.setCaption("Users Found found (" + jpaContainer.size() + ")");
 		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "status", "enable");
 	}
 

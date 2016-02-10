@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 
+import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.service.TransactionService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
@@ -13,8 +14,17 @@ import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
 import com.dmg.admin.util.ViewUtil;
 import com.dmg.core.bean.ApproveStatusEnum;
+import com.dmg.core.bean.BillAUH;
+import com.dmg.core.bean.BillDu;
 import com.dmg.core.bean.Transaction;
+import com.dmg.core.bean.TransactionAUH;
+import com.dmg.core.bean.TransactionDu;
+import com.dmg.core.bean.UserAccount;
+import com.dmg.core.bean.UserAccountsAUH;
+import com.dmg.core.bean.UserAccountsDU;
 import com.dmg.core.exception.DataAccessLayerException;
+import com.vaadin.addon.jpacontainer.JPAContainer;
+import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.addon.tableexport.CustomTableHolder;
 import com.vaadin.addon.tableexport.ExcelExport;
 import com.vaadin.data.util.BeanItemContainer;
@@ -28,7 +38,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
-import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -51,6 +60,8 @@ public class TransactionsView extends VerticalLayout implements View {
 	private ExcelExport excelExport;
 	private final Navigator navigator;
 	private Button editBtn;
+	private String city = "";
+	JPAContainer jpaContainer;
 
 	public TransactionsView(Navigator navigator) {
 		this.navigator = navigator;
@@ -59,6 +70,21 @@ public class TransactionsView extends VerticalLayout implements View {
 		setSizeFull();
 		setSpacing(true);
 	}
+	
+	private void initPagedTable() {
+		city = SessionHandler.get().getCity();
+		if ("DUBAI".equals(city)) {
+			jpaContainer = JPAContainerFactory.makeBatchable(TransactionDu.class, "dmg-rg-admin");
+		} else {
+			jpaContainer = JPAContainerFactory.makeBatchable(TransactionAUH.class, "dmg-rg-admin");
+		}
+		pagedTable.setContainerDataSource(jpaContainer);
+		pagedTable.setCaption("TransAction Found found (" + jpaContainer.size() + ")");
+		pagedTable.setVisibleColumns("contractNo", "status", "creationDate", "updateDate", "merchTxnRef", "receiptNo", "doubleAmount", "approveStatus");
+	}
+	
+	
+	
 
 	public void initView() {
 		pagedTable = new CustomPagedFilterTable();
@@ -104,8 +130,16 @@ public class TransactionsView extends VerticalLayout implements View {
 				HorizontalLayout horizontalLayout = new HorizontalLayout();
 				horizontalLayout.setSpacing(true);
 
+				Transaction txn;
+				if ("DUBAI".equals(city)) {
+					txn = (TransactionDu) jpaContainer.getItem(itemId).getEntity();
+				} else {
+					txn = (TransactionAUH) jpaContainer.getItem(itemId).getEntity();
+				}
+				
+				
 				Label label = new Label();
-				switch (((Transaction) itemId).getApproveStatusEnum()) {
+				switch (txn.getApproveStatusEnum()) {
 				case APPROVED:
 					label.setCaption(ApproveStatusEnum.APPROVED.getName());
 					label.setIcon(new ThemeResource("img/approved.png"));
@@ -125,7 +159,6 @@ public class TransactionsView extends VerticalLayout implements View {
 					horizontalLayout.addComponent(label);
 					horizontalLayout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 					return horizontalLayout;
-
 				}
 
 			}
@@ -231,8 +264,10 @@ public class TransactionsView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
+		initPagedTable();
 		editBtn.setVisible(false);
-		reloadResult();
+		//reloadResult();
 
 	}
 
