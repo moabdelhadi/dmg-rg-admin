@@ -31,6 +31,10 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.Page;
+import com.vaadin.server.Resource;
+import com.vaadin.server.ResourceReference;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,7 +55,7 @@ public class NewRequestsView extends VerticalLayout implements View {
 	 * 
 	 */
 	private static final long serialVersionUID = -4787817640065298241L;
-	public static final String NAME = "NewUsers";
+	public static final String NAME = "newusers";
 	private CustomPagedFilterTable pagedTable;
 
 	JPAContainer jpaContainer;
@@ -235,6 +239,8 @@ public class NewRequestsView extends VerticalLayout implements View {
 
 	private void openDetails() {
 		
+		
+		Page.getCurrent().open("/dmg-rg-client/views/contract/contract.html", "UserContarct", true);
 		
 //		Button button = billViews.get(counter);
 //		BrowserWindowOpener opener = new BrowserWindowOpener(BillPopupUI.class);
