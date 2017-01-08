@@ -1,5 +1,8 @@
 package com.dmg.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.admin.auth.util.UserUtil;
 import com.dmg.admin.view.BillsView;
@@ -28,6 +31,7 @@ import com.vaadin.ui.UI;
 public class MainUI extends UI {
 
 	private Navigator navigator;
+	private static Logger log = LoggerFactory.getLogger(MainUI.class);
 
 	@Override
 	protected void init(final VaadinRequest request) {
