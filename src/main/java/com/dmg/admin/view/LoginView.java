@@ -44,6 +44,8 @@ public class LoginView extends VerticalLayout implements View {
 		 */
 		TabSheet tabSheet = new TabSheet();
 		tabSheet.setWidth("30%");
+		
+		log.debug("Start Login View");
 
 		VerticalLayout vMainLayout = new VerticalLayout();
 		VerticalLayout vFormLayout = new VerticalLayout();
@@ -62,6 +64,7 @@ public class LoginView extends VerticalLayout implements View {
 		username.setInputPrompt("username");
 		username.setWidth("100%");
 
+		log.debug("Login UserName Field Created ");
 		username.addStyleName("inline-icon");
 		username.setIcon(FontAwesome.USER);
 		vFormLayout.addComponent(username);
@@ -75,14 +78,16 @@ public class LoginView extends VerticalLayout implements View {
 		password.setIcon(FontAwesome.LOCK);
 		vFormLayout.addComponent(password);
 		// vLayout.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
-
+		log.debug("Login Password Field Created ");
 		final Button loginButton = new Button("Login");
 		loginButton.setClickShortcut(KeyCode.ENTER);
 		vFormLayout.addComponent(loginButton);
 		vFormLayout.setComponentAlignment(loginButton, Alignment.MIDDLE_RIGHT);
-
+		
+	
 		addComponent(tabSheet);
-
+		log.debug("Login Add component");
+		
 		setComponentAlignment(tabSheet, Alignment.MIDDLE_CENTER);
 
 		loginButton.addClickListener(new Button.ClickListener() {
@@ -136,12 +141,16 @@ public class LoginView extends VerticalLayout implements View {
 
 			}
 		});
+		
+		log.debug("After Click Listener");
 
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		log.debug("Login enter");
 		if (SessionHandler.get() != null) {
+			log.debug("Login enter No Access");
 			event.getNavigator().navigateTo(StartView.NAME);
 		}
 	}
