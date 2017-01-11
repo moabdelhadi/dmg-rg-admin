@@ -217,8 +217,10 @@ public class GasMeterView extends VerticalLayout implements View {
 
 	private void openDetails() {
 		
-		
-		Page.getCurrent().open("/dmg-rg-client-v2/imgs"+ ((MeterReading) pagedTable.getValue()).getImageName(), "METER READING", true);
+
+			navigator.navigateTo(UpdateGasMeterView.NAME + "/" + pagedTable.getValue());
+
+//		Page.getCurrent().open("/dmg-rg-client-v2/imgs"+ ((MeterReading) pagedTable.getValue()).getImageName(), "METER READING", true);
 		
 //		Button button = billViews.get(counter);
 //		BrowserWindowOpener opener = new BrowserWindowOpener(BillPopupUI.class);

@@ -14,6 +14,7 @@ import com.dmg.admin.view.NewRequestsView;
 import com.dmg.admin.view.RegistrationView;
 import com.dmg.admin.view.StartView;
 import com.dmg.admin.view.TransactionsView;
+import com.dmg.admin.view.UpdateGasMeterView;
 import com.dmg.admin.view.UpdateTransactionView;
 import com.dmg.admin.view.UpdateUserView;
 import com.dmg.admin.view.UsersView;
@@ -42,6 +43,7 @@ public class MainUI extends UI {
 		navigator.addView(BillsView.NAME, new BillsView(navigator));
 		navigator.addView(UsersView.NAME, new UsersView(navigator));
 		navigator.addView(GasMeterView.NAME, new GasMeterView(navigator));
+		navigator.addView(UpdateGasMeterView.NAME, new UpdateGasMeterView(navigator));
 		navigator.addView(UpdateUserView.NAME, new UpdateUserView(navigator));
 		navigator.addView(UpdateUserView.NAME, new UpdateUserView(navigator));
 		navigator.addView(UpdateTransactionView.NAME, new UpdateTransactionView(navigator));
