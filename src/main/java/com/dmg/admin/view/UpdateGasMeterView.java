@@ -138,6 +138,7 @@ public class UpdateGasMeterView extends VerticalLayout implements View {
 			
 			Resource externalResource = new ExternalResource("https://pay.royalgas.com/dmg-rg-client-v2/imgs/"+ meterReading.getImageName());
 			Image img = new Image("", externalResource);
+			img.setWidth("400px");
 			meterReadingForm.getLayout().addComponent(img);
 			meterReadingForm.getLayout().addComponent(updateBtn);
 //			meterReadingForm.getLayout().addComponent(activateUserBtn);
