@@ -56,9 +56,9 @@ public class BillService implements Serializable {
 		return FacadeFactory.getFacade().find(bill.getClass(), id);
 	}
 
-	public void storeBill(Bill bill) throws DataAccessLayerException {
-		FacadeFactory.getFacade().store(bill);
-	}
+//	public void storeBill(Bill bill) throws DataAccessLayerException {
+//		FacadeFactory.getFacade().store(bill);
+//	}
 
 	public Bill findBill(Bill bill) throws DataAccessLayerException {
 
