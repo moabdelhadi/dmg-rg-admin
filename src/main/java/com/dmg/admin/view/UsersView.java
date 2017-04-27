@@ -61,7 +61,7 @@ public class UsersView extends VerticalLayout implements View {
 		}
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("Users Found found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("name", "email", "contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "status", "enable");
+		pagedTable.setVisibleColumns("name", "email","company" ,"contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "status", "enable");
 	}
 
 	public void initView() {
@@ -74,6 +74,7 @@ public class UsersView extends VerticalLayout implements View {
 
 		pagedTable.addContainerProperty("name", String.class, null);
 		pagedTable.addContainerProperty("email", String.class, null);
+		pagedTable.addContainerProperty("company", String.class, null);
 		pagedTable.addContainerProperty("contractNo", String.class, null);
 		pagedTable.addContainerProperty("city", String.class, null);
 		pagedTable.addContainerProperty("buildingNumber", String.class, null);
@@ -87,6 +88,7 @@ public class UsersView extends VerticalLayout implements View {
 
 		pagedTable.setColumnHeader("name", "Name");
 		pagedTable.setColumnHeader("email", "Email");
+		pagedTable.setColumnHeader("company", "Company");
 		pagedTable.setColumnHeader("contractNo", "Contract #");
 		pagedTable.setColumnHeader("city", "city");
 		pagedTable.setColumnHeader("buildingNumber", "Building #");
@@ -101,6 +103,7 @@ public class UsersView extends VerticalLayout implements View {
 
 		pagedTable.setColumnExpandRatio("name", 0.10F);
 		pagedTable.setColumnExpandRatio("email", 0.10F);
+		pagedTable.setColumnExpandRatio("Company", 0.10F);
 		pagedTable.setColumnExpandRatio("contractNo", 0.20F);
 		pagedTable.setColumnExpandRatio("city", 0.05F);
 		pagedTable.setColumnExpandRatio("buildingNumber", 0.05F);

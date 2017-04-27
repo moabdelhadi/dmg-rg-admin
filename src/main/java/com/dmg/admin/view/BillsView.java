@@ -74,7 +74,7 @@ public class BillsView extends VerticalLayout implements View {
 		}
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("Bills found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("contractNo", "docNo", "serialNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "payEnum", "billDate");
+		pagedTable.setVisibleColumns("company", "contractNo", "docNo", "serialNo", "totalAmount", "receivedAmmount", "lastReceivedPayReference", "payEnum", "billDate");
 	}
 
 	public void initView() {
@@ -84,6 +84,7 @@ public class BillsView extends VerticalLayout implements View {
 		pagedTable.setFilterBarVisible(true);
 		pagedTable.setImmediate(true);
 
+		pagedTable.addContainerProperty("company", String.class, null);
 		pagedTable.addContainerProperty("contractNo", String.class, null);
 		pagedTable.addContainerProperty("docNo", String.class, null);
 		pagedTable.addContainerProperty("serialNo", String.class, null);
@@ -93,6 +94,7 @@ public class BillsView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("payEnum", Image.class, null);
 		pagedTable.addContainerProperty("billDate", Date.class, null);
 
+		pagedTable.setColumnHeader("company", "Company");
 		pagedTable.setColumnHeader("contractNo", "Contract No.");
 		pagedTable.setColumnHeader("docNo", "Doc No.");
 		pagedTable.setColumnHeader("serialNo", "Serial No.");

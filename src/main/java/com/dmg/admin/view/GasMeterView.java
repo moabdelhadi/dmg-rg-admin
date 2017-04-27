@@ -68,7 +68,7 @@ public class GasMeterView extends VerticalLayout implements View {
 		}
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("Meter Readings found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("contractNo", "meterReading", "imageName", "status","creationDate");
+		pagedTable.setVisibleColumns("company", "contractNo", "meterReading", "imageName", "status","creationDate");
 	}
 
 	public void initView() {
@@ -78,12 +78,14 @@ public class GasMeterView extends VerticalLayout implements View {
 		pagedTable.setFilterBarVisible(true);
 		pagedTable.setImmediate(true);
 
+		pagedTable.addContainerProperty("company", String.class, null);
 		pagedTable.addContainerProperty("contractNo", String.class, null);
 		pagedTable.addContainerProperty("meterReading", String.class, null);
 		pagedTable.addContainerProperty("imageName", String.class, null);
 		pagedTable.addContainerProperty("status", String.class, null);
 		pagedTable.addContainerProperty("creationDate", Date.class, null);
 
+		pagedTable.setColumnHeader("company", "Company");
 		pagedTable.setColumnHeader("contractNo", "Contract No");
 		pagedTable.setColumnHeader("meterReading", "Reading");
 		pagedTable.setColumnHeader("imageName", "Image");

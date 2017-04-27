@@ -75,7 +75,7 @@ public class TransactionsView extends VerticalLayout implements View {
 		
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("TransAction Found found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("contractNo", "status", "creationDate", "updateDate", "merchTxnRef", "receiptNo", "doubleAmount", "approveStatusEnum");
+		pagedTable.setVisibleColumns("company", "contractNo", "status", "creationDate", "updateDate", "merchTxnRef", "receiptNo", "doubleAmount", "approveStatusEnum");
 	}
 	
 	public void initView() {
@@ -85,7 +85,9 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.setFilterBarVisible(true);
 		pagedTable.setImmediate(true);
 
+		pagedTable.addContainerProperty("company", String.class, null);
 		pagedTable.addContainerProperty("contractNo", String.class, null);
+		
 //		pagedTable.addContainerProperty("city", String.class, null);
 		pagedTable.addContainerProperty("status", String.class, null);
 		pagedTable.addContainerProperty("creationDate", Date.class, null);
@@ -95,6 +97,7 @@ public class TransactionsView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("doubleAmount", Double.class, null);
 		pagedTable.addContainerProperty("approveStatusEnum", ApproveStatusEnum.class, null);
 
+		pagedTable.setColumnHeader("company", "Company");
 		pagedTable.setColumnHeader("contractNo", "Contract #.");
 //		pagedTable.setColumnHeader("city", "City");
 		pagedTable.setColumnHeader("status", "Status");
