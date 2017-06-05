@@ -36,7 +36,7 @@ public class SendMailsForm extends CustomComponent {
 
 	FieldGroup binder;
 
-	public SendMailsForm(SendInv item) {
+	public SendMailsForm() {
 		
 		layout.addStyleName("top-bottom-margins");
 		layout.setWidth("100%");
@@ -52,10 +52,10 @@ public class SendMailsForm extends CustomComponent {
 		layout.addComponent(mapFilePathField);
 		layout.addComponent(companyField);
 
-		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
-		binder = new FieldGroup();
-		binder.setItemDataSource(bean);
-		binder.bindMemberFields(this);
+//		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
+//		binder = new FieldGroup();
+//		binder.setItemDataSource(bean);
+//		binder.bindMemberFields(this);
 		setCompositionRoot(layout);
 
 	}

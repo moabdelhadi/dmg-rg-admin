@@ -35,7 +35,7 @@ public class SendEmailService implements Serializable {
 	
 	}
 
-	public void update(SendInv sendInv) throws DataAccessLayerException {
+	public void store(SendInv sendInv) throws DataAccessLayerException {
 		FacadeFactory.getFacade().store(sendInv);
 	}
 

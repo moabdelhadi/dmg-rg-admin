@@ -1,5 +1,7 @@
 package com.dmg.admin.view;
 
+import java.io.File;
+
 import com.dmg.admin.auth.util.PasswordUtil;
 import com.dmg.admin.exception.PasswordRequirementException;
 import com.dmg.admin.service.SendEmailService;
@@ -38,7 +40,7 @@ public class SendInvEmailView extends VerticalLayout implements View {
 //	private SendInv userAccount;
 	private Panel panel;
 	private Button startSendBtn;
-	private SendMailsForm userAccountForm;
+	private SendMailsForm sendMailForm;
 
 	public SendInvEmailView(Navigator navigator) {
 		this.navigator = navigator;
@@ -69,10 +71,13 @@ public class SendInvEmailView extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 
 				try {
-					if (validateData()) {
-						userAccountForm.getBinder().commit();
-						userAccount.setSyncStatus(2);
-						accountService.update(userAccount);
+					if (validateFields()) {
+						
+						//sendMailForm.getBinder().commit();
+						
+						sendEmailService.update(userAccount);
+						
+						
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 					}
 				} catch (CommitException e) {
@@ -83,83 +88,48 @@ public class SendInvEmailView extends VerticalLayout implements View {
 			}
 		});
 		
-		activateUserBtn.addClickListener(new ClickListener() {
-			
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
 
-				try {
-
-						userAccount.setStatus(UserStatus.ACTIVE.value());
-						userAccount.setActivationKey("");
-						userAccount.setSyncStatus(2);
-						accountService.update(userAccount);
-						Notification.show("User has been activated successfully!", Type.HUMANIZED_MESSAGE);
-				} catch (DataAccessLayerException e) {
-					Notification.show("DB ERROR when saving the changes!", Type.ERROR_MESSAGE);
-				}
-				
-				
-				
-				
-			}
-		});
 	}
 
 	private boolean validateFields() {
-		String password = userAccountForm.getPasswordField().getValue();
-		if (password != null && !"".equals(password)) {
-			String confirmPassword = userAccountForm.getConfirmPasswordField().getValue();
-			if (confirmPassword != null && confirmPassword.equals(password)) {
-				try {
-					PasswordUtil.isValid(password);
-				} catch (PasswordRequirementException e) {
-					Notification.show("ERROR", e.getMessage(), Type.ERROR_MESSAGE);
-					return false;
-				}
-				String hashedPassword = PasswordUtil.generateHashedPassword(password);
-				userAccount.setPassword(hashedPassword);
-				return true;
-			} else {
-				Notification.show("ERROR", "Password and confirmation do not match!", Type.ERROR_MESSAGE);
-				return false;
-			}
-		}
+		
+		
+		String city = sendMailForm.getCityField().getValue();
+		String company = sendMailForm.getCompanyField().getValue();
+		String mapFilePath = sendMailForm.getMapFilePathField().getValue();
+		String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
+
+		File mapFile = new File("")
+		
 		return true;
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		id = event.getParameters();
+		//id = event.getParameters();
 		try {
-			userAccount = accountService.getUserAcount(Long.parseLong(id));
+			
+//			userAccount = accountService.getUserAcount(Long.parseLong(id));
 
-			PropertysetItem item = new PropertysetItem();
-			item.addItemProperty("name", new ObjectProperty<String>(userAccount.getName() == null ? "" : userAccount.getName()));
-			item.addItemProperty("email", new ObjectProperty<String>(userAccount.getEmail() == null ? "" : userAccount.getEmail()));
-			item.addItemProperty("city", new ObjectProperty<String>(userAccount.getCity() == null ? "" : userAccount.getCity()));
-			item.addItemProperty("buildingNumber", new ObjectProperty<String>(userAccount.getBuildingNumber() == null ? "" : userAccount.getBuildingNumber()));
-			item.addItemProperty("apartmentNumber", new ObjectProperty<String>(userAccount.getAppartmentNumber() == null ? "" : userAccount.getAppartmentNumber()));
-			item.addItemProperty("contractNumber", new ObjectProperty<String>(userAccount.getContractNo() == null ? "" : userAccount.getContractNo()));
-			item.addItemProperty("phone", new ObjectProperty<String>(userAccount.getPhone() == null ? "" : userAccount.getPhone()));
-			item.addItemProperty("mobile", new ObjectProperty<String>(userAccount.getMobile() == null ? "" : userAccount.getMobile()));
-			item.addItemProperty("pobox", new ObjectProperty<String>(userAccount.getPobox() == null ? "" : userAccount.getPobox()));
-			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
-			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
+//			PropertysetItem item = new PropertysetItem();
+//			item.addItemProperty("name", new ObjectProperty<String>(userAccount.getName() == null ? "" : userAccount.getName()));
+//			item.addItemProperty("email", new ObjectProperty<String>(userAccount.getEmail() == null ? "" : userAccount.getEmail()));
+//			item.addItemProperty("city", new ObjectProperty<String>(userAccount.getCity() == null ? "" : userAccount.getCity()));
+//			item.addItemProperty("buildingNumber", new ObjectProperty<String>(userAccount.getBuildingNumber() == null ? "" : userAccount.getBuildingNumber()));
+//			item.addItemProperty("apartmentNumber", new ObjectProperty<String>(userAccount.getAppartmentNumber() == null ? "" : userAccount.getAppartmentNumber()));
+//			item.addItemProperty("contractNumber", new ObjectProperty<String>(userAccount.getContractNo() == null ? "" : userAccount.getContractNo()));
+//			item.addItemProperty("phone", new ObjectProperty<String>(userAccount.getPhone() == null ? "" : userAccount.getPhone()));
+//			item.addItemProperty("mobile", new ObjectProperty<String>(userAccount.getMobile() == null ? "" : userAccount.getMobile()));
+//			item.addItemProperty("pobox", new ObjectProperty<String>(userAccount.getPobox() == null ? "" : userAccount.getPobox()));
+//			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
+//			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
 
-			userAccountForm = new UserAccountForm(userAccount);
+			sendMailForm = new SendMailsForm();
 			//here setting the read only fields
-			userAccountForm.getNameField().setReadOnly(true);
-			userAccountForm.getCityField().setReadOnly(true);
-			userAccountForm.getContractNoField().setReadOnly(true);
-			userAccountForm.getBuildingNumberField().setReadOnly(true);
-			userAccountForm.getAppartmentNumberField().setReadOnly(true);
-			userAccountForm.getLayout().addComponent(updateBtn);
-			userAccountForm.getLayout().addComponent(activateUserBtn);
-			panel.setContent(userAccountForm);
-		} catch (NumberFormatException | DataAccessLayerException e) {
+			sendMailForm.getLayout().addComponent(startSendBtn);
+			panel.setContent(sendMailForm);
+		
+		} catch (NumberFormatException e) {
 			if (e instanceof NumberFormatException) {
 				Notification.show("ID entered is not correct", Type.ERROR_MESSAGE);
 				navigator.navigateTo("");

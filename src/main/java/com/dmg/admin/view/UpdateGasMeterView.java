@@ -125,7 +125,6 @@ public class UpdateGasMeterView extends VerticalLayout implements View {
 			item.addItemProperty("date", new ObjectProperty<Date>(meterReading.getCreationDate()));
 			item.addItemProperty("city", new ObjectProperty<String>(meterReading.getCity() == null ? "" : meterReading.getCity()));
 			item.addItemProperty("reading", new ObjectProperty<String>(meterReading.getMeterReading() == null ? "" : meterReading.getMeterReading()));
-//			item.addItemProperty("image", new ObjectProperty<String>("https://pay.royalgas.com/dmg-rg-client-v2/imgs/"+ meterReading.getImageName()));
 			item.addItemProperty("status", new ObjectProperty<String>(meterReading.getStatus() == null ? "" : meterReading.getStatus()));
 
 			meterReadingForm = new MeterReadingForm(meterReading);
