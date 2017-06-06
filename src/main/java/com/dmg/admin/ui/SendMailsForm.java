@@ -1,15 +1,12 @@
 package com.dmg.admin.ui;
 
-import com.dmg.core.bean.SendInv;
-import com.dmg.core.bean.UserAccount;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.PropertyId;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.validator.EmailValidator;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 public class SendMailsForm extends CustomComponent {
@@ -19,17 +16,15 @@ public class SendMailsForm extends CustomComponent {
 	 */
 	private static final long serialVersionUID = 701948131350786451L;
 
-	@PropertyId("pdfDirPath")
 	TextField pdfDirPathField = new TextField("PDF Dir Path");
 
-	@PropertyId("mapFilePath")
 	TextField mapFilePathField = new TextField("Map File");
+	TextField prefixField = new TextField("PREFIX");
 
-	@PropertyId("city")
-	TextField cityField = new TextField("City");
+
+	ComboBox cityField = new ComboBox("City");
 	
-	@PropertyId("company")
-	TextField companyField = new TextField("Company");
+	ComboBox companyField = new ComboBox("Company");
 
 
 	FormLayout layout = new FormLayout();
@@ -46,12 +41,22 @@ public class SendMailsForm extends CustomComponent {
 		mapFilePathField.setWidth("100%");
 		cityField.setWidth("100%");
 		companyField.setWidth("100%");
+		
+		List<String> itemIds=new ArrayList<String>();
+		itemIds.add("DUBAI");
+		itemIds.add("ABUDHABI");
+		cityField.addItems(itemIds);
+		
+		List<String> itemIdsCo=new ArrayList<String>();
+		itemIdsCo.add("01");
+		itemIdsCo.add("02");
+		companyField.addItems(itemIdsCo);
 
 		layout.addComponent(cityField);
 		layout.addComponent(pdfDirPathField);
 		layout.addComponent(mapFilePathField);
 		layout.addComponent(companyField);
-
+		layout.addComponent(prefixField);
 //		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
 //		binder = new FieldGroup();
 //		binder.setItemDataSource(bean);
@@ -60,10 +65,15 @@ public class SendMailsForm extends CustomComponent {
 
 	}
 
-	public TextField getCityField() {
+
+	public ComboBox getCityField() {
 		return cityField;
 	}
-	
+
+	public ComboBox getCompanyField() {
+		return companyField;
+	}
+
 	public TextField getPdfDirPathField() {
 		return pdfDirPathField;
 	}
@@ -71,10 +81,11 @@ public class SendMailsForm extends CustomComponent {
 	public TextField getMapFilePathField() {
 		return mapFilePathField;
 	}
-
-	public TextField getCompanyField() {
-		return companyField;
+	
+	public TextField getPrefixField() {
+		return prefixField;
 	}
+
 
 	public FormLayout getLayout() {
 		return layout;

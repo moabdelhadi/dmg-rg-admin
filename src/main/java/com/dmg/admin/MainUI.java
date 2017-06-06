@@ -12,6 +12,7 @@ import com.dmg.admin.view.LoginView;
 import com.dmg.admin.view.LogoutView;
 import com.dmg.admin.view.NewRequestsView;
 import com.dmg.admin.view.RegistrationView;
+import com.dmg.admin.view.SendInvEmailView;
 import com.dmg.admin.view.StartView;
 import com.dmg.admin.view.TransactionsView;
 import com.dmg.admin.view.UpdateGasMeterView;
@@ -37,6 +38,7 @@ public class MainUI extends UI {
 
 	@Override
 	protected void init(final VaadinRequest request) {
+		
 		navigator = new Navigator(this, this);
 		navigator.addView("", new StartView(navigator));
 		navigator.addView(TransactionsView.NAME, new TransactionsView(navigator));
@@ -51,6 +53,7 @@ public class MainUI extends UI {
 		navigator.addView(RegistrationView.NAME, new RegistrationView(navigator));
 		navigator.addView(ChangePasswordView.NAME, new ChangePasswordView(navigator));
 		navigator.addView(LogoutView.NAME, new LogoutView(navigator));
+		navigator.addView(SendInvEmailView.NAME, new SendInvEmailView(navigator));
 
 		navigator.addViewChangeListener(new ViewChangeListener() {
 

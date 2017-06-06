@@ -6,9 +6,11 @@ import java.util.Set;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.tools.ant.taskdefs.SendEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dmg.admin.task.SendMailThread;
 import com.dmg.core.persistence.FacadeFactory;
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.PooledDataSource;
@@ -49,6 +51,9 @@ public class HibernateListener implements ServletContextListener {
 		logger.warn(" d8'          `8b  88888888Y''    88     `8'     88  88  88      `888");
 		try {
 			FacadeFactory.registerFacade("dmg-rg-admin", true);
+			
+			Thread thread = new Thread(new SendMailThread());
+			thread.start();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

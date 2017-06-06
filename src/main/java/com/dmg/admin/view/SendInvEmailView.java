@@ -1,6 +1,13 @@
 package com.dmg.admin.view;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.dmg.admin.auth.util.PasswordUtil;
 import com.dmg.admin.exception.PasswordRequirementException;
@@ -9,6 +16,7 @@ import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.SendMailsForm;
 import com.dmg.admin.ui.UserAccountForm;
+import com.dmg.core.bean.SendInv;
 import com.dmg.core.bean.UserAccount;
 import com.dmg.core.bean.UserStatus;
 import com.dmg.core.exception.DataAccessLayerException;
@@ -34,7 +42,7 @@ public class SendInvEmailView extends VerticalLayout implements View {
 	 */
 	private static final long serialVersionUID = -3459100173504667518L;
 	private final Navigator navigator;
-	public static final String NAME = "send-inv-email";
+	public static final String NAME = "sendInvEmail";
 	private final SendEmailService sendEmailService;
 	private String id;
 //	private SendInv userAccount;
@@ -75,31 +83,96 @@ public class SendInvEmailView extends VerticalLayout implements View {
 						
 						//sendMailForm.getBinder().commit();
 						
-						sendEmailService.update(userAccount);
+						String city = sendMailForm.getCityField().getValue().toString();
+						String company = sendMailForm.getCompanyField().getValue().toString();
+						String mapFilePath = sendMailForm.getMapFilePathField().getValue();
+						String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
+						String prefix = sendMailForm.getPrefixField().getValue();
+						File mapFile = new File(mapFilePath);
+
+						Map<String, String> map=getMapList(mapFile);
 						
+						for (String key : map.keySet()) {
+							SendInv sendInv = new SendInv();
+							sendInv.setCcbId(map.get(key));
+							sendInv.setCity(city);
+							sendInv.setCompany(company);
+							sendInv.setContractNo(key);
+							sendInv.setFileName(pdfDirPath);
+							sendInv.setCreationDate(Calendar.getInstance().getTime());
+							sendInv.setStatus("PENDING");
+							sendInv.setPrefix(prefix);
+							sendEmailService.store(sendInv);	
+						}
 						
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 					}
-				} catch (CommitException e) {
-					Notification.show("Error commiting changes - " + e.getCause().getMessage(), Type.ERROR_MESSAGE);
+				} catch (IOException e) {
+					Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
 				} catch (DataAccessLayerException e) {
-					Notification.show("DB ERROR when saving the changes!", Type.ERROR_MESSAGE);
+					Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
 				}
 			}
+
 		});
 		
 
+	}
+	
+	private Map<String, String> getMapList(File mapFile) throws IOException {
+		Map<String, String> map = new HashMap<String, String>();
+		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
+		String line = reader.readLine();
+		while (line!=null && !line.isEmpty()) {
+			String[] split = line.split("\t");
+			if(split.length==2){
+				map.put(split[1], split[0]);
+			}
+			line = reader.readLine();
+		}
+		
+		return map;
 	}
 
 	private boolean validateFields() {
 		
 		
-		String city = sendMailForm.getCityField().getValue();
-		String company = sendMailForm.getCompanyField().getValue();
+		Object city = sendMailForm.getCityField().getValue();
+		Object company = sendMailForm.getCompanyField().getValue();
 		String mapFilePath = sendMailForm.getMapFilePathField().getValue();
 		String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
 
-		File mapFile = new File("")
+		if(city==null || city.toString().isEmpty()){
+			Notification.show("ERROR", "Please Select City !", Type.ERROR_MESSAGE);
+			return false;
+		}
+		
+		if(company==null || company.toString().isEmpty()){
+			Notification.show("ERROR", "Please Select Company Value !", Type.ERROR_MESSAGE);
+			return false;
+		}
+		
+		if(mapFilePath ==null || mapFilePath.isEmpty()){
+			Notification.show("ERROR", "Please Fill Map File !", Type.ERROR_MESSAGE);
+			return false;
+		}
+		
+		if(pdfDirPath ==null || pdfDirPath.isEmpty()){
+			Notification.show("ERROR", "Please PDF Dir!", Type.ERROR_MESSAGE);
+			return false;
+		}
+		
+		File mapFile = new File(mapFilePath);
+		if(!mapFile.exists()){
+			Notification.show("ERROR", "Fill Map is not Correct !", Type.ERROR_MESSAGE);
+			return false;
+		}
+
+		File pdfDir = new File(pdfDirPath);
+		if(!pdfDir.exists() || !pdfDir.isDirectory()){
+			Notification.show("ERROR", "PDF Dir Is not correct !", Type.ERROR_MESSAGE);
+			return false;
+		}
 		
 		return true;
 	}

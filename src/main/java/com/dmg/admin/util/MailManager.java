@@ -1,6 +1,5 @@
 package com.dmg.admin.util;
 
-import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
@@ -63,11 +62,13 @@ public class MailManager {
 			Multipart multipart = new MimeMultipart();
 			
 			if(fileName!=null && !fileName.isEmpty() ){
+				int lastIndexOf = fileName.lastIndexOf("/");
+				String onlyName = fileName.substring(lastIndexOf);
 				MimeBodyPart messageBodyPart = new MimeBodyPart();
 				//String filename = "/home/manisha/file.txt";
 				DataSource source = new FileDataSource(fileName);
 				messageBodyPart.setDataHandler(new DataHandler(source));
-				messageBodyPart.setFileName(fileName);
+				messageBodyPart.setFileName(onlyName);
 				multipart.addBodyPart(messageBodyPart);
 			}
 			
