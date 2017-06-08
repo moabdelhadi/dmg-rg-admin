@@ -9,8 +9,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.dmg.admin.auth.util.PasswordUtil;
 import com.dmg.admin.exception.PasswordRequirementException;
+import com.dmg.admin.service.BillService;
 import com.dmg.admin.service.SendEmailService;
 import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
@@ -41,6 +45,7 @@ public class SendInvEmailView extends VerticalLayout implements View {
 	 * 
 	 */
 	private static final long serialVersionUID = -3459100173504667518L;
+	private static final Logger log = LoggerFactory.getLogger(SendInvEmailView.class);
 	private final Navigator navigator;
 	public static final String NAME = "sendInvEmail";
 	private final SendEmailService sendEmailService;
@@ -90,28 +95,13 @@ public class SendInvEmailView extends VerticalLayout implements View {
 						String prefix = sendMailForm.getPrefixField().getValue();
 						File mapFile = new File(mapFilePath);
 
-						Map<String, String> map=getMapList(mapFile);
-						
-						for (String key : map.keySet()) {
-							SendInv sendInv = new SendInv();
-							sendInv.setCcbId(map.get(key));
-							sendInv.setCity(city);
-							sendInv.setCompany(company);
-							sendInv.setContractNo(key);
-							sendInv.setFileName(pdfDirPath);
-							sendInv.setCreationDate(Calendar.getInstance().getTime());
-							sendInv.setStatus("PENDING");
-							sendInv.setPrefix(prefix);
-							sendEmailService.store(sendInv);	
-						}
-						
+						Map<String, String> map=addrecordstoDB(mapFile, city, company, pdfDirPath,prefix);
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
+						
 					}
 				} catch (IOException e) {
 					Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
-				} catch (DataAccessLayerException e) {
-					Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
-				}
+				} 
 			}
 
 		});
@@ -119,15 +109,34 @@ public class SendInvEmailView extends VerticalLayout implements View {
 
 	}
 	
-	private Map<String, String> getMapList(File mapFile) throws IOException {
+	private Map<String, String> addrecordstoDB(File mapFile, String city, String company, String pdfDirPath, String prefix) throws IOException {
 		Map<String, String> map = new HashMap<String, String>();
 		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
 		String line = reader.readLine();
 		while (line!=null && !line.isEmpty()) {
 			String[] split = line.split("\t");
 			if(split.length==2){
-				map.put(split[1], split[0]);
+				//map.put(split[1], split[0]);
+				
+				
+					SendInv sendInv = new SendInv();
+					sendInv.setCcbId(split[0]);
+					sendInv.setCity(city);
+					sendInv.setCompany(company);
+					sendInv.setContractNo(split[1]);
+					sendInv.setFileName(pdfDirPath);
+					sendInv.setCreationDate(Calendar.getInstance().getTime());
+					sendInv.setStatus("PENDING");
+					sendInv.setPrefix(prefix);
+					try {
+						sendEmailService.store(sendInv);
+					} catch (DataAccessLayerException e) {
+						log.error("ERROR in save line "+line);
+						Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
+					}	
+				
 			}
+			
 			line = reader.readLine();
 		}
 		
