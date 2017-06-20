@@ -42,15 +42,16 @@ public class SendMailThread implements Runnable {
 				if (list != null && !list.isEmpty()) {
 					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId()
 							+ ".pdf";
-					String email = list.get(0).getEmail();
+					UserAccount userAccountItem = list.get(0);
+					String email = userAccountItem.getEmail();
 					if(email==null || email.isEmpty()){
 						firstItem.setStatus("ERROR");
 						firstItem.setMessage("NO EMAIL");
 						service.store(firstItem);
 						continue;
 					}
-					MailManager.getInstance().sendMail(email, "Bill for your Royal Gas Account no. "+firstItem.getContractNo(),
-							"Your bill for "+firstItem.getContractNo() +" is ready. To view and save your bill, please double click on the attachment." , fileName);
+					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
+					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
 				}
@@ -94,6 +95,20 @@ public class SendMailThread implements Runnable {
 
 		}
 
+	}
+
+	private String getMessageBody(String prefix, UserAccount user) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<p>Your bill for ");
+		builder.append(prefix);
+		builder.append(" is ready. To view and save your bill, please double click on the attachment.</p><p>You can make your gas bill payment through the following</p><p>1)      By website https://www.royalgas.com/online-payment</p><p>2)      By Mobile Application Both android and App store</p><p>3)      By collector - We will be sending a SMS in regards to the schedule of the gas bill payment collection. Our collector will make a door-to-door collection on the scheduled date. Any request for bill collection after the scheduled date is subject AED 30 fee.</p><p>Please use the below information to register online account</p><p> Royal Gas Account Number     - ");
+		builder.append(user.getContractNo());
+		builder.append("</p><p>  Building Number                     - ");
+		builder.append(user.getBuildingNumber());
+		builder.append("</p><p>  Apartment Number                  - ");
+		builder.append(user.getAppartmentNumber());
+		builder.append("</p>");
+		return builder.toString();
 	}
 
 }
