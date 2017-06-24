@@ -28,31 +28,46 @@ public class SendMailThread implements Runnable {
 			SendInv firstItem = null;
 			log.info("START THREAD LOOP");
 			try {
+				log.info("BEFORE get first");
 				firstItem = service.getFirstItem();
+				log.info("AFTER get first");
 				if (firstItem == null) {
+					log.warn("FIRST ITEM = NULL");
 					Thread.sleep(36000);
 					continue;
 				}
+				log.info("BEFORE get USER");
 				UserAccount user = BeansFactory.getInstance().getUserAccount(firstItem.getCity());
 				Map<String, Object> parameters = new HashMap<String, Object>();
 				parameters.put(Constants.USER_ACCOUNT_ID, firstItem.getContractNo());
 				parameters.put(Constants.USER_CITY, firstItem.getCity());
 				parameters.put(Constants.USER_COMPANY, firstItem.getCompany());
 				List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
+				log.info("AFTERT get USER");
 				if (list != null && !list.isEmpty()) {
+					log.info("list has value");
 					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId()
 							+ ".pdf";
 					String email = list.get(0).getEmail();
 					if(email==null || email.isEmpty()){
+						log.info("NO EMAIL");
 						firstItem.setStatus("ERROR");
 						firstItem.setMessage("NO EMAIL");
 						service.store(firstItem);
 						continue;
 					}
+					log.info("BEFOR SEND EMAIL");
 					MailManager.getInstance().sendMail(email, "Bill for your Royal Gas Account no. "+firstItem.getContractNo(),
 							"Your bill for "+firstItem.getContractNo() +" is ready. To view and save your bill, please double click on the attachment." , fileName);
+					log.info("AFTER SEND EMAIL");
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
+					log.info("AFTER SAVE");
+				}else{
+					firstItem.setStatus("ERROR");
+					firstItem.setMessage("NO CONTRACT");
+					service.store(firstItem);
+					continue;
 				}
 
 				Thread.sleep(36000);
