@@ -51,10 +51,15 @@ public class SendMailThread implements Runnable {
 						service.store(firstItem);
 						continue;
 					}
+<<<<<<< HEAD
 					log.info("BEFOR SEND EMAIL");
 					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
 					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
 					log.info("AFTER SEND EMAIL");
+=======
+					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
+					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
+>>>>>>> branch 'master' of https://github.com/moabdelhadi/dmg-rg-admin.git
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
 					log.info("AFTER SAVE");
