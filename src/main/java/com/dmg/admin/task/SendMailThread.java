@@ -40,8 +40,7 @@ public class SendMailThread implements Runnable {
 				parameters.put(Constants.USER_COMPANY, firstItem.getCompany());
 				List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
 				if (list != null && !list.isEmpty()) {
-					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId()
-							+ ".pdf";
+					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId() + ".pdf";
 					UserAccount userAccountItem = list.get(0);
 					String email = userAccountItem.getEmail();
 					if(email==null || email.isEmpty()){
@@ -51,18 +50,15 @@ public class SendMailThread implements Runnable {
 						service.store(firstItem);
 						continue;
 					}
-<<<<<<< HEAD
+
 					log.info("BEFOR SEND EMAIL");
 					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
 					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
 					log.info("AFTER SEND EMAIL");
-=======
-					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
-					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
->>>>>>> branch 'master' of https://github.com/moabdelhadi/dmg-rg-admin.git
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
 					log.info("AFTER SAVE");
+					
 				}else{
 					firstItem.setStatus("ERROR");
 					firstItem.setMessage("NO CONTRACT");
