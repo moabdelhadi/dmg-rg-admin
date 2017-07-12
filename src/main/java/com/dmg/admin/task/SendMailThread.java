@@ -45,15 +45,29 @@ public class SendMailThread implements Runnable {
 					UserAccount userAccountItem = list.get(0);
 					String email = userAccountItem.getEmail();
 					if(email==null || email.isEmpty()){
+						log.info("NO EMAIL");
 						firstItem.setStatus("ERROR");
 						firstItem.setMessage("NO EMAIL");
 						service.store(firstItem);
 						continue;
 					}
+<<<<<<< HEAD
+					log.info("BEFOR SEND EMAIL");
 					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
 					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
+					log.info("AFTER SEND EMAIL");
+=======
+					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
+					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
+>>>>>>> branch 'master' of https://github.com/moabdelhadi/dmg-rg-admin.git
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
+					log.info("AFTER SAVE");
+				}else{
+					firstItem.setStatus("ERROR");
+					firstItem.setMessage("NO CONTRACT");
+					service.store(firstItem);
+					continue;
 				}
 
 				Thread.sleep(36000);
