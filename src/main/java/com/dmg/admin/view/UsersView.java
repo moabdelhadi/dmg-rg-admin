@@ -61,7 +61,7 @@ public class UsersView extends VerticalLayout implements View {
 		}
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("Users Found found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("name", "email","company" ,"contractNo", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "status", "enable");
+		pagedTable.setVisibleColumns("name", "email","company" ,"contractNo" ,"adnocRefID", "city", "buildingNumber", "appartmentNumber", "phone", "mobile", "pobox", "status", "enable");
 	}
 
 	public void initView() {
@@ -76,6 +76,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.addContainerProperty("email", String.class, null);
 		pagedTable.addContainerProperty("company", String.class, null);
 		pagedTable.addContainerProperty("contractNo", String.class, null);
+		pagedTable.addContainerProperty("adnocRefID", String.class, null);
 		pagedTable.addContainerProperty("city", String.class, null);
 		pagedTable.addContainerProperty("buildingNumber", String.class, null);
 		pagedTable.addContainerProperty("appartmentNumber", String.class, null);
@@ -90,6 +91,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnHeader("email", "Email");
 		pagedTable.setColumnHeader("company", "Company");
 		pagedTable.setColumnHeader("contractNo", "Contract #");
+		pagedTable.setColumnHeader("adnocRefID", "adnocRefID");
 		pagedTable.setColumnHeader("city", "city");
 		pagedTable.setColumnHeader("buildingNumber", "Building #");
 		pagedTable.setColumnHeader("appartmentNumber", "Apartment #");
@@ -105,6 +107,7 @@ public class UsersView extends VerticalLayout implements View {
 		pagedTable.setColumnExpandRatio("email", 0.10F);
 		pagedTable.setColumnExpandRatio("Company", 0.10F);
 		pagedTable.setColumnExpandRatio("contractNo", 0.20F);
+		pagedTable.setColumnExpandRatio("adnocRefID", 0.20F);
 		pagedTable.setColumnExpandRatio("city", 0.05F);
 		pagedTable.setColumnExpandRatio("buildingNumber", 0.05F);
 		pagedTable.setColumnExpandRatio("appartmentNumber", 0.05F);
