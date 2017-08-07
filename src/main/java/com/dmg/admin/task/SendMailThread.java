@@ -117,7 +117,12 @@ public class SendMailThread implements Runnable {
 		builder.append(user.getBuildingNumber());
 		builder.append("</p><p>  Apartment Number                  - ");
 		builder.append(user.getAppartmentNumber());
-		builder.append("</p>");
+		builder.append("</p><br>");
+		builder.append("<p>Best Regards,</p>");
+		builder.append("<p>Royal Development for Gas Works & Cont.</p>");
+		builder.append("<p>Tel. # : +971-2-6323236</p>");
+		builder.append("<p>e-mail :support.ad@royalgas.ae</p>");
+		builder.append("<p>website :www.royalgas.com</p>");
 		return builder.toString();
 	}
 
