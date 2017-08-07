@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dmg.admin.service.SendEmailService;
+import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.util.MailManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;
@@ -39,29 +40,26 @@ public class SendMailThread implements Runnable {
 				parameters.put(Constants.USER_COMPANY, firstItem.getCompany());
 				List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
 				if (list != null && !list.isEmpty()) {
-					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId()
-							+ ".pdf";
+					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId() + ".pdf";
 					UserAccount userAccountItem = list.get(0);
 					String email = userAccountItem.getEmail();
-					if (email == null || email.isEmpty()) {
+					if(email==null || email.isEmpty()){
 						log.info("NO EMAIL");
 						firstItem.setStatus("ERROR");
 						firstItem.setMessage("NO EMAIL");
 						service.store(firstItem);
 						continue;
 					}
+
 					log.info("BEFOR SEND EMAIL");
 					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
-					MailManager.getInstance().sendMail(
-							email,
-							"Royal Gas bill for acount no. " + firstItem.getContractNo() + " , for "
-									+ firstItem.getPrefix(), msgB, fileName);
+					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
 					log.info("AFTER SEND EMAIL");
-
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
 					log.info("AFTER SAVE");
-				} else {
+					
+				}else{
 					firstItem.setStatus("ERROR");
 					firstItem.setMessage("NO CONTRACT");
 					service.store(firstItem);
@@ -119,12 +117,7 @@ public class SendMailThread implements Runnable {
 		builder.append(user.getBuildingNumber());
 		builder.append("</p><p>  Apartment Number                  - ");
 		builder.append(user.getAppartmentNumber());
-		builder.append("</p><br>");
-		builder.append("<p>Best Regards,</p>");
-		builder.append("<p>Royal Development for Gas Works & Cont.</p>");
-		builder.append("<p>Tel. # : +971-2-6323236</p>");
-		builder.append("<p>e-mail :support.ad@royalgas.ae</p>");
-		builder.append("<p>website :www.royalgas.com</p>");
+		builder.append("</p>");
 		return builder.toString();
 	}
 
