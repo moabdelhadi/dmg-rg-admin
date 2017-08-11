@@ -1,32 +1,26 @@
 package com.dmg.admin.view;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dmg.admin.auth.util.PasswordUtil;
-import com.dmg.admin.exception.PasswordRequirementException;
-import com.dmg.admin.service.BillService;
 import com.dmg.admin.service.SendEmailService;
-import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.SendMailsForm;
-import com.dmg.admin.ui.UserAccountForm;
+import com.dmg.admin.util.PropertiesManager;
+import com.dmg.core.bean.BeansFactory;
+import com.dmg.core.bean.Constants;
 import com.dmg.core.bean.SendInv;
 import com.dmg.core.bean.UserAccount;
-import com.dmg.core.bean.UserStatus;
 import com.dmg.core.exception.DataAccessLayerException;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.data.util.PropertysetItem;
+import com.dmg.core.persistence.FacadeFactory;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -90,17 +84,26 @@ public class SendInvEmailView extends VerticalLayout implements View {
 						
 						String city = sendMailForm.getCityField().getValue().toString();
 						String company = sendMailForm.getCompanyField().getValue().toString();
-						String mapFilePath = sendMailForm.getMapFilePathField().getValue();
+						String buildingCode = sendMailForm.getBuildingField().getValue();
 						String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
 						String prefix = sendMailForm.getPrefixField().getValue();
-						File mapFile = new File(mapFilePath);
+						//File mapFile = new File(mapFilePath);
 
-						Map<String, String> map=addrecordstoDB(mapFile, city, company, pdfDirPath,prefix);
+						UserAccount user = BeansFactory.getInstance().getUserAccount(city);
+						Map<String, Object> parameters = new HashMap<String, Object>();
+						parameters.put(Constants.USER_BUILDING_NO, buildingCode.trim());
+						parameters.put(Constants.USER_CITY, city);
+						parameters.put(Constants.USER_COMPANY, company);
+						List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
+						
+						addrecordstoDB(list, city, company, pdfDirPath,prefix);
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 						
 					}
+				} catch (DataAccessLayerException e) {
+					Notification.show("ERROR in reading Date From DB!", Type.ERROR_MESSAGE);
 				} catch (IOException e) {
-					Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
+					Notification.show("ERROR in COPING FILES!", Type.ERROR_MESSAGE);
 				} 
 			}
 
@@ -109,38 +112,45 @@ public class SendInvEmailView extends VerticalLayout implements View {
 
 	}
 	
-	private Map<String, String> addrecordstoDB(File mapFile, String city, String company, String pdfDirPath, String prefix) throws IOException {
-		Map<String, String> map = new HashMap<String, String>();
-		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
-		String line = reader.readLine();
-		while (line!=null && !line.isEmpty()) {
-			String[] split = line.split("\t");
-			if(split.length==2){
-				//map.put(split[1], split[0]);
-				
-				
-					SendInv sendInv = new SendInv();
-					sendInv.setCcbId(split[0]);
-					sendInv.setCity(city);
-					sendInv.setCompany(company);
-					sendInv.setContractNo(split[1]);
-					sendInv.setFileName(pdfDirPath);
-					sendInv.setCreationDate(Calendar.getInstance().getTime());
-					sendInv.setStatus("PENDING");
-					sendInv.setPrefix(prefix);
-					try {
-						sendEmailService.store(sendInv);
-					} catch (DataAccessLayerException e) {
-						log.error("ERROR in save line "+line);
-						Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
-					}	
-				
+	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String pdfDirPath, String prefix) throws IOException {
+//		Map<String, String> map = new HashMap<String, String>();
+		String pdfBasePath = PropertiesManager.getInstance().getProperty("adnc.pdf.base.path");
+		String pdfSendStatus = PropertiesManager.getInstance().getProperty("adnc.pdf.send.status");
+		if(!pdfBasePath.endsWith("/")){
+			pdfBasePath+="/";
+		}
+//		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
+//		String line = reader.readLine();
+		for (UserAccount userAccount : users) {
+			if(userAccount== null || userAccount.getAdnocRefID()==null || userAccount.getAdnocRefID().isEmpty()){
+				log.warn("Users Not Send becaus of missing data" + userAccount);
+				continue;
 			}
 			
-			line = reader.readLine();
+			if(!userAccount.getEnable()){
+				log.warn("User Not Enabled" + userAccount.getContractNo());
+				continue;
+			}
+			
+			SendInv sendInv = new SendInv();
+			sendInv.setCcbId(userAccount.getAdnocRefID());
+			sendInv.setCity(city);
+			sendInv.setCompany(company);
+			sendInv.setContractNo(userAccount.getContractNo());
+			sendInv.setFileName(pdfDirPath);
+			sendInv.setCreationDate(Calendar.getInstance().getTime());
+			sendInv.setStatus(pdfSendStatus); //"PENDING"
+			sendInv.setPrefix(prefix);
+			try {
+				sendEmailService.store(sendInv);
+			} catch (DataAccessLayerException e) {
+				log.error("ERROR in save line "+userAccount.getContractNo());
+				Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
+			}	
+			FileUtils.copyFile(new File(pdfDirPath + "/" + prefix + userAccount.getAdnocRefID() + ".pdf"), new File( pdfBasePath+userAccount.getAdnocRefID()+".pdf"));
+			
 		}
-		
-		return map;
+//		return map;
 	}
 
 	private boolean validateFields() {
@@ -148,7 +158,7 @@ public class SendInvEmailView extends VerticalLayout implements View {
 		
 		Object city = sendMailForm.getCityField().getValue();
 		Object company = sendMailForm.getCompanyField().getValue();
-		String mapFilePath = sendMailForm.getMapFilePathField().getValue();
+		String mapFilePath = sendMailForm.getBuildingField().getValue();
 		String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
 
 		if(city==null || city.toString().isEmpty()){
@@ -171,9 +181,8 @@ public class SendInvEmailView extends VerticalLayout implements View {
 			return false;
 		}
 		
-		File mapFile = new File(mapFilePath);
-		if(!mapFile.exists()){
-			Notification.show("ERROR", "Fill Map is not Correct !", Type.ERROR_MESSAGE);
+		if(mapFilePath ==null || mapFilePath.isEmpty()){
+			Notification.show("ERROR", "Builing in empty !", Type.ERROR_MESSAGE);
 			return false;
 		}
 
