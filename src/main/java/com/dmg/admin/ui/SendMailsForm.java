@@ -18,7 +18,7 @@ public class SendMailsForm extends CustomComponent {
 
 	TextField pdfDirPathField = new TextField("PDF Dir Path");
 
-	TextField mapFilePathField = new TextField("Map File");
+	TextField buildingField = new TextField("Building");
 	TextField prefixField = new TextField("PREFIX");
 
 
@@ -38,7 +38,7 @@ public class SendMailsForm extends CustomComponent {
 		layout.setMargin(true);
 
 		pdfDirPathField.setWidth("100%");
-		mapFilePathField.setWidth("100%");
+		buildingField.setWidth("100%");
 		cityField.setWidth("100%");
 		companyField.setWidth("100%");
 		
@@ -54,7 +54,7 @@ public class SendMailsForm extends CustomComponent {
 
 		layout.addComponent(cityField);
 		layout.addComponent(pdfDirPathField);
-		layout.addComponent(mapFilePathField);
+		layout.addComponent(buildingField);
 		layout.addComponent(companyField);
 		layout.addComponent(prefixField);
 //		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
@@ -78,10 +78,13 @@ public class SendMailsForm extends CustomComponent {
 		return pdfDirPathField;
 	}
 
-	public TextField getMapFilePathField() {
-		return mapFilePathField;
-	}
+
 	
+	public TextField getBuildingField() {
+		return buildingField;
+	}
+
+
 	public TextField getPrefixField() {
 		return prefixField;
 	}
