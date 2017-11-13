@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dmg.admin.service.SendEmailService;
-import com.dmg.admin.service.UserAccountService;
 import com.dmg.admin.util.MailManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;

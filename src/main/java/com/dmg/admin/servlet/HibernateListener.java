@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dmg.admin.task.SendMailThread;
+import com.dmg.admin.task.SendMeterReadingsThread;
 import com.dmg.core.persistence.FacadeFactory;
 import com.mchange.v2.c3p0.C3P0Registry;
 import com.mchange.v2.c3p0.PooledDataSource;
@@ -54,6 +55,9 @@ public class HibernateListener implements ServletContextListener {
 			
 			Thread thread = new Thread(new SendMailThread());
 			thread.start();
+			
+			Thread thread2 = new Thread(new SendMeterReadingsThread());
+			thread2.start();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,8 +1,10 @@
 package com.dmg.admin.service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +33,10 @@ public class MeterService implements Serializable {
 	private static final Logger log = LoggerFactory.getLogger(MeterService.class);
 
 	private static final String LIST_QUERY_ORDERED_BY_DATE = "SELECT u FROM MeterReadingDu u ORDER BY u.id DESC";
-	/*private static final String FIND_USERS_TO_UPDATE = "SELECT u FROM UserAccountsDU u WHERE u.contractNo=:contractNo AND u.city=:city ";*/
 	private static final String LIST_QUERY_ORDERED_BY_DATE_AUH = "SELECT u FROM MeterReadingAUH u ORDER BY u.id DESC";
-
-	/*private static final String FIND_USERS_TO_UPDATE_AUH = "SELECT u FROM UserAccountsAUH u WHERE u.contractNo=:contractNo AND u.city=:city ";*/
+	
+	private static final String LIST_METER_READINGS_DATE = "SELECT u FROM MeterReadingDu u WHERE u.creationDate>:fromDate  AND u.creationDate<:toDate  ORDER BY u.id ASC";
+	private static final String LIST_METER_READINGS_DATE_AUH = "SELECT u FROM MeterReadingAUH u WHERE u.creationDate>:fromDate  AND u.creationDate<:toDate  ORDER BY u.id ASC";
 
 	public List<MeterReading> lisReadings() throws DataAccessLayerException {
 
@@ -52,6 +54,26 @@ public class MeterService implements Serializable {
 
 		return FacadeFactory.getFacade().list(query, new HashMap<String, Object>());
 	}
+	
+	public List<MeterReading> lisReadings(String city, Date from, Date to) throws DataAccessLayerException {
+		
+		String query = "";
+		if ("DUBAI".equals(city)) {
+			query = LIST_METER_READINGS_DATE;
+		} else if ("ABUDHABI".equals(city)) {
+			query = LIST_METER_READINGS_DATE_AUH;
+		} else {
+			log.error("Error in Get the City Value= : " + city);
+			return null;
+		}
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("fromDate", from);
+		parameters.put("toDate", to);
+		
+		return FacadeFactory.getFacade().list(query, parameters);
+		
+	}
 
 	public MeterReading getMeterReading(Long id) throws DataAccessLayerException {
 		MeterReading meterReading = getMeterBean();
@@ -67,6 +89,8 @@ public class MeterService implements Serializable {
 	public void update(MeterReading meterReading) throws DataAccessLayerException {
 		FacadeFactory.getFacade().store(meterReading);
 	}
+
+
 
 	//	public List<UserAccount> getModifiedUsers() throws DataAccessLayerException {
 	//		Map<String, Object> parameters = new HashMap<String, Object>();
