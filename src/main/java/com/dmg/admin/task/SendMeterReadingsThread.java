@@ -49,20 +49,18 @@ public class SendMeterReadingsThread implements Runnable {
 			Calendar cal = Calendar.getInstance();
 
 			int year = cal.get(Calendar.YEAR);
-			int month = cal.get(Calendar.MONTH);
+			int month = cal.get(Calendar.MONTH)+1;
 			int DAY = cal.get(Calendar.DAY_OF_MONTH);
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d");
 			cal.setTime(dateFormat.parse(year + "-" + month + "-" + DAY));
 
-			cal.add(Calendar.DATE, -2);
-
-			Date from = cal.getTime();
-			log.debug("from=" + from);
-
-			cal.add(Calendar.DATE, 1);
 			Date to = cal.getTime();
 			log.debug("to=" + to);
+			
+			cal.add(Calendar.DATE, -1);
+			Date from = cal.getTime();
+			log.debug("from=" + from);
 
 			String fromString = dateFormat.format(from);
 			
@@ -106,9 +104,9 @@ public class SendMeterReadingsThread implements Runnable {
 				sb.append(meterReading.getContractNo());
 				sb.append(",");
 				sb.append(meterReading.getCity());
-				sb.append(",");
+				sb.append(",'");
 				sb.append(meterReading.getMeterReading());
-				sb.append(",https://pay.royalgas.com/dmg-rg-client-v2/imgs/");
+				sb.append("',https://pay.royalgas.com/dmg-rg-client-v2/imgs/");
 				sb.append(meterReading.getImageName());
 				sb.append("\n");
 			}
