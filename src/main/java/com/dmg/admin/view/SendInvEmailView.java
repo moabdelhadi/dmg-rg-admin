@@ -2,7 +2,9 @@ package com.dmg.admin.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,8 +103,10 @@ public class SendInvEmailView extends VerticalLayout implements View {
 						
 					}
 				} catch (DataAccessLayerException e) {
+					log.error("DataAccessLayerException",e);
 					Notification.show("ERROR in reading Date From DB!", Type.ERROR_MESSAGE);
 				} catch (IOException e) {
+					log.error("error in coping files",e);
 					Notification.show("ERROR in COPING FILES!", Type.ERROR_MESSAGE);
 				} 
 			}
@@ -118,6 +122,14 @@ public class SendInvEmailView extends VerticalLayout implements View {
 		String pdfSendStatus = PropertiesManager.getInstance().getProperty("adnc.pdf.send.status");
 		if(!pdfBasePath.endsWith("/")){
 			pdfBasePath+="/";
+		}
+		Date time = Calendar.getInstance().getTime();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
+		String format = df.format(time);
+		pdfBasePath+=format;
+		File dir = new File(pdfBasePath);
+		if(!dir.exists()){
+			dir.mkdirs();
 		}
 //		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
 //		String line = reader.readLine();
@@ -138,17 +150,25 @@ public class SendInvEmailView extends VerticalLayout implements View {
 			sendInv.setCompany(company);
 			sendInv.setContractNo(userAccount.getContractNo());
 			sendInv.setFileName(pdfDirPath);
-			sendInv.setCreationDate(Calendar.getInstance().getTime());
+			sendInv.setCreationDate(time);
 			sendInv.setStatus(pdfSendStatus); //"PENDING"
 			sendInv.setPrefix(prefix);
 			try {
 				sendEmailService.store(sendInv);
+				
+				File sorc = new File(pdfDirPath + "/" + prefix + userAccount.getAdnocRefID() + ".pdf");
+				File dest = new File( pdfBasePath+"/"+userAccount.getAdnocRefID()+".pdf");
+				if(sorc.exists()){
+					FileUtils.copyFile(sorc, dest);
+				}
+				
+
 			} catch (DataAccessLayerException e) {
 				log.error("ERROR in save line "+userAccount.getContractNo());
-				Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
-			}	
-			FileUtils.copyFile(new File(pdfDirPath + "/" + prefix + userAccount.getAdnocRefID() + ".pdf"), new File( pdfBasePath+userAccount.getAdnocRefID()+".pdf"));
-			
+				//Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
+			} catch (Exception e) {
+				log.error("ERROR in copyFile line "+userAccount.getContractNo());
+			}
 		}
 //		return map;
 	}
