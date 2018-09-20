@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.dmg.admin.service.SendEmailService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.SendMailsForm;
+import com.dmg.admin.ui.SendTemplateMailsForm;
 import com.dmg.admin.util.PropertiesManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;
@@ -33,6 +34,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class SendInvEmailTemplateView extends VerticalLayout implements View {
@@ -44,12 +46,12 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 	private static final Logger log = LoggerFactory.getLogger(SendInvEmailTemplateView.class);
 	private final Navigator navigator;
 	public static final String NAME = "sendEmailTemplate";
-	//private final SendEmailService sendEmailService;
+	private final SendEmailService sendEmailService;
 	private String id;
 //	private SendInv userAccount;
-	//private Panel panel;
+	private Panel panel;
 	private Button startSendBtn;
-	private SendMailsForm sendMailForm;
+	private SendTemplateMailsForm sendTemplateMailForm;
 
 	public SendInvEmailTemplateView(Navigator navigator) {
 		this.navigator = navigator;
@@ -84,11 +86,11 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						
 						//sendMailForm.getBinder().commit();
 						
-						String city = sendMailForm.getCityField().getValue().toString();
-						String company = sendMailForm.getCompanyField().getValue().toString();
-						String buildingCode = sendMailForm.getBuildingField().getValue();
-						String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
-						String prefix = sendMailForm.getPrefixField().getValue();
+						String city = sendTemplateMailForm.getCityField().getValue().toString();
+						String company = sendTemplateMailForm.getCompanyField().getValue().toString();
+						String buildingCode = sendTemplateMailForm.getBuildingField().getValue();
+						String pdfDirPath = sendTemplateMailForm.getPdfDirPathField().getValue();
+						String prefix = sendTemplateMailForm.getPrefixField().getValue();
 						//File mapFile = new File(mapFilePath);
 
 						UserAccount user = BeansFactory.getInstance().getUserAccount(city);
@@ -176,11 +178,15 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 	private boolean validateFields() {
 		
 		
-		Object city = sendMailForm.getCityField().getValue();
-		Object company = sendMailForm.getCompanyField().getValue();
-		String mapFilePath = sendMailForm.getBuildingField().getValue();
-		String pdfDirPath = sendMailForm.getPdfDirPathField().getValue();
-
+		Object city = sendTemplateMailForm.getCityField().getValue();
+		Object company = sendTemplateMailForm.getCompanyField().getValue();
+		String buildingNo = sendTemplateMailForm.getBuildingNo().getValue();
+		String accountNo = sendTemplateMailForm.getAccountNo().getValue();
+		Object template = sendTemplateMailForm.getTemplateField().getValue();
+		String messageText = sendTemplateMailForm.getMessageText().getValue();
+		
+		
+		
 		if(city==null || city.toString().isEmpty()){
 			Notification.show("ERROR", "Please Select City !", Type.ERROR_MESSAGE);
 			return false;
@@ -191,25 +197,26 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			return false;
 		}
 		
-		if(mapFilePath ==null || mapFilePath.isEmpty()){
-			Notification.show("ERROR", "Please Fill Map File !", Type.ERROR_MESSAGE);
+		if(template==null || template.toString().isEmpty()){
+			Notification.show("ERROR", "Please Select Template Value !", Type.ERROR_MESSAGE);
 			return false;
 		}
 		
-		if(pdfDirPath ==null || pdfDirPath.isEmpty()){
-			Notification.show("ERROR", "Please PDF Dir!", Type.ERROR_MESSAGE);
+		if(buildingNo ==null || buildingNo.isEmpty()){
+			Notification.show("ERROR", "Please Fill building No !", Type.ERROR_MESSAGE);
 			return false;
 		}
 		
-		if(mapFilePath ==null || mapFilePath.isEmpty()){
-			Notification.show("ERROR", "Builing in empty !", Type.ERROR_MESSAGE);
+		if(accountNo ==null || accountNo.isEmpty()){
+			Notification.show("ERROR", "Please Fill Contract No", Type.ERROR_MESSAGE);
 			return false;
 		}
-
-		File pdfDir = new File(pdfDirPath);
-		if(!pdfDir.exists() || !pdfDir.isDirectory()){
-			Notification.show("ERROR", "PDF Dir Is not correct !", Type.ERROR_MESSAGE);
-			return false;
+		
+		if( template.equals("FREE") ){
+			if(messageText==null || messageText.isEmpty()) {
+				Notification.show("ERROR", "message Text isn empty !", Type.ERROR_MESSAGE);
+				return false;
+			}
 		}
 		
 		return true;
@@ -235,10 +242,10 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 //			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
 //			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
 
-			sendMailForm = new SendMailsForm();
+			sendTemplateMailForm = new SendMailsForm();
 			//here setting the read only fields
-			sendMailForm.getLayout().addComponent(startSendBtn);
-			panel.setContent(sendMailForm);
+			sendTemplateMailForm.getLayout().addComponent(startSendBtn);
+			panel.setContent(sendTemplateMailForm);
 		
 		} catch (NumberFormatException e) {
 			if (e instanceof NumberFormatException) {
