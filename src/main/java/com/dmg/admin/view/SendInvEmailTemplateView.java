@@ -17,6 +17,7 @@ import com.dmg.admin.service.SendEmailService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.SendMailsForm;
 import com.dmg.admin.ui.SendTemplateMailsForm;
+import com.dmg.admin.util.MailTemplatesGenerateUtil;
 import com.dmg.admin.util.PropertiesManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;
@@ -88,19 +89,30 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						
 						String city = sendTemplateMailForm.getCityField().getValue().toString();
 						String company = sendTemplateMailForm.getCompanyField().getValue().toString();
-						String buildingCode = sendTemplateMailForm.getBuildingField().getValue();
-						String pdfDirPath = sendTemplateMailForm.getPdfDirPathField().getValue();
-						String prefix = sendTemplateMailForm.getPrefixField().getValue();
+						String buildingCode = sendTemplateMailForm.getBuildingNo().getValue();
+						String accountNo = sendTemplateMailForm.getAccountNo().getValue();
+						String templateField = sendTemplateMailForm.getTemplateField().getValue().toString();
+						String messageText = sendTemplateMailForm.getMessageText().getValue();
+						Boolean nameCheck = sendTemplateMailForm.getNameCheck().getValue();
+						Boolean contractNoCheck = sendTemplateMailForm.getContractNoCheck().getValue();
+						Boolean dueDateCheck = sendTemplateMailForm.getDateCheck().getValue();
+						
 						//File mapFile = new File(mapFilePath);
 
 						UserAccount user = BeansFactory.getInstance().getUserAccount(city);
 						Map<String, Object> parameters = new HashMap<String, Object>();
-						parameters.put(Constants.USER_BUILDING_NO, buildingCode.trim());
+						
+						if(!buildingCode.trim().equalsIgnoreCase("all")){
+							parameters.put(Constants.USER_BUILDING_NO, buildingCode.trim());
+						}
+						if(!accountNo.trim().equalsIgnoreCase("all")){
+							parameters.put(Constants.USER_ACCOUNT_ID, accountNo.trim());
+						}
 						parameters.put(Constants.USER_CITY, city);
 						parameters.put(Constants.USER_COMPANY, company);
 						List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
 						
-						addrecordstoDB(list, city, company, pdfDirPath,prefix);
+						addrecordstoDB(list, city, company, templateField ,messageText, nameCheck, contractNoCheck, dueDateCheck);
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 						
 					}
@@ -118,25 +130,29 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 
 	}
 	
-	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String pdfDirPath, String prefix) throws IOException {
-//		Map<String, String> map = new HashMap<String, String>();
-		String pdfBasePath = PropertiesManager.getInstance().getProperty("adnc.pdf.base.path");
+	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String templateField, String messageText, Boolean nameCheck, Boolean contractNoCheck, Boolean dueDateCheck) throws IOException {
+
+////		Map<String, String> map = new HashMap<String, String>();
+//		String pdfBasePath = PropertiesManager.getInstance().getProperty("adnc.pdf.base.path");
 		String pdfSendStatus = PropertiesManager.getInstance().getProperty("adnc.pdf.send.status");
-		if(!pdfBasePath.endsWith("/")){
-			pdfBasePath+="/";
-		}
+//		if(!pdfBasePath.endsWith("/")){
+//			pdfBasePath+="/";
+//		}
+		
 		Date time = Calendar.getInstance().getTime();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
-		String format = df.format(time);
-		pdfBasePath+=format;
-		File dir = new File(pdfBasePath);
-		if(!dir.exists()){
-			dir.mkdirs();
-		}
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
+//		String format = df.format(time);
+//		pdfBasePath+=format;
+//		File dir = new File(pdfBasePath);
+//		if(!dir.exists()){
+//			dir.mkdirs();
+//		}
 //		BufferedReader reader = new BufferedReader(new FileReader(mapFile));
 //		String line = reader.readLine();
+
+		MailTemplatesGenerateUtil mailTemplateGenerator = MailTemplatesGenerateUtil.getInstance();
 		for (UserAccount userAccount : users) {
-			if(userAccount== null || userAccount.getAdnocRefID()==null || userAccount.getAdnocRefID().isEmpty()){
+			if(userAccount== null ){
 				log.warn("Users Not Send becaus of missing data" + userAccount);
 				continue;
 			}
@@ -147,24 +163,22 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			}
 			
 			SendInv sendInv = new SendInv();
-			sendInv.setCcbId(userAccount.getAdnocRefID());
+			sendInv.setCcbId("");
 			sendInv.setCity(city);
 			sendInv.setCompany(company);
 			sendInv.setContractNo(userAccount.getContractNo());
-			sendInv.setFileName(pdfDirPath);
+			sendInv.setFileName("");
 			sendInv.setCreationDate(time);
 			sendInv.setStatus(pdfSendStatus); //"PENDING"
-			sendInv.setPrefix(prefix);
+			sendInv.setPrefix("");
+			
+			String body = mailTemplateGenerator.createEmailTemplate(templateField, messageText, userAccount, nameCheck, contractNoCheck, dueDateCheck );
+			sendInv.setPrefix(body);
+			sendInv.setAttachment("");
+			
+			
 			try {
 				sendEmailService.store(sendInv);
-				
-				File sorc = new File(pdfDirPath + "/" + prefix + userAccount.getAdnocRefID() + ".pdf");
-				File dest = new File( pdfBasePath+"/"+userAccount.getAdnocRefID()+".pdf");
-				if(sorc.exists()){
-					FileUtils.copyFile(sorc, dest);
-				}
-				
-
 			} catch (DataAccessLayerException e) {
 				log.error("ERROR in save line "+userAccount.getContractNo());
 				//Notification.show("ERROR in reading Mapping File!", Type.ERROR_MESSAGE);
@@ -202,12 +216,12 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			return false;
 		}
 		
-		if(buildingNo ==null || buildingNo.isEmpty()){
+		if(buildingNo ==null || buildingNo.trim().isEmpty()){
 			Notification.show("ERROR", "Please Fill building No !", Type.ERROR_MESSAGE);
 			return false;
 		}
 		
-		if(accountNo ==null || accountNo.isEmpty()){
+		if(accountNo ==null || accountNo.trim().isEmpty()){
 			Notification.show("ERROR", "Please Fill Contract No", Type.ERROR_MESSAGE);
 			return false;
 		}
@@ -242,7 +256,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 //			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
 //			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
 
-			sendTemplateMailForm = new SendMailsForm();
+			sendTemplateMailForm = new SendTemplateMailsForm();
 			//here setting the read only fields
 			sendTemplateMailForm.getLayout().addComponent(startSendBtn);
 			panel.setContent(sendTemplateMailForm);

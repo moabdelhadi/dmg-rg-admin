@@ -131,6 +131,12 @@ public class SendTemplateMailsForm extends CustomComponent {
 		return nameCheck;
 	}
 
+	
+
+	public CheckBox getContractNoCheck() {
+		return contractNoCheck;
+	}
+
 
 	public FormLayout getLayout() {
 		return layout;
