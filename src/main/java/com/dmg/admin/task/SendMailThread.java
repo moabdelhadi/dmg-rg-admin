@@ -39,7 +39,7 @@ public class SendMailThread implements Runnable {
 				parameters.put(Constants.USER_COMPANY, firstItem.getCompany());
 				List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
 				if (list != null && !list.isEmpty()) {
-					String fileName = firstItem.getFileName() + "/" + firstItem.getPrefix() + firstItem.getCcbId() + ".pdf";
+					String fileName = firstItem.getAttachment();
 					UserAccount userAccountItem = list.get(0);
 					String email = userAccountItem.getEmail();
 					if(email==null || email.isEmpty()){
@@ -51,8 +51,8 @@ public class SendMailThread implements Runnable {
 					}
 
 					log.info("BEFOR SEND EMAIL");
-					String msgB = getMessageBody(firstItem.getPrefix(), userAccountItem);
-					MailManager.getInstance().sendMail(email, "Royal Gas bill for "+firstItem.getPrefix(),	msgB , fileName);
+					
+					MailManager.getInstance().sendMail(email, firstItem.getTitle(),	firstItem.getBody() , fileName);
 					log.info("AFTER SEND EMAIL");
 					firstItem.setStatus("SENT");
 					service.store(firstItem);
@@ -106,23 +106,23 @@ public class SendMailThread implements Runnable {
 
 	}
 
-	private String getMessageBody(String prefix, UserAccount user) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("<p>Your bill for ");
-		builder.append(prefix);
-		builder.append(" is ready. To view and save your bill, please double click on the attachment.</p><p>You can make your gas bill payment through the following</p><p>1)      By website https://www.royalgas.com/online-payment</p><p>2)      By Mobile Application Both android and App store</p><p>3)      By collector - We will be sending a SMS in regards to the schedule of the gas bill payment collection. Our collector will make a door-to-door collection on the scheduled date. Any request for bill collection after the scheduled date is subject AED 30 fee.</p><p>Please use the below information to register online account</p><p> Royal Gas Account Number     - ");
-		builder.append(user.getContractNo());
-		builder.append("</p><p>  Building Number                     - ");
-		builder.append(user.getBuildingNumber());
-		builder.append("</p><p>  Apartment Number                  - ");
-		builder.append(user.getAppartmentNumber());
-		builder.append("</p><br>");
-		builder.append("<p>Best Regards,</p>");
-		builder.append("<p>Royal Development for Gas Works & Cont.</p>");
-		builder.append("<p>Tel. # : +971-2-6323236</p>");
-		builder.append("<p>e-mail :support.ad@royalgas.ae</p>");
-		builder.append("<p>website :www.royalgas.com</p>");
-		return builder.toString();
-	}
+//	private String getMessageBody(String prefix, UserAccount user) {
+//		StringBuilder builder = new StringBuilder();
+//		builder.append("<p>Your bill for ");
+//		builder.append(prefix);
+//		builder.append(" is ready. To view and save your bill, please double click on the attachment.</p><p>You can make your gas bill payment through the following</p><p>1)      By website https://www.royalgas.com/online-payment</p><p>2)      By Mobile Application Both android and App store</p><p>3)      By collector - We will be sending a SMS in regards to the schedule of the gas bill payment collection. Our collector will make a door-to-door collection on the scheduled date. Any request for bill collection after the scheduled date is subject AED 30 fee.</p><p>Please use the below information to register online account</p><p> Royal Gas Account Number     - ");
+//		builder.append(user.getContractNo());
+//		builder.append("</p><p>  Building Number                     - ");
+//		builder.append(user.getBuildingNumber());
+//		builder.append("</p><p>  Apartment Number                  - ");
+//		builder.append(user.getAppartmentNumber());
+//		builder.append("</p><br>");
+//		builder.append("<p>Best Regards,</p>");
+//		builder.append("<p>Royal Development for Gas Works & Cont.</p>");
+//		builder.append("<p>Tel. # : +971-2-6323236</p>");
+//		builder.append("<p>e-mail :support.ad@royalgas.ae</p>");
+//		builder.append("<p>website :www.royalgas.com</p>");
+//		return builder.toString();
+//	}
 
 }

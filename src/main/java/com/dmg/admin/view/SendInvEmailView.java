@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.dmg.admin.service.SendEmailService;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.SendMailsForm;
+import com.dmg.admin.util.MailTemplatesGenerateUtil;
 import com.dmg.admin.util.PropertiesManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;
@@ -153,6 +154,12 @@ public class SendInvEmailView extends VerticalLayout implements View {
 			sendInv.setCreationDate(time);
 			sendInv.setStatus(pdfSendStatus); //"PENDING"
 			sendInv.setPrefix(prefix);
+			String attachment = pdfDirPath + "/" + prefix + userAccount.getAdnocRefID() + ".pdf";
+			sendInv.setAttachment(attachment);
+			sendInv.setTitle("Royal Gas bill for "+prefix);
+			String msgB = MailTemplatesGenerateUtil.getInstance().createSendAdnocInvMessageBody(prefix, userAccount);
+			sendInv.setBody(msgB);
+			
 			try {
 				sendEmailService.store(sendInv);
 				

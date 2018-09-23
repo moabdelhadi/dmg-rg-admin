@@ -35,7 +35,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class SendInvEmailTemplateView extends VerticalLayout implements View {
@@ -93,9 +92,10 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						String accountNo = sendTemplateMailForm.getAccountNo().getValue();
 						String templateField = sendTemplateMailForm.getTemplateField().getValue().toString();
 						String messageText = sendTemplateMailForm.getMessageText().getValue();
+						String messageTitle = sendTemplateMailForm.getTitleField().getValue();
 						Boolean nameCheck = sendTemplateMailForm.getNameCheck().getValue();
 						Boolean contractNoCheck = sendTemplateMailForm.getContractNoCheck().getValue();
-						Boolean dueDateCheck = sendTemplateMailForm.getDateCheck().getValue();
+						Boolean passwordCheck = sendTemplateMailForm.getPasswordCheck().getValue();
 						
 						//File mapFile = new File(mapFilePath);
 
@@ -112,7 +112,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						parameters.put(Constants.USER_COMPANY, company);
 						List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
 						
-						addrecordstoDB(list, city, company, templateField ,messageText, nameCheck, contractNoCheck, dueDateCheck);
+						addrecordstoDB(list, city, company, templateField ,messageText, messageTitle,  nameCheck, contractNoCheck, passwordCheck);
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 						
 					}
@@ -130,7 +130,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 
 	}
 	
-	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String templateField, String messageText, Boolean nameCheck, Boolean contractNoCheck, Boolean dueDateCheck) throws IOException {
+	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String templateField, String messageText, String messageTitle,  Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck) throws IOException {
 
 ////		Map<String, String> map = new HashMap<String, String>();
 //		String pdfBasePath = PropertiesManager.getInstance().getProperty("adnc.pdf.base.path");
@@ -171,10 +171,10 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			sendInv.setCreationDate(time);
 			sendInv.setStatus(pdfSendStatus); //"PENDING"
 			sendInv.setPrefix("");
-			
-			String body = mailTemplateGenerator.createEmailTemplate(templateField, messageText, userAccount, nameCheck, contractNoCheck, dueDateCheck );
-			sendInv.setPrefix(body);
+			String body = mailTemplateGenerator.createEmailTemplate(templateField, messageText, messageTitle, userAccount, nameCheck, contractNoCheck, passwordCheck );
 			sendInv.setAttachment("");
+			sendInv.setTitle(messageTitle);
+			sendInv.setBody(body);
 			
 			
 			try {
@@ -226,7 +226,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			return false;
 		}
 		
-		if( template.equals("FREE") ){
+		if( template.toString().equalsIgnoreCase("FREE") ){
 			if(messageText==null || messageText.isEmpty()) {
 				Notification.show("ERROR", "message Text isn empty !", Type.ERROR_MESSAGE);
 				return false;

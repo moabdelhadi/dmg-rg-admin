@@ -24,15 +24,16 @@ public class SendTemplateMailsForm extends CustomComponent {
 	ComboBox companyField = new ComboBox("Company");
 	TextField buildingNo = new TextField("Buildin No. or ALL");
 	TextField accountNo = new TextField("Account No, or ALL");
+	TextField titleField = new TextField("Email Title");
 	ComboBox templateField = new ComboBox("Template");
 
-	TextArea  messageText = new TextArea("template");
+	TextArea  messageText = new TextArea("Message Body");
 
 	Label addDatalabel = new Label("Additional Data:");
 	CheckBox nameCheck=new CheckBox("Contract Name:", false);
 	CheckBox contractNoCheck=new CheckBox("Contract No:", false);
 	CheckBox amountCheck=new CheckBox("Amount:", false);
-	CheckBox dateCheck=new CheckBox("Due Date:", false);
+	CheckBox passwordCheck=new CheckBox("Password:", false);
 
 	FormLayout layout = new FormLayout();
 
@@ -65,8 +66,8 @@ public class SendTemplateMailsForm extends CustomComponent {
 		itemTempId.add("thirdReminder");
 		itemTempId.add("lastReminder");
 		itemTempId.add("free");
-		templateField.addItems(itemIdsCo);
-		messageText.setEnabled(false);
+		templateField.addItems(itemTempId);
+		messageText.setEnabled(true);
 		
 		layout.addComponent(cityField);
 		layout.addComponent(companyField);
@@ -74,12 +75,13 @@ public class SendTemplateMailsForm extends CustomComponent {
 		layout.addComponent(buildingNo);
 		layout.addComponent(accountNo);
 		layout.addComponent(templateField);
+		layout.addComponent(titleField);
 		layout.addComponent(messageText);
 		layout.addComponent(addDatalabel);
 		layout.addComponent(nameCheck);
 		layout.addComponent(contractNoCheck);
 		layout.addComponent(amountCheck);
-		layout.addComponent(dateCheck);
+		layout.addComponent(passwordCheck);
 		
 //		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
 //		binder = new FieldGroup();
@@ -116,10 +118,10 @@ public class SendTemplateMailsForm extends CustomComponent {
 		return amountCheck;
 	}
 
-	public CheckBox getDateCheck() {
-		return dateCheck;
-	}
 
+	public CheckBox getPasswordCheck() {
+		return passwordCheck;
+	}
 
 
 	public ComboBox getTemplateField() {
@@ -132,6 +134,11 @@ public class SendTemplateMailsForm extends CustomComponent {
 	}
 
 	
+
+	public TextField getTitleField() {
+		return titleField;
+	}
+
 
 	public CheckBox getContractNoCheck() {
 		return contractNoCheck;
