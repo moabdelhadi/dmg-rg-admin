@@ -56,10 +56,8 @@ public class MailDetailsView extends VerticalLayout implements View {
 		id = event.getParameters();
 		try {
 			mail = sendMailService.getMail(Long.parseLong(id));
-
 			maildetailDisplayLayout = new MailStausDisplayLayout(mail);
-
-			panel.setContent(billDisplayLayout);
+			panel.setContent(maildetailDisplayLayout);
 		} catch (NumberFormatException | DataAccessLayerException e) {
 			if (e instanceof NumberFormatException) {
 				Notification.show("ID entered is not correct", Type.ERROR_MESSAGE);

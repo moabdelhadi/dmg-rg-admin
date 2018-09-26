@@ -12,6 +12,7 @@ import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
 import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
+import com.dmg.admin.ui.MailStausDisplayLayout;
 import com.dmg.admin.util.ViewUtil;
 import com.dmg.core.bean.Bill;
 import com.dmg.core.bean.BillAUH;
@@ -55,7 +56,7 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 	private ExcelExport excelExport;
 	private final Navigator navigator;
 	private Button detailsBtn;
-	//private final Window billWindow = new Window();
+	private final Window mailDetailsWindow = new Window();
 	private String city = "";
 	private final Button exportBtn = new Button("Export");
 
@@ -191,18 +192,13 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 	}
 
 	private void openDetails() {
-		if (!billWindow.isAttached()) {
-			billWindow.center();
-			billWindow.setWidth("80%");
-			Bill bill;
-			if ("DUBAI".equals(city)) {
-				bill = (BillDu) jpaContainer.getItem(pagedTable.getValue()).getEntity();
-			} else {
-				bill = (BillAUH) jpaContainer.getItem(pagedTable.getValue()).getEntity();
-			}
-			BillDisplayLayout billDisplayLayout = new BillDisplayLayout(bill);
-			billWindow.setContent(billDisplayLayout);
-			UI.getCurrent().addWindow(billWindow);
+		if (!mailDetailsWindow.isAttached()) {
+			mailDetailsWindow.center();
+			mailDetailsWindow.setWidth("80%");
+			SendInv mailD=  (SendInv) jpaContainer.getItem(pagedTable.getValue()).getEntity();
+			MailStausDisplayLayout mailSDisplayLayout = new MailStausDisplayLayout(mailD);
+			mailDetailsWindow.setContent(mailSDisplayLayout);
+			UI.getCurrent().addWindow(mailDetailsWindow);
 		}
 	}
 

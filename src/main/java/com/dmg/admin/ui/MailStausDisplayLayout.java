@@ -25,42 +25,26 @@ public class MailStausDisplayLayout extends HorizontalLayout {
 
 		// setting default values for null
 		VerticalLayout verticalLayout1 = new VerticalLayout();
-		VerticalLayout verticalLayout2 = new VerticalLayout();
-		VerticalLayout verticalLayout3 = new VerticalLayout();
+//		VerticalLayout verticalLayout2 = new VerticalLayout();
+//		VerticalLayout verticalLayout3 = new VerticalLayout();
 
-		verticalLayout1.addComponent(new DataRowLayout("Doc No.:", StringUtils.trimToEmpty(item.getDocNo())));
-		verticalLayout1.addComponent(new DataRowLayout("Doc Type:", StringUtils.trimToEmpty(item.getDocType())));
-		verticalLayout1.addComponent(new DataRowLayout("Year Code:", StringUtils.trimToEmpty(item.getYearCode())));
-		verticalLayout1.addComponent(new DataRowLayout("Serial No.:", trimString(String.valueOf(item.getSerialNo()))));
-		verticalLayout1.addComponent(new DataRowLayout("Party Name:", StringUtils.trimToEmpty(item.getPartyName())));
-		verticalLayout1.addComponent(new DataRowLayout("Previous Balance:", trimString(String.valueOf(item.getPrevBalance()))));
-		verticalLayout1.addComponent(new DataRowLayout("Last Received Date:", getFormattedDate(item.getLastReceivingDate())));
-		verticalLayout1.addComponent(new DataRowLayout("Last Received Amount:", trimString(String.valueOf(item.getLastReceivingAmount()))));
-		verticalLayout1.addComponent(new DataRowLayout("City:", StringUtils.trimToEmpty(item.getCity())));
-
-		verticalLayout2.addComponent(new DataRowLayout("Last Reading Date:", getFormattedDate(item.getBillDate())));
-		verticalLayout2.addComponent(new DataRowLayout("Service:", trimString(String.valueOf(item.getService()))));
-		verticalLayout2.addComponent(new DataRowLayout("Gas Difference:", trimString(String.valueOf(item.getGasDifference()))));
-		verticalLayout2.addComponent(new DataRowLayout("Last Received Pay Reference:", StringUtils.trimToEmpty(item.getLastReceivedPayReference())));
-		verticalLayout2.addComponent(new DataRowLayout("Collector Name:", StringUtils.trimToEmpty(item.getCollectorName())));
-		verticalLayout2.addComponent(new DataRowLayout("Last Reading:", StringUtils.trimToEmpty(item.getLastReading())));
-		verticalLayout2.addComponent(new DataRowLayout("Last Reading Date:", getFormattedDate(item.getLastReadingDate())));
-		verticalLayout2.addComponent(new DataRowLayout("Current Reading:", StringUtils.trimToEmpty(item.getCurrentReading())));
-		verticalLayout2.addComponent(new DataRowLayout("Current Reading Date:", getFormattedDate(item.getCurrentReadingDate())));
-
-		verticalLayout3.addComponent(new DataRowLayout("Building Code:", StringUtils.trimToEmpty(item.getBuildingCode())));
-		verticalLayout3.addComponent(new DataRowLayout("Building Name:", StringUtils.trimToEmpty(item.getBuildingName())));
-		verticalLayout3.addComponent(new DataRowLayout("Apartment Code:", StringUtils.trimToEmpty(item.getApartmentCode())));
-		verticalLayout3.addComponent(new DataRowLayout("Total Unit:", StringUtils.trimToEmpty(item.getTotalUnit())));
-		verticalLayout3.addComponent(new DataRowLayout("Unit Price:", StringUtils.trimToEmpty(item.getUnitPrice())));
-		verticalLayout3.addComponent(new DataRowLayout("Amount:", trimString(String.valueOf(item.getAmount()))));
-		verticalLayout3.addComponent(new DataRowLayout("Total Amount:", trimString(String.valueOf(item.getTotalAmount()))));
-		verticalLayout3.addComponent(new DataRowLayout("Contract No.:", StringUtils.trimToEmpty(item.getContractNo())));
-		verticalLayout3.addComponent(new DataRowLayout("Received Amount:", trimString(String.valueOf(item.getReceivedAmmount()))));
-
+		verticalLayout1.addComponent(new DataRowLayout("ID:", trimString(String.valueOf(item.getId()))));
+		verticalLayout1.addComponent(new DataRowLayout("CITY:", StringUtils.trimToEmpty(item.getCity())));
+		verticalLayout1.addComponent(new DataRowLayout("Company:", StringUtils.trimToEmpty(item.getCompany())));
+		verticalLayout1.addComponent(new DataRowLayout("Contract No:", StringUtils.trimToEmpty(item.getContractNo())));
+		verticalLayout1.addComponent(new DataRowLayout("Adnoc Ref:", StringUtils.trimToEmpty(item.getCcbId())));
+		verticalLayout1.addComponent(new DataRowLayout("CreationDate:", getFormattedDate(item.getCreationDate())));
+		verticalLayout1.addComponent(new DataRowLayout("Update Date:", getFormattedDate(item.getUpdateDate())));
+		verticalLayout1.addComponent(new DataRowLayout("Status:", StringUtils.trimToEmpty(item.getStatus())));
+		verticalLayout1.addComponent(new DataRowLayout("Error Message :", StringUtils.trimToEmpty(item.getMessage())));
+		verticalLayout1.addComponent(new DataRowLayout("Attachment:", StringUtils.trimToEmpty(item.getAttachment())));
+		
+		verticalLayout1.addComponent(new DataRowLayout("TITLE:", StringUtils.trimToEmpty(item.getTitle())));
+		verticalLayout1.addComponent(new DataRowLayout("Body:", StringUtils.trimToEmpty(item.getBody())));
+		
 		addComponent(verticalLayout1);
-		addComponent(verticalLayout2);
-		addComponent(verticalLayout3);
+//		addComponent(verticalLayout2);
+//		addComponent(verticalLayout3);
 
 		/*
 		 * horizontalLayout.setExpandRatio(verticalLayout1, 0.45F);

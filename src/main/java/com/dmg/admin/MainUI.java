@@ -12,6 +12,7 @@ import com.dmg.admin.view.LoginView;
 import com.dmg.admin.view.LogoutView;
 import com.dmg.admin.view.NewRequestsView;
 import com.dmg.admin.view.RegistrationView;
+import com.dmg.admin.view.SendEmailStatusList;
 import com.dmg.admin.view.SendInvEmailTemplateView;
 import com.dmg.admin.view.SendInvEmailView;
 import com.dmg.admin.view.StartView;
@@ -56,6 +57,7 @@ public class MainUI extends UI {
 		navigator.addView(LogoutView.NAME, new LogoutView(navigator));
 		navigator.addView(SendInvEmailView.NAME, new SendInvEmailView(navigator));
 		navigator.addView(SendInvEmailTemplateView.NAME, new SendInvEmailTemplateView(navigator));
+		navigator.addView(SendEmailStatusList.NAME, new SendEmailStatusList(navigator));
 
 		navigator.addViewChangeListener(new ViewChangeListener() {
 
