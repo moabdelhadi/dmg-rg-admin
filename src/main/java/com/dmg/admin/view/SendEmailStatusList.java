@@ -1,12 +1,8 @@
 package com.dmg.admin.view;
 
 import java.math.BigDecimal;
-import java.util.Date;
-
-import org.apache.commons.lang.StringUtils;
 
 import com.dmg.admin.auth.SessionHandler;
-import com.dmg.admin.ui.BillDisplayLayout;
 import com.dmg.admin.ui.ComponentUtil;
 import com.dmg.admin.ui.CustomFilterDecorator;
 import com.dmg.admin.ui.CustomFilterGenerator;
@@ -14,9 +10,6 @@ import com.dmg.admin.ui.CustomPagedFilterControlConfig;
 import com.dmg.admin.ui.CustomPagedFilterTable;
 import com.dmg.admin.ui.MailStausDisplayLayout;
 import com.dmg.admin.util.ViewUtil;
-import com.dmg.core.bean.Bill;
-import com.dmg.core.bean.BillAUH;
-import com.dmg.core.bean.BillDu;
 import com.dmg.core.bean.SendInv;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -32,10 +25,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomTable;
-import com.vaadin.ui.CustomTable.ColumnGenerator;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -70,7 +60,9 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 	private void initPagedTable() {
 		city = SessionHandler.get().getCity();
 		jpaContainer = JPAContainerFactory.makeBatchable(SendInv.class, "dmg-rg-admin");
-		
+		String[] params = {"id"};
+		boolean[] desc = {false};
+		jpaContainer.sort(params, desc);
 		pagedTable.setContainerDataSource(jpaContainer);
 		pagedTable.setCaption("EmailSendList found (" + jpaContainer.size() + ")");
 		pagedTable.setVisibleColumns("company", "contractNo", "city", "ccbId", "status", "message", "title");
