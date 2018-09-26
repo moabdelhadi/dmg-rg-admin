@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.core.bean.AbstractPojo;
 import com.dmg.core.bean.BeansFactory;
+import com.dmg.core.bean.Bill;
 import com.dmg.core.bean.SendInv;
 import com.dmg.core.bean.UserAccount;
 import com.dmg.core.exception.DataAccessLayerException;
@@ -48,6 +49,10 @@ public class SendEmailService implements Serializable {
 			return null;
 		}
 		return list.get(0);
+	}
+	
+	public SendInv getMail(long id) throws DataAccessLayerException {
+		return FacadeFactory.getFacade().find(SendInv.class, id);
 	}
 
 	public void store(SendInv sendInv) throws DataAccessLayerException {
