@@ -55,7 +55,7 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 	private ExcelExport excelExport;
 	private final Navigator navigator;
 	private Button detailsBtn;
-	private final Window billWindow = new Window();
+	//private final Window billWindow = new Window();
 	private String city = "";
 	private final Button exportBtn = new Button("Export");
 
@@ -128,7 +128,7 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 			@Override
 			public void containerItemSetChange(ItemSetChangeEvent event) {
 				int itemSize = jpaContainer.size();
-				pagedTable.setCaption("Bills found (" + itemSize + ")");
+				pagedTable.setCaption("MAILS found (" + itemSize + ")");
 				if (itemSize > EXPORT_LIMIT) {
 					exportBtn.setVisible(false);
 				} else {
@@ -168,7 +168,7 @@ public class SendEmailStatusList extends VerticalLayout implements View {
 				CustomTableHolder pagedTableHolder = new CustomTableHolder(pagedTable);
 				excelExport = new ExcelExport(pagedTableHolder);
 				excelExport.excludeCollapsedColumns();
-				excelExport.setReportTitle("Bills Report");
+				excelExport.setReportTitle("Mails Report");
 				excelExport.export();
 			}
 		});
