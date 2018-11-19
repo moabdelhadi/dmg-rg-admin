@@ -1,6 +1,7 @@
 package com.dmg.admin.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.dmg.admin.auth.SessionHandler;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Bill;
+import com.dmg.core.bean.Constants;
 import com.dmg.core.exception.DataAccessLayerException;
 import com.dmg.core.persistence.FacadeFactory;
 
@@ -56,9 +58,9 @@ public class BillService implements Serializable {
 		return FacadeFactory.getFacade().find(bill.getClass(), id);
 	}
 
-//	public void storeBill(Bill bill) throws DataAccessLayerException {
-//		FacadeFactory.getFacade().store(bill);
-//	}
+	// public void storeBill(Bill bill) throws DataAccessLayerException {
+	// FacadeFactory.getFacade().store(bill);
+	// }
 
 	public Bill findBill(Bill bill) throws DataAccessLayerException {
 
@@ -83,6 +85,31 @@ public class BillService implements Serializable {
 
 		return FacadeFactory.getFacade().find(query, parameters);
 
+	}
+
+	public Bill getLatestBill(String contractID, String city, String company) {
+
+		List<Bill> list = new ArrayList<Bill>();
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put(Constants.BILL_CONTRACT_NUMBER, contractID);
+		parameters.put(Constants.BILL_COMPANY, company);
+
+		Bill bill = BeansFactory.getInstance().getBill(city);
+		try {
+			list.addAll(FacadeFactory.getFacade().list(bill.getClass(), parameters, Constants.BILL_INV_DATE, false, 1));
+
+			for (Bill billRes : list) {
+				billRes = (Bill) FacadeFactory.getFacade().refresh(billRes);
+			}
+
+		} catch (DataAccessLayerException e) {
+			log.error("Error in get bills for contract number , " + contractID, e);
+		}
+
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 }

@@ -31,6 +31,8 @@ public class SendTemplateMailsForm extends CustomComponent {
 
 	Label addDatalabel = new Label("Additional Data:");
 	CheckBox nameCheck=new CheckBox("Contract Name:", false);
+	CheckBox isActive=new CheckBox("Is Active:", true);
+	CheckBox isBalaneMore=new CheckBox("Balance > 0:", true);
 	CheckBox contractNoCheck=new CheckBox("Contract No:", false);
 	CheckBox amountCheck=new CheckBox("Amount:", false);
 	CheckBox passwordCheck=new CheckBox("Password:", false);
@@ -63,8 +65,6 @@ public class SendTemplateMailsForm extends CustomComponent {
 		List<String> itemTempId=new ArrayList<String>();
 		itemTempId.add("firstReminder");
 		itemTempId.add("secondReminder");
-		itemTempId.add("thirdReminder");
-		itemTempId.add("lastReminder");
 		itemTempId.add("free");
 		templateField.addItems(itemTempId);
 		messageText.setEnabled(true);
@@ -74,6 +74,8 @@ public class SendTemplateMailsForm extends CustomComponent {
 		
 		layout.addComponent(buildingNo);
 		layout.addComponent(accountNo);
+		layout.addComponent(isActive);
+		layout.addComponent(isBalaneMore);
 		layout.addComponent(templateField);
 		layout.addComponent(titleField);
 		layout.addComponent(messageText);
@@ -132,8 +134,16 @@ public class SendTemplateMailsForm extends CustomComponent {
 	public CheckBox getNameCheck() {
 		return nameCheck;
 	}
-
 	
+	public CheckBox getIsActive() {
+		return isActive;
+	}
+
+
+	public CheckBox getIsBalaneMore() {
+		return isBalaneMore;
+	}
+
 
 	public TextField getTitleField() {
 		return titleField;

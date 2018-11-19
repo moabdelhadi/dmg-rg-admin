@@ -140,7 +140,7 @@ public class SendInvEmailView extends VerticalLayout implements View {
 				continue;
 			}
 			
-			if(!userAccount.getEnable()){
+			if(!userAccount.isEnable()){
 				log.warn("User Not Enabled" + userAccount.getContractNo());
 				continue;
 			}

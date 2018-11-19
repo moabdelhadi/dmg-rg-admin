@@ -147,7 +147,7 @@ public class UpdateUserView extends VerticalLayout implements View {
 			item.addItemProperty("mobile", new ObjectProperty<String>(userAccount.getMobile() == null ? "" : userAccount.getMobile()));
 			item.addItemProperty("pobox", new ObjectProperty<String>(userAccount.getPobox() == null ? "" : userAccount.getPobox()));
 			item.addItemProperty("poboxCity", new ObjectProperty<String>(userAccount.getPoboxCity() == null ? "" : userAccount.getPoboxCity()));
-			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.getEnable()));
+			item.addItemProperty("enable", new ObjectProperty<Boolean>(userAccount.isEnable()));
 
 			userAccountForm = new UserAccountForm(userAccount);
 			//here setting the read only fields

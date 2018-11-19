@@ -133,7 +133,7 @@ public class UsersView extends VerticalLayout implements View {
 				} else {
 					userAccount = (UserAccountsAUH) jpaContainer.getItem(itemId).getEntity();
 				}
-				if (userAccount.getEnable()) {
+				if (userAccount.isEnable()) {
 					icon = new Image(null, new ThemeResource("img/enable.png"));
 
 				} else {

@@ -94,8 +94,11 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						String messageText = sendTemplateMailForm.getMessageText().getValue();
 						String messageTitle = sendTemplateMailForm.getTitleField().getValue();
 						Boolean nameCheck = sendTemplateMailForm.getNameCheck().getValue();
+						Boolean isActive = sendTemplateMailForm.getIsActive().getValue();
+						Boolean isBalanceMore = sendTemplateMailForm.getIsBalaneMore().getValue();
 						Boolean contractNoCheck = sendTemplateMailForm.getContractNoCheck().getValue();
 						Boolean passwordCheck = sendTemplateMailForm.getPasswordCheck().getValue();
+						Boolean amountCheck = sendTemplateMailForm.getAmountCheck().getValue();
 						
 						//File mapFile = new File(mapFilePath);
 
@@ -110,9 +113,11 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 						}
 						parameters.put(Constants.USER_CITY, city);
 						parameters.put(Constants.USER_COMPANY, company);
-						List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
+						parameters.put(Constants.USER_ENABLE, isActive);
 						
-						addrecordstoDB(list, city, company, templateField ,messageText, messageTitle,  nameCheck, contractNoCheck, passwordCheck);
+						
+						List<? extends UserAccount> list = FacadeFactory.getFacade().list(user.getClass(), parameters);
+						addrecordstoDB(list, city, company, templateField ,messageText, messageTitle, isBalanceMore,  nameCheck, contractNoCheck, passwordCheck, amountCheck );
 						Notification.show("User has been updated successfully!", Type.HUMANIZED_MESSAGE);
 						
 					}
@@ -130,7 +135,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 
 	}
 	
-	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String templateField, String messageText, String messageTitle,  Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck) throws IOException {
+	private void addrecordstoDB(List<? extends UserAccount> users, String city, String company, String templateField, String messageText, String messageTitle, Boolean isBalanceMore,  Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck, Boolean amountCheck) throws IOException {
 
 ////		Map<String, String> map = new HashMap<String, String>();
 //		String pdfBasePath = PropertiesManager.getInstance().getProperty("adnc.pdf.base.path");
@@ -157,7 +162,12 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 				continue;
 			}
 			
-			if(!userAccount.getEnable()){
+//			if(!userAccount.isEnable()){
+//				log.warn("User Not Enabled" + userAccount.getContractNo());
+//				continue;
+//			}
+			
+			if(isBalanceMore && !(userAccount.getBalance().doubleValue()>0)){
 				log.warn("User Not Enabled" + userAccount.getContractNo());
 				continue;
 			}
@@ -171,7 +181,7 @@ public class SendInvEmailTemplateView extends VerticalLayout implements View {
 			sendInv.setCreationDate(time);
 			sendInv.setStatus(pdfSendStatus); //"PENDING"
 			sendInv.setPrefix("");
-			String body = mailTemplateGenerator.createEmailTemplate(templateField, messageText, messageTitle, userAccount, nameCheck, contractNoCheck, passwordCheck );
+			String body = mailTemplateGenerator.createEmailTemplate(templateField, messageText, messageTitle, userAccount, nameCheck, contractNoCheck, passwordCheck, false, false, amountCheck );
 			sendInv.setAttachment("");
 			sendInv.setTitle(messageTitle);
 			sendInv.setBody(body);
