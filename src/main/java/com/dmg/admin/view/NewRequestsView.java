@@ -59,17 +59,17 @@ public class NewRequestsView extends VerticalLayout implements View {
 		setSpacing(true);
 	}
 
-	private void initPagedTable() {
-		city = SessionHandler.get().getCity();
-		if ("DUBAI".equals(city)) {
-			jpaContainer = JPAContainerFactory.makeBatchable(NewUserRegistrationDu.class, "dmg-rg-admin");
-		} else {
-			jpaContainer = JPAContainerFactory.makeBatchable(NewUserRegistrationAUH.class, "dmg-rg-admin");
-		}
-		pagedTable.setContainerDataSource(jpaContainer);
-		pagedTable.setCaption("New Clients found (" + jpaContainer.size() + ")");
-		pagedTable.setVisibleColumns("name", "email", "buildingNumber", "appartmentNumber", "phone", "mobile", "meterReading", "refNo");
-	}
+//	private void initPagedTable() {
+//		city = SessionHandler.get().getCity();
+//		if ("DUBAI".equals(city)) {
+//			jpaContainer = JPAContainerFactory.makeBatchable(NewUserRegistrationDu.class, "dmg-rg-admin");
+//		} else {
+//			jpaContainer = JPAContainerFactory.makeBatchable(NewUserRegistrationAUH.class, "dmg-rg-admin");
+//		}
+//		pagedTable.setContainerDataSource(jpaContainer);
+//		pagedTable.setCaption("New Clients found (" + jpaContainer.size() + ")");
+//		pagedTable.setVisibleColumns("name", "email", "buildingNumber", "appartmentNumber", "phone", "mobile", "meterReading", "refNo");
+//	}
 
 	public void initView() {
 		pagedTable = new CustomPagedFilterTable();
@@ -256,7 +256,7 @@ public class NewRequestsView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		initPagedTable();
+//		initPagedTable();
 		detailsBtn.setVisible(false);
 	}
 

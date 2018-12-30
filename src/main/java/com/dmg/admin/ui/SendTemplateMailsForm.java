@@ -25,6 +25,8 @@ public class SendTemplateMailsForm extends CustomComponent {
 	TextField buildingNo = new TextField("Buildin No. or ALL");
 	TextField accountNo = new TextField("Account No, or ALL");
 	TextField titleField = new TextField("Email Title");
+	TextField isBalaneMore=new TextField("Balance more Than:");
+	
 	ComboBox templateField = new ComboBox("Template");
 
 	TextArea  messageText = new TextArea("Message Body");
@@ -32,10 +34,17 @@ public class SendTemplateMailsForm extends CustomComponent {
 	Label addDatalabel = new Label("Additional Data:");
 	CheckBox nameCheck=new CheckBox("Contract Name:", false);
 	CheckBox isActive=new CheckBox("Is Active:", true);
-	CheckBox isBalaneMore=new CheckBox("Balance > 0:", true);
+	CheckBox isDUserExelude=new CheckBox("Execlude D users:");
+	CheckBox isCUserExelude=new CheckBox("Execlude C users:");
+	CheckBox onlyDUser=new CheckBox("Only D users:");
+	CheckBox onlyCUser=new CheckBox("Only C users:");
+	CheckBox onlineEnableUser=new CheckBox("Only Online Enable users:");
 	CheckBox contractNoCheck=new CheckBox("Contract No:", false);
 	CheckBox amountCheck=new CheckBox("Amount:", false);
 	CheckBox passwordCheck=new CheckBox("Password:", false);
+	CheckBox buildingCheck=new CheckBox("Building No;:", false);
+	CheckBox apartmentCheck=new CheckBox("Apartment No.:", false);
+	
 
 	FormLayout layout = new FormLayout();
 
@@ -76,6 +85,11 @@ public class SendTemplateMailsForm extends CustomComponent {
 		layout.addComponent(accountNo);
 		layout.addComponent(isActive);
 		layout.addComponent(isBalaneMore);
+		layout.addComponent(onlyDUser);
+		layout.addComponent(isDUserExelude);
+		layout.addComponent(onlyCUser);
+		layout.addComponent(isCUserExelude);
+		layout.addComponent(onlineEnableUser);
 		layout.addComponent(templateField);
 		layout.addComponent(titleField);
 		layout.addComponent(messageText);
@@ -84,6 +98,8 @@ public class SendTemplateMailsForm extends CustomComponent {
 		layout.addComponent(contractNoCheck);
 		layout.addComponent(amountCheck);
 		layout.addComponent(passwordCheck);
+		layout.addComponent(apartmentCheck);
+		layout.addComponent(buildingCheck);
 		
 //		BeanItem<SendInv> bean = new BeanItem<SendInv>(item);
 //		binder = new FieldGroup();
@@ -138,9 +154,26 @@ public class SendTemplateMailsForm extends CustomComponent {
 	public CheckBox getIsActive() {
 		return isActive;
 	}
+	
+	
+	
+	
+	public CheckBox getIsCUserExelude() {
+		return isCUserExelude;
+	}
 
 
-	public CheckBox getIsBalaneMore() {
+	public CheckBox getOnlyCUser() {
+		return onlyCUser;
+	}
+
+
+	public CheckBox getOnlineEnableUser() {
+		return onlineEnableUser;
+	}
+
+
+	public TextField getIsBalaneMore() {
 		return isBalaneMore;
 	}
 
@@ -152,6 +185,25 @@ public class SendTemplateMailsForm extends CustomComponent {
 
 	public CheckBox getContractNoCheck() {
 		return contractNoCheck;
+	}
+	
+	public CheckBox getIsDUserExelude() {
+		return isDUserExelude;
+	}
+
+
+	public CheckBox getOnlyDUser() {
+		return onlyDUser;
+	}
+
+
+	public CheckBox getBuildingCheck() {
+		return buildingCheck;
+	}
+
+
+	public CheckBox getApartmentCheck() {
+		return apartmentCheck;
 	}
 
 

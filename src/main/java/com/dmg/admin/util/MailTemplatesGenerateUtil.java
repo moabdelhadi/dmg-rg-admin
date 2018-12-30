@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import com.dmg.admin.service.BillService;
 import com.dmg.admin.service.UserAccountService;
 import com.dmg.core.bean.Bill;
+import com.dmg.core.bean.Constants;
 import com.dmg.core.bean.UserAccount;
+import com.dmg.core.bean.UserStatus;
 import com.dmg.core.exception.DataAccessLayerException;
 
 public class MailTemplatesGenerateUtil {
@@ -220,7 +222,7 @@ public class MailTemplatesGenerateUtil {
 		builder.append("<p></p>");
 		builder.append("<p><b>Online Login Information</b></p>");
 		builder.append("<p></p>");
-		String data=appendData(userAccount, false, true, true, true, true, false);
+		String data=appendData(userAccount, false, true, true, true, true, false, true);
 		builder.append(data);
 		builder.append("<p>Note: the above Password link has been automatically generated for you to ease your online access; meanwhile we urge you to update your personal password accordingly.</p>");
 		builder.append("<p></p>");
@@ -238,17 +240,17 @@ public class MailTemplatesGenerateUtil {
 	}
 	
 	
-	public String createEmailTemplate(String templateType, String messageText, String title,  UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck){
-		
-		
-		String createEmailTemplate = createEmailTemplate(templateType, messageText, title, userAccount, nameCheck, contractNoCheck, passwordCheck, false, false, false);
-		return createEmailTemplate;
-		
-
-	}
+//	public String createEmailTemplate(String templateType, String messageText, String title,  UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck){
+//		
+//		
+//		String createEmailTemplate = createEmailTemplate(templateType, messageText, title, userAccount, nameCheck, contractNoCheck, passwordCheck, false, false, false);
+//		return createEmailTemplate;
+//		
+//
+//	}
 	
 	
-	public String createEmailTemplate(String templateType, String messageText, String title,  UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck, Boolean regionCheck, Boolean apartmentNoCheck, Boolean balanceCheck ){
+	public String createEmailTemplate(String templateType, String messageText, String title,  UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean passwordCheck, Boolean regionCheck, Boolean apartmentNoCheck, Boolean balanceCheck,  Boolean buildingCheck ){
 		
 		StringBuilder builder = new StringBuilder();
 		
@@ -262,7 +264,7 @@ public class MailTemplatesGenerateUtil {
 			builder.append(getLastTemp(userAccount));
 		}
 		
-		String data=appendData(userAccount, nameCheck, contractNoCheck, passwordCheck, regionCheck, apartmentNoCheck, balanceCheck);
+		String data=appendData(userAccount, nameCheck, contractNoCheck, passwordCheck, regionCheck, apartmentNoCheck, balanceCheck, buildingCheck);
 		builder.append(data);
 		builder.append(appendFooter());
 		return builder.toString();
@@ -271,7 +273,7 @@ public class MailTemplatesGenerateUtil {
 	
 	
 	
-	private String appendData(UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean password, Boolean regionCheck, Boolean apartmentNoCheck, Boolean balanceCheck) {
+	private String appendData(UserAccount userAccount, Boolean nameCheck, Boolean contractNoCheck, Boolean password, Boolean regionCheck, Boolean apartmentNoCheck, Boolean balanceCheck, Boolean buildingCheck) {
 
 		StringBuilder builder = new StringBuilder();
 		if(regionCheck){
@@ -298,6 +300,12 @@ public class MailTemplatesGenerateUtil {
 			builder.append("</p>");
 		}
 		
+		if(buildingCheck){
+			builder.append("<p><b>Building Number:</b>");
+			builder.append(userAccount.getBuildingNumber());
+			builder.append("</p>");
+		}
+		
 		if(balanceCheck){
 			builder.append("<p><b>Outstanding Balance:</b>");
 			builder.append(userAccount.getBalance());
@@ -312,33 +320,34 @@ public class MailTemplatesGenerateUtil {
 		
 	}
 
-	private String appendData(UserAccount userAccount,  Boolean nameCheck, Boolean contractNoCheck, Boolean password) {
-
-		StringBuilder builder = new StringBuilder();
-		if(nameCheck){
-			builder.append("<p>Name:");
-			builder.append(userAccount.getName());
-			builder.append("</p>");
-		}
-		
-		if(contractNoCheck){
-			builder.append("<p>Account No:");
-			builder.append(userAccount.getContractNo());
-			builder.append("</p>");
-		}
-		
-		if(password){
-			builder.append(passwordResetLink(userAccount));
-		}
-		
-		return builder.toString();
-	}
+//	private String appendData(UserAccount userAccount,  Boolean nameCheck, Boolean contractNoCheck, Boolean password) {
+//
+//		StringBuilder builder = new StringBuilder();
+//		if(nameCheck){
+//			builder.append("<p>Name:");
+//			builder.append(userAccount.getName());
+//			builder.append("</p>");
+//		}
+//		
+//		if(contractNoCheck){
+//			builder.append("<p>Account No:");
+//			builder.append(userAccount.getContractNo());
+//			builder.append("</p>");
+//		}
+//		
+//		if(password){
+//			builder.append(passwordResetLink(userAccount));
+//		}
+//		
+//		return builder.toString();
+//	}
 	
 	
 	private String passwordResetLink(UserAccount account){
 		
 		String hashKey = SHAEncrypt.encryptKey(account.getCity() + "_" + account.getContractNo() + "_" + System.currentTimeMillis());
 		account.setPassResetKey(hashKey);
+		account.setStatus(UserStatus.ACTIVE.value());
 		
 		UserAccountService userAccountService = new UserAccountService();
 		try {
