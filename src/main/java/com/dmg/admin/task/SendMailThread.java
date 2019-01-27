@@ -29,7 +29,7 @@ public class SendMailThread implements Runnable {
 			try {
 				firstItem = service.getFirstItem();
 				if (firstItem == null) {
-					Thread.sleep(36000);
+					Thread.sleep(15000);
 					continue;
 				}
 				UserAccount user = BeansFactory.getInstance().getUserAccount(firstItem.getCity());
@@ -65,7 +65,7 @@ public class SendMailThread implements Runnable {
 					continue;
 				}
 
-				Thread.sleep(36000);
+				Thread.sleep(15000);
 			} catch (DataAccessLayerException e) {
 				log.error("Error in get Data", e);
 				if (firstItem != null) {
