@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dmg.admin.service.SendEmailService;
 import com.dmg.admin.util.MailManager;
+import com.dmg.admin.util.PropertiesManager;
 import com.dmg.core.bean.BeansFactory;
 import com.dmg.core.bean.Constants;
 import com.dmg.core.bean.SendInv;
@@ -19,17 +20,20 @@ import com.dmg.core.persistence.FacadeFactory;
 public class SendMailThread implements Runnable {
 
 	private static Logger log = LoggerFactory.getLogger(SendMailThread.class);
-
+	private static String sleep = PropertiesManager.getInstance().getProperty("email.sleep.delay");
 	@Override
 	public void run() {
 		SendEmailService service = new SendEmailService();
+		
+		int delay = Integer.parseInt(sleep);
+		
 		while (true) {
 			SendInv firstItem = null;
 			log.info("START THREAD LOOP");
 			try {
 				firstItem = service.getFirstItem();
 				if (firstItem == null) {
-					Thread.sleep(15000);
+					Thread.sleep(delay);
 					continue;
 				}
 				UserAccount user = BeansFactory.getInstance().getUserAccount(firstItem.getCity());
@@ -65,7 +69,7 @@ public class SendMailThread implements Runnable {
 					continue;
 				}
 
-				Thread.sleep(15000);
+				Thread.sleep(delay);
 			} catch (DataAccessLayerException e) {
 				log.error("Error in get Data", e);
 				if (firstItem != null) {
