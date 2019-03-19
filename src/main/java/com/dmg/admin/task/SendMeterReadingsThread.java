@@ -71,11 +71,6 @@ public class SendMeterReadingsThread implements Runnable {
 				return;
 			}
 			
-			
-			
-
-			
-			
 			List<MeterReading> lisReadings = service.lisReadings(city, from, to);
 
 			if (lisReadings == null || lisReadings.size() == 0) {
@@ -88,6 +83,8 @@ public class SendMeterReadingsThread implements Runnable {
 			sb.append("DATE");
 			sb.append(",");
 			sb.append("CONTRACT NO");
+			sb.append(",");
+			sb.append("COMPANY");
 			sb.append(",");
 			sb.append("CITY");
 			sb.append(",");
@@ -102,6 +99,8 @@ public class SendMeterReadingsThread implements Runnable {
 				sb.append(meterReading.getCreationDate());
 				sb.append(",");
 				sb.append(meterReading.getContractNo());
+				sb.append(",");
+				sb.append(meterReading.getCompany());
 				sb.append(",");
 				sb.append(meterReading.getCity());
 				sb.append(",'");
